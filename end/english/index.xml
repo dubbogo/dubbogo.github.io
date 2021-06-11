@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bigspring Hugo</title>
+    <link>http://examplesite.org/end/english/</link>
+    <description>Recent content on Bigspring Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Apr 2020 10:07:21 +0600</lastBuildDate><atom:link href="http://examplesite.org/end/english/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

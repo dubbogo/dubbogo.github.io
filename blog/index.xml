@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Neuigkeiten on Dubbo-go 3.0</title>
+    <link>http://examplesite.org/blog/</link>
+    <description>Recent content in Neuigkeiten on Dubbo-go 3.0</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Apr 2020 10:07:21 +0600</lastBuildDate><atom:link href="http://examplesite.org/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dies ist eine deutsche Testseite</title>
+      <link>http://examplesite.org/blog/post-1/</link>
+      <pubDate>Sat, 18 Apr 2020 10:07:21 +0600</pubDate>
+      
+      <guid>http://examplesite.org/blog/post-1/</guid>
+      <description>Exemplarische Überschrift Hier ist ein Beispiel für eine Überschrift. Sie können diese Überschrift verwenden, indem Sie den Markdownify-Regeln folgen.</description>
+    </item>
+    
+  </channel>
+</rss>
