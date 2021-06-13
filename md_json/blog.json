@@ -1,0 +1,133 @@
+{
+  "en-us": [
+    {
+      "filename": "download.md",
+      "link": "\\en-us\\blog\\download.html",
+      "meta": {
+        "title": "Downloads",
+        "keywords": "download, dubbo-go",
+        "description": "this article collect of download resources dubbo-go"
+      }
+    }
+  ],
+  "zh-cn": [
+    {
+      "filename": "download.md",
+      "link": "\\zh-cn\\blog\\download.html",
+      "meta": {
+        "title": "下载中心",
+        "keywords": "download, dubbo-go",
+        "description": "本文集合了 dubbo-go 的相关下载资料"
+      }
+    },
+    {
+      "filename": "dubbo-go-1.4.0.md",
+      "link": "\\zh-cn\\blog\\dubbo-go-1.4.0.html",
+      "meta": {
+        "title": "dubbo-go 1.4.0 版本发布，支持 K8s 注册中心、rest 协议",
+        "keywords": "\"dubbo-go\", \"1.4.0\", \"K8s\"",
+        "description": "得益于社区活跃的支持，2020 年 3 月 25 日 我们发布了一个让人兴奋的版本——dubbo-go v1.4.0。"
+      }
+    },
+    {
+      "filename": "dubbo-go-experience.md",
+      "link": "\\zh-cn\\blog\\dubbo-go-experience.html",
+      "meta": {
+        "title": "dubbo-go 踩坑记",
+        "keywords": "\"dubbo-go\", \"踩坑\", \"dubbo-go实践\"",
+        "description": "使用dubbo-go的前因后果与踩坑过程。"
+      }
+    },
+    {
+      "filename": "dubbo-go-hessian2-1.6.md",
+      "link": "\\zh-cn\\blog\\dubbo-go-hessian2-1.6.html",
+      "meta": {}
+    },
+    {
+      "filename": "dubbo-go-k8s-registry.md",
+      "link": "\\zh-cn\\blog\\dubbo-go-k8s-registry.html",
+      "meta": {
+        "title": "dubbo-go 中将 Kubernets 原⽣作为注册中⼼_的设计和实现",
+        "keywords": "\"dubbo-go\", \"Kubernets\", \"注册中心\"",
+        "description": "介绍 dubbo-go 以 Kubernetes 为中⼼的服务注册的初衷，设计⽅案，以及具体实现。"
+      }
+    },
+    {
+      "filename": "dubbo-go-one-year.md",
+      "link": "\\zh-cn\\blog\\dubbo-go-one-year.html",
+      "meta": {}
+    },
+    {
+      "filename": "dubbo-go-practice-exploration.md",
+      "link": "\\zh-cn\\blog\\dubbo-go-practice-exploration.html",
+      "meta": {
+        "title": "涂鸦智能 dubbo-go 亿级流量的实践与探索",
+        "keywords": "\"dubbo-go\", \"实践\"",
+        "description": "本文分为实践和快速接入两部分，分享在涂鸦智能的 dubbo-go 实战经验，意在帮助用户快速接入 dubbo-go RPC 框架，希望能让大家少走些弯路。"
+      }
+    },
+    {
+      "filename": "dubbo-go-rusted-call-implementation.md",
+      "link": "\\zh-cn\\blog\\dubbo-go-rusted-call-implementation.html",
+      "meta": {
+        "title": "dubbo-go 可信调用实现",
+        "keywords": "\"dubbo-go\", \"可信调用\"",
+        "description": "本文将讲解如何在 Dubbo/Dubbo-Go 中实现灵活，安全和高效的身份验证和授权方案。"
+      }
+    },
+    {
+      "filename": "dubbo-go-sentinel.md",
+      "link": "\\zh-cn\\blog\\dubbo-go-sentinel.html",
+      "meta": {
+        "title": "在dubbo-go 中使用sentinel",
+        "keywords": "\"dubbo-go\", \"sentinel-golang\",\"limit filter\"",
+        "description": "如何在dubbo-go中使用sentinel"
+      }
+    },
+    {
+      "filename": "dubbogo-configcenter.md",
+      "link": "\\zh-cn\\blog\\dubbogo-configcenter.html",
+      "meta": {
+        "title": "dubbo-go 中如何实现远程配置管理",
+        "keywords": "\"config center\", \"apollo\", \"zookeeper\", \"nacos\"",
+        "description": "在 dubbo-go 中如何实现远程配置管理。讨论了目前已有的实现，以及如何扩展新的配置中心。"
+      }
+    },
+    {
+      "filename": "dubbogo-metrics-design-implementation.md",
+      "link": "\\zh-cn\\blog\\dubbogo-metrics-design-implementation.html",
+      "meta": {
+        "title": "dubbogo中metrics的设计",
+        "keywords": "\"metrics\", \"prometheus\", \"可观测性\"",
+        "description": "metrics是可观测性的核心部分。该文讨论了在dubbo-go中metrics的顶级抽象，通过Prometheus为例子揭示了如何采集和上报数据。"
+      }
+    },
+    {
+      "filename": "dubbogo-tps-limit-design-implementation.md",
+      "link": "\\zh-cn\\blog\\dubbogo-tps-limit-design-implementation.html",
+      "meta": {
+        "title": "dubbogo中的TPS Limit设计与实现",
+        "keywords": "\"tps limit\", \"fixed window\", \"sliding window\", \"扩展接口\"",
+        "description": "在dubbogo中的TPS limit的设计与实现。讨论了目前已有的实现，以及可以扩展的接口。"
+      }
+    },
+    {
+      "filename": "graceful-shutdown.md",
+      "link": "\\zh-cn\\blog\\graceful-shutdown.html",
+      "meta": {
+        "title": "要优雅退出吗？dubbogo给你",
+        "keywords": "\"graceful shutdown\", \"registry\", \"protocol\"",
+        "description": "在dubbogo中的优雅退出的设计与实现。讨论了直接退出的存在问题，因此得出优雅退出所需的步骤。"
+      }
+    },
+    {
+      "filename": "grpc-dubbo.md",
+      "link": "\\zh-cn\\blog\\grpc-dubbo.html",
+      "meta": {
+        "title": "无缝连接dubbo-go与gRPC",
+        "keywords": "\"gRPC\", \"protocol\"",
+        "description": "在dubbo-go中接入gRPC的设计与实现。核心在于实现gRPC protocol，作为一个适配器将dubbo-go和gRPC连接起来。"
+      }
+    }
+  ]
+}
