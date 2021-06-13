@@ -14,7 +14,7 @@ export default {
                         ],
                     },
                     {
-                        title: 'Quick start',
+                        title: 'Quick Start',
                         link: '/en-us/docs/user/quick-start.html'
                     },
                     {
