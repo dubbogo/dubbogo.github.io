@@ -2,7 +2,7 @@ export default {
     'en-us': {
         sidemenu: [
             {
-                title: 'User guide',
+                title: 'User Guide',
                 children: [
                     {
                         title: 'Preface',
