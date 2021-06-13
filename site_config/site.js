@@ -120,7 +120,7 @@ export default {
       {
         key: 'docs',
         text: '文档',
-        link: '/zh-cn/docs/user/quick-start.html',
+        link: '/zh-cn/docs/user/quickstart/3.0/quickstart.html',
       },
       {
         key: 'blog',
@@ -140,7 +140,7 @@ export default {
       {
         key: 'java',
         text: 'Java',
-        link: 'https://dubbo.apache.org/zh-cn/index.html',
+        link: 'https://dubbo.io',
       },
     ],
     disclaimer: {

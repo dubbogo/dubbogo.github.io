@@ -154,7 +154,7 @@ export default {
                     },
                     {
                         title: '快速开始',
-                        link: '/zh-cn/docs/user/quick-start.html'
+                        link: '/zh-cn/docs/user/quickstart/1.5/quick-start.html'
                     },
                     {
                         title: '配置',
