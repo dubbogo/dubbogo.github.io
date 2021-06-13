@@ -8,5 +8,5 @@ package-lock.json
 /en-us/
 /zh-cn/
 build/
-#index.html
+index.html
 md_json/
