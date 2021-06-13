@@ -5,8 +5,9 @@
 ## 先决条件
 
 Dubbo-go 站点由[docsite](https://github.com/txd-team/docsite)提供支持。
-如果您的版本低于`1.3.3`，请升级到`1.3.3`。
-同时请确保你的node版本是8.x，docsit还不支持高于8.x的版本。
+
+请使用**版本为 1.3.9 的docsite**。
+同时请**确保你的node版本是8.x**，docsit还不支持高于8.x的版本。
 
 ## 构建说明
 

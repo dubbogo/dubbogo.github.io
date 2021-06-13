@@ -5,8 +5,10 @@ This project includes official documents and blogs of Dubbo-go to guide users to
 ## Prerequisite
 
 Dubbo-go website is powered by [docsite](https://github.com/txd-team/docsite).
-If your version of docsite is less than `1.3.3`, please upgrade to `1.3.3`.
-Please also make sure your node version is 8.x, versions higher than 8.x is not supported by docsite yet.
+
+please use **docsite version at `1.3.9`**.
+
+Please also **make sure your node version is 8.x**, versions higher than 8.x is not supported by docsite yet.
 
 ## Build instruction
 
