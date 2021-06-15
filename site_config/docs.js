@@ -101,23 +101,23 @@ export default {
                         children: [
                             {
                                 title: '服务提供者',
-                                link: '',
+                                link: '/zh-cn/docs/user/user_configuration/service_providers.html',
                             },
                             {
                                 title: '客户端',
-                                link: '',
+                                link: '/zh-cn/docs/user/user_configuration/client.html',
                             },
                             {
                                 title: '协议选择',
-                                link: '',
+                                link: '/zh-cn/docs/user/user_configuration/protocol_selection.html',
                             },
                             {
                                 title: '注册中心',
-                                link: '',
+                                link: '/zh-cn/docs/user/user_configuration/registry.html',
                             },
                             {
                                 title: '路由规则',
-                                link: '',
+                                link: '/zh-cn/docs/user/user_configuration/routing_rules.html',
                             }
                         ]
                     },
