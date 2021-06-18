@@ -4,6 +4,41 @@ export default {
         postsTitle: 'All posts',
         list: [
             {
+                title: 'dubbo-go 白话文',
+                author: '@于雨',
+                dateStr: 'February 20th, 2021',
+                desc: '本文手把手教你使用 dubbogo 调用 dubbogo 或 dubbo 提供的服务提供方',
+                link: '/zh-cn/blog/dubbo-go-vernacular.html',
+            },
+            {
+                title: 'dubbo-go源码笔记（二）客户端调用过程',
+                author: '@李志信',
+                dateStr: 'January 15, 2021',
+                desc: '随着微服务架构的流行，许多高性能 rpc 框架应运而生，由阿里开源的 dubbo 框架 go 语言版本的 dubbo-go 也成为了众多开发者不错的选择。本文将介绍 dubbo-go 框架的基本使用方法，以及从 export 调用链的角度进行 server 端源码导读，希望能引导读者进一步认识这款框架。',
+                link: '/zh-cn/blog/dubbo-go-code-notes-2.html',
+            },
+            {
+                title: 'dubbogo 3.0：牵手 gRPC 走向云原生时代',
+                author: '@李志信,于雨',
+                dateStr: 'January 15, 2021',
+                desc: '本文介绍了 dubbo-go 3.0 对云原生的支持和规划',
+                link: '/zh-cn/blog/dubbo-go-3-grpc.html',
+            },
+            {
+                title: '分布式事务框架 seata-golang 通信模型详解',
+                author: '@刘晓敏,于雨',
+                dateStr: 'January 15, 2021',
+                desc: '本文介绍了 seata 的 go 语言客户端通信模型的实现',
+                link: '/zh-cn/blog/dubbo-go-seata.html',
+            },
+            {
+                title: 'Dubbo-go 源码笔记（一）Server 端开启服务过程',
+                author: '@李志信',
+                dateStr: 'January 14, 2021',
+                desc: '随着微服务架构的流行，许多高性能 rpc 框架应运而生，由阿里开源的 dubbo 框架 go 语言版本的 dubbo-go 也成为了众多开发者不错的选择。本文将介绍 dubbo-go 框架的基本使用方法，以及从 export 调用链的角度进行 server 端源码导读，希望能引导读者进一步认识这款框架。',
+                link: '/zh-cn/blog/dubbo-go-code-notes-1.html',
+            },
+            {
                 title: '涂鸦智能 dubbo-go 亿级流量的实践与探索',
                 author: '@panty',
                 dateStr: 'June 13th, 2020',
@@ -79,6 +114,41 @@ export default {
         barText: '博客',
         postsTitle: '所有文章',
         list: [
+            {
+                title: 'dubbo-go 白话文',
+                author: '@于雨',
+                dateStr: 'February 20th, 2021',
+                desc: '本文手把手教你使用 dubbogo 调用 dubbogo 或 dubbo 提供的服务提供方',
+                link: '/zh-cn/blog/dubbo-go-vernacular.html',
+            },
+            {
+                title: 'dubbo-go源码笔记（二）客户端调用过程',
+                author: '@李志信',
+                dateStr: 'January 15, 2021',
+                desc: '随着微服务架构的流行，许多高性能 rpc 框架应运而生，由阿里开源的 dubbo 框架 go 语言版本的 dubbo-go 也成为了众多开发者不错的选择。本文将介绍 dubbo-go 框架的基本使用方法，以及从 export 调用链的角度进行 server 端源码导读，希望能引导读者进一步认识这款框架。',
+                link: '/zh-cn/blog/dubbo-go-code-notes-2.html',
+            },
+            {
+                title: 'dubbogo 3.0：牵手 gRPC 走向云原生时代',
+                author: '@李志信,于雨',
+                dateStr: 'January 15, 2021',
+                desc: '本文介绍了 dubbo-go 3.0 对云原生的支持和规划',
+                link: '/zh-cn/blog/dubbo-go-3-grpc.html',
+            },
+            {
+                title: '分布式事务框架 seata-golang 通信模型详解',
+                author: '@刘晓敏,于雨',
+                dateStr: 'January 15, 2021',
+                desc: '本文介绍了 seata 的 go 语言客户端通信模型的实现',
+                link: '/zh-cn/blog/dubbo-go-seata.html',
+            },
+            {
+                title: 'Dubbo-go 源码笔记（一）Server 端开启服务过程',
+                author: '@李志信',
+                dateStr: 'January 14, 2021',
+                desc: '随着微服务架构的流行，许多高性能 rpc 框架应运而生，由阿里开源的 dubbo 框架 go 语言版本的 dubbo-go 也成为了众多开发者不错的选择。本文将介绍 dubbo-go 框架的基本使用方法，以及从 export 调用链的角度进行 server 端源码导读，希望能引导读者进一步认识这款框架。',
+                link: '/zh-cn/blog/dubbo-go-code-notes-1.html',
+            },
             {
                 title: '涂鸦智能 dubbo-go 亿级流量的实践与探索',
                 author: '@panty',
