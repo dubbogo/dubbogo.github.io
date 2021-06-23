@@ -95,8 +95,12 @@ client.go文件：
 ```go
 package main
 
-import (
+import(
 	"context"
+	"time"
+)
+
+import (
 	_ "dubbo.apache.org/dubbo-go/v3/cluster/cluster_impl"
 	_ "dubbo.apache.org/dubbo-go/v3/cluster/loadbalance"
 	"dubbo.apache.org/dubbo-go/v3/common/logger"
@@ -106,8 +110,10 @@ import (
 	_ "dubbo.apache.org/dubbo-go/v3/protocol/dubbo3"
 	_ "dubbo.apache.org/dubbo-go/v3/registry/protocol"
 	_ "dubbo.apache.org/dubbo-go/v3/registry/zookeeper"
+)
+
+import(
 	"dubbo3-demo/protobuf"
-	"time"
 )
 
 var greeterProvider = new(protobuf.GreeterClientImpl)
@@ -160,8 +166,12 @@ server.go文件：
 ```go
 package main
 
-import (
+import(
 	"context"
+	"fmt"
+)
+
+import (
 	"dubbo.apache.org/dubbo-go/v3/common/logger"
 	_ "dubbo.apache.org/dubbo-go/v3/common/proxy/proxy_factory"
 	"dubbo.apache.org/dubbo-go/v3/config"
@@ -169,9 +179,11 @@ import (
 	_ "dubbo.apache.org/dubbo-go/v3/protocol/dubbo3"
 	_ "dubbo.apache.org/dubbo-go/v3/registry/protocol"
 	_ "dubbo.apache.org/dubbo-go/v3/registry/zookeeper"
-	"dubbo3-demo/protobuf"
-	"fmt"
 	tripleConstant "github.com/dubbogo/triple/pkg/common/constant"
+)
+
+import (
+	"dubbo3-demo/protobuf"
 )
 
 func setConfigByAPI() {
