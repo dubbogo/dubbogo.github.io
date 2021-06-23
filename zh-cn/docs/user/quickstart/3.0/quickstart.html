@@ -72,8 +72,12 @@ message HelloRequest {
 <p>client.go文件：</p>
 <pre><code class="language-go"><span class="hljs-keyword">package</span> main
 
-<span class="hljs-keyword">import</span> (
+<span class="hljs-keyword">import</span>(
 	<span class="hljs-string">"context"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-keyword">import</span> (
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/cluster/cluster_impl"</span>
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/cluster/loadbalance"</span>
 	<span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/common/logger"</span>
@@ -83,8 +87,10 @@ message HelloRequest {
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/protocol/dubbo3"</span>
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/registry/protocol"</span>
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/registry/zookeeper"</span>
+)
+
+<span class="hljs-keyword">import</span>(
 	<span class="hljs-string">"dubbo3-demo/protobuf"</span>
-	<span class="hljs-string">"time"</span>
 )
 
 <span class="hljs-keyword">var</span> greeterProvider = <span class="hljs-built_in">new</span>(protobuf.GreeterClientImpl)
@@ -134,8 +140,12 @@ message HelloRequest {
 <p>server.go文件：</p>
 <pre><code class="language-go"><span class="hljs-keyword">package</span> main
 
-<span class="hljs-keyword">import</span> (
+<span class="hljs-keyword">import</span>(
 	<span class="hljs-string">"context"</span>
+	<span class="hljs-string">"fmt"</span>
+)
+
+<span class="hljs-keyword">import</span> (
 	<span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/common/logger"</span>
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/common/proxy/proxy_factory"</span>
 	<span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/config"</span>
@@ -143,9 +153,11 @@ message HelloRequest {
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/protocol/dubbo3"</span>
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/registry/protocol"</span>
 	_ <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/registry/zookeeper"</span>
-	<span class="hljs-string">"dubbo3-demo/protobuf"</span>
-	<span class="hljs-string">"fmt"</span>
 	tripleConstant <span class="hljs-string">"github.com/dubbogo/triple/pkg/common/constant"</span>
+)
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"dubbo3-demo/protobuf"</span>
 )
 
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">setConfigByAPI</span><span class="hljs-params">()</span></span> {
