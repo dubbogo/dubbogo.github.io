@@ -11,7 +11,7 @@ Dubbo-go 站点由[docsite](https://github.com/txd-team/docsite)提供支持。
 
 ## 构建说明
 
-1. 运行 `npm install docsite -g` 安装开发工具。
+1. 运行 `npm install -g docsite@1.3.9` 安装开发工具。
 2. 在根目录下运行 `npm i` 安装依赖。
 3. 在根目录下运行 `docsite start` 启动本地服务, 你可以在 'http://127.0.0.1:8080' 下访问站点。
 4. 运行 `docsite build` to build source code。

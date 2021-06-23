@@ -12,7 +12,7 @@ Please also **make sure your node version is 8.x**, versions higher than 8.x is 
 
 ## Build instruction
 
-1. Run `npm install docsite -g` to install the dev tool.
+1. Run `npm install docsite@1.3.9 -g` to install the dev tool.
 2. Run `npm i` in the root directory to install the dependencies.
 3. Run `docsite start` in the root directory to start a local server, you will see the website in 'http://127.0.0.1:8080'.
 4. Run `docsite build` to build source code.
