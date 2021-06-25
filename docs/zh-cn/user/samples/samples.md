@@ -4,7 +4,7 @@ keywords: dubbo-go 3.0 示例
 description: dubbo-go 3.0 示例
 ---
 
-[【Dubbo-go-samples 仓库地址】](https://github.com/apache/dubbo-go-samples)
+[【Dubbo-go-samples 仓库地址】](https://github.com/apache/dubbo-go-samples/tree/3.0)
 
 ## 1. 本工程包含的示例
 
