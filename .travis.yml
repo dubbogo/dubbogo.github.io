@@ -12,7 +12,7 @@ install:
 script:
   - docsite build
   - mkdir ./temporary
-  - cp -r build/ docs/ index.html 404.html img/ zh-cn/ en-us/ ./temporary/ resource/
+  - cp -r build/ docs/ index.html 404.html img/ zh-cn/ en-us/ resource/ ./temporary/
 
 # 分支白名单
 branches:
