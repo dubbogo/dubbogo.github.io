@@ -4,6 +4,20 @@ export default {
         postsTitle: 'All posts',
         list: [
             {
+                title: '得物社区服务基于 dubbogo 技术升级实践',
+                author: '@小柯',
+                dateStr: 'June 24th, 2021',
+                desc: '社区服务集成 Dubbo-go 的整体思路与方案',
+                link: '/zh-cn/blog/dubbo-go-dewu-community.html',
+            },
+            {
+                title: 'dubbogo 是如何炼成的？',
+                author: '@于雨',
+                dateStr: 'June 22th, 2021',
+                desc: 'dubbogo 是如何炼成的？',
+                link: '/zh-cn/blog/dubbo-go-how-build.html',
+            },
+            {
                 title: 'dubbo-go 白话文',
                 author: '@于雨',
                 dateStr: 'February 20th, 2021',
@@ -114,6 +128,20 @@ export default {
         barText: '博客',
         postsTitle: '所有文章',
         list: [
+            {
+                title: '得物社区服务基于 dubbogo 技术升级实践',
+                author: '@小柯',
+                dateStr: 'June 24th, 2021',
+                desc: '社区服务集成 Dubbo-go 的整体思路与方案',
+                link: '/zh-cn/blog/dubbo-go-dewu-community.html',
+            },
+            {
+                title: 'dubbogo 是如何炼成的？',
+                author: '@于雨',
+                dateStr: 'June 22th, 2021',
+                desc: 'dubbogo 是如何炼成的？',
+                link: '/zh-cn/blog/dubbo-go-how-build.html',
+            },
             {
                 title: 'dubbo-go 白话文',
                 author: '@于雨',
