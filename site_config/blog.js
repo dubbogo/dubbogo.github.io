@@ -11,6 +11,13 @@ export default {
                 link: '/zh-cn/blog/dubbo-go-how-to-be-constructed.html',
             },
             {
+                title: '得物社区服务基于 dubbogo 技术升级实践',
+                author: '@小柯',
+                dateStr: 'June 26th, 2021',
+                desc: '考虑到服务性能与迁移成本，我们最终选择了 Go + grpc + K8S 作为此项工程的首选为社区微服务构建建立起了里程碑。',
+                link: '/zh-cn/blog/dewu-dubbo-go.html',
+            },
+            {
                 title: 'dubbo-go 白话文',
                 author: '@于雨',
                 dateStr: 'February 20th, 2021',
@@ -127,6 +134,13 @@ export default {
                 dateStr: 'June 28th, 2021',
                 desc: 'dubbo-go 是怎么炼成的，于老板来解读',
                 link: '/zh-cn/blog/dubbo-go-how-to-be-constructed.html',
+            },
+            {
+                title: '得物社区服务基于 dubbogo 技术升级实践',
+                author: '@小柯',
+                dateStr: 'June 26th, 2021',
+                desc: '考虑到服务性能与迁移成本，我们最终选择了 Go + grpc + K8S 作为此项工程的首选为社区微服务构建建立起了里程碑。',
+                link: '/zh-cn/blog/dewu-dubbo-go.html',
             },
             {
                 title: 'dubbo-go 白话文',
