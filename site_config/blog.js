@@ -122,6 +122,13 @@ export default {
         postsTitle: '所有文章',
         list: [
             {
+                title: 'dubbo-go 是怎么炼成的',
+                author: '@于雨',
+                dateStr: 'June 28th, 2021',
+                desc: 'dubbo-go 是怎么炼成的，于老板来解读',
+                link: '/zh-cn/blog/dubbo-go-how-to-be-constructed.html',
+            },
+            {
                 title: 'dubbo-go 白话文',
                 author: '@于雨',
                 dateStr: 'February 20th, 2021',
