@@ -72,33 +72,33 @@ Dubbo-go 主项目，主要是基于 Dubbo 的分层代码设计，上图是Dubb
 ```go
 // HelloWorldServiceClientImpl is the client API for HelloWorldService service.
 type HelloWorldServiceClientImpl struct {
-SayHello func(ctx context.Context, in *SayHelloReq, out *SayHelloResp) error
-//...
+    SayHello func(ctx context.Context, in *SayHelloReq, out *SayHelloResp) error
+    //...
 }
 
 // service Reference
 func (c *HelloWorldServiceClientImpl) Reference() string {
-return "helloWorldServiceImpl"
+    return "helloWorldServiceImpl"
 }
 
 // GetDubboStub
 func (c *HelloWorldServiceClientImpl) GetDubboStub(cc *grpc.ClientConn) HelloWorldServiceClient {
-return NewHelloWorldServiceClient(cc)
+    return NewHelloWorldServiceClient(cc)
 }
 
 // Server interface
 type HelloWorldServiceProviderBase struct {
-proxyImpl protocol.Invoker
+    proxyImpl protocol.Invoker
 }
 
 // set invoker proxy
 func (s *HelloWorldServiceProviderBase) SetProxyImpl(impl protocol.Invoker) {
-s.proxyImpl = impl
+    s.proxyImpl = impl
 }
 
 // get invoker proxy
 func (s *HelloWorldServiceProviderBase) GetProxyImpl() protocol.Invoker {
-return s.proxyImpl
+    return s.proxyImpl
 }
 ```
 
@@ -117,37 +117,37 @@ return s.proxyImpl
 ```go
 // ClientDubbo
 type HelloWorldServiceClientDubbo struct {
-GrpcClient  HelloWorldServiceClient
-DubboClient *HelloWorldServiceClientImpl
-Open        bool
-Caller      string
+    GrpcClient  HelloWorldServiceClient
+    DubboClient *HelloWorldServiceClientImpl
+    Open        bool
+    Caller      string
 }
 
 // 具体的方法实现
 func (c *HelloWorldServiceClientDubbo) SayHello(ctx context.Context, req *SayHelloReq, opts ...grpc.CallOption) (*SayHelloResp, error) {
-serverName := c.DubboClient.Reference()
-//获取 nacos配置源数据
-serverCfg := nacosCfg.GetServerCfg()
-if !c.Open {
-c.Open = serverCfg.AllOpen
-}
-cfg := serverCfg.ServiceCfg
-
-    // 判断调用链路
-if !c.Open &&
-!cfg[serverName].Open &&
-(cfg[serverName].Consumers == nil || !cfg[serverName].Consumers[c.Caller]) &&
-!cfg[serverName].Method["SayHello"].Open &&
-(cfg[serverName].Method["SayHello"].Consumer == nil || !cfg[serverName].Method["SayHello"].Consumer[c.Caller]) {
-
+    serverName := c.DubboClient.Reference()
+    //获取 nacos配置源数据
+    serverCfg := nacosCfg.GetServerCfg()
+    if !c.Open {
+        c.Open = serverCfg.AllOpen
+    }
+    cfg := serverCfg.ServiceCfg
+    
+    // 判断调用链路 
+    if !c.Open &&
+        !cfg[serverName].Open &&
+        (cfg[serverName].Consumers == nil || !cfg[serverName].Consumers[c.Caller]) &&
+        !cfg[serverName].Method["SayHello"].Open &&
+        (cfg[serverName].Method["SayHello"].Consumer == nil || !cfg[serverName].Method["SayHello"].Consumer[c.Caller]) {
+        
         // 原gRPC链路
         return c.GrpcClient.SayHello(ctx, req, opts...)
-}
+    }
 
-// Dubbo-go治理链路
-out := new(SayHelloResp)
-err := c.DubboClient.SayHello(ctx, req, out)
-return out, err
+    // Dubbo-go治理链路
+    out := new(SayHelloResp)
+    err := c.DubboClient.SayHello(ctx, req, out)
+    return out, err
 }
 ```
 
@@ -163,15 +163,15 @@ return out, err
 
 ```go
 type HelloWorldService struct {
-*pb.UnimplementedHelloWorldServiceServer
-*pb.HelloWorldServiceClientImpl
-*pb.HelloWorldServiceProviderBase
+    *pb.UnimplementedHelloWorldServiceServer
+    *pb.HelloWorldServiceClientImpl
+    *pb.HelloWorldServiceProviderBase
 }
 
 func NewHelloWorldService() *HelloWorldService {
-return &HelloWorldService{
-HelloWorldServiceProviderBase: &pb.HelloWorldServiceProviderBase{},
-}
+    return &HelloWorldService{
+        HelloWorldServiceProviderBase: &pb.HelloWorldServiceProviderBase{},
+    }
 }
 ```
 
