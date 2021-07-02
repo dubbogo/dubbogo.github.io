@@ -35,33 +35,33 @@
 <p>基于上述，Dubbo-go 帮助我们解决了 gRPC 的相关整合，相当于在gRPC 基础之上包装了 Dubbo-go 治理层，而我们从 gRPC 的 ProtoBuf 修改作为切入点开始，Dubbo-go 官方基于 Google protobuf 扩展插件定义了Dubbo-go gRPC 所使用的 protobuf 自定义逻辑代码，完成兼容性问题即可。</p>
 <pre><code class="language-go"><span class="hljs-comment">// HelloWorldServiceClientImpl is the client API for HelloWorldService service.</span>
 <span class="hljs-keyword">type</span> HelloWorldServiceClientImpl <span class="hljs-keyword">struct</span> {
-SayHello <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, in *SayHelloReq, out *SayHelloResp)</span> <span class="hljs-title">error</span></span>
-<span class="hljs-comment">//...</span>
+    SayHello <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, in *SayHelloReq, out *SayHelloResp)</span> <span class="hljs-title">error</span></span>
+    <span class="hljs-comment">//...</span>
 }
 
 <span class="hljs-comment">// service Reference</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *HelloWorldServiceClientImpl)</span> <span class="hljs-title">Reference</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> {
-<span class="hljs-keyword">return</span> <span class="hljs-string">"helloWorldServiceImpl"</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"helloWorldServiceImpl"</span>
 }
 
 <span class="hljs-comment">// GetDubboStub</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *HelloWorldServiceClientImpl)</span> <span class="hljs-title">GetDubboStub</span><span class="hljs-params">(cc *grpc.ClientConn)</span> <span class="hljs-title">HelloWorldServiceClient</span></span> {
-<span class="hljs-keyword">return</span> NewHelloWorldServiceClient(cc)
+    <span class="hljs-keyword">return</span> NewHelloWorldServiceClient(cc)
 }
 
 <span class="hljs-comment">// Server interface</span>
 <span class="hljs-keyword">type</span> HelloWorldServiceProviderBase <span class="hljs-keyword">struct</span> {
-proxyImpl protocol.Invoker
+    proxyImpl protocol.Invoker
 }
 
 <span class="hljs-comment">// set invoker proxy</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *HelloWorldServiceProviderBase)</span> <span class="hljs-title">SetProxyImpl</span><span class="hljs-params">(impl protocol.Invoker)</span></span> {
-s.proxyImpl = impl
+    s.proxyImpl = impl
 }
 
 <span class="hljs-comment">// get invoker proxy</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *HelloWorldServiceProviderBase)</span> <span class="hljs-title">GetProxyImpl</span><span class="hljs-params">()</span> <span class="hljs-title">protocol</span>.<span class="hljs-title">Invoker</span></span> {
-<span class="hljs-keyword">return</span> s.proxyImpl
+    <span class="hljs-keyword">return</span> s.proxyImpl
 }
 </code></pre>
 <p><strong>实时切换开关</strong></p>
@@ -71,52 +71,52 @@ s.proxyImpl = impl
 <p>左侧gRPC常规链路，右侧Dubbo-go治理模型链路</p>
 <pre><code class="language-go"><span class="hljs-comment">// ClientDubbo</span>
 <span class="hljs-keyword">type</span> HelloWorldServiceClientDubbo <span class="hljs-keyword">struct</span> {
-GrpcClient  HelloWorldServiceClient
-DubboClient *HelloWorldServiceClientImpl
-Open        <span class="hljs-keyword">bool</span>
-Caller      <span class="hljs-keyword">string</span>
+    GrpcClient  HelloWorldServiceClient
+    DubboClient *HelloWorldServiceClientImpl
+    Open        <span class="hljs-keyword">bool</span>
+    Caller      <span class="hljs-keyword">string</span>
 }
 
 <span class="hljs-comment">// 具体的方法实现</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *HelloWorldServiceClientDubbo)</span> <span class="hljs-title">SayHello</span><span class="hljs-params">(ctx context.Context, req *SayHelloReq, opts ...grpc.CallOption)</span> <span class="hljs-params">(*SayHelloResp, error)</span></span> {
-serverName := c.DubboClient.Reference()
-<span class="hljs-comment">//获取 nacos配置源数据</span>
-serverCfg := nacosCfg.GetServerCfg()
-<span class="hljs-keyword">if</span> !c.Open {
-c.Open = serverCfg.AllOpen
-}
-cfg := serverCfg.ServiceCfg
-
-    <span class="hljs-comment">// 判断调用链路</span>
-<span class="hljs-keyword">if</span> !c.Open &amp;&amp;
-!cfg[serverName].Open &amp;&amp;
-(cfg[serverName].Consumers == <span class="hljs-literal">nil</span> || !cfg[serverName].Consumers[c.Caller]) &amp;&amp;
-!cfg[serverName].Method[<span class="hljs-string">"SayHello"</span>].Open &amp;&amp;
-(cfg[serverName].Method[<span class="hljs-string">"SayHello"</span>].Consumer == <span class="hljs-literal">nil</span> || !cfg[serverName].Method[<span class="hljs-string">"SayHello"</span>].Consumer[c.Caller]) {
-
+    serverName := c.DubboClient.Reference()
+    <span class="hljs-comment">//获取 nacos配置源数据</span>
+    serverCfg := nacosCfg.GetServerCfg()
+    <span class="hljs-keyword">if</span> !c.Open {
+        c.Open = serverCfg.AllOpen
+    }
+    cfg := serverCfg.ServiceCfg
+    
+    <span class="hljs-comment">// 判断调用链路 </span>
+    <span class="hljs-keyword">if</span> !c.Open &amp;&amp;
+        !cfg[serverName].Open &amp;&amp;
+        (cfg[serverName].Consumers == <span class="hljs-literal">nil</span> || !cfg[serverName].Consumers[c.Caller]) &amp;&amp;
+        !cfg[serverName].Method[<span class="hljs-string">"SayHello"</span>].Open &amp;&amp;
+        (cfg[serverName].Method[<span class="hljs-string">"SayHello"</span>].Consumer == <span class="hljs-literal">nil</span> || !cfg[serverName].Method[<span class="hljs-string">"SayHello"</span>].Consumer[c.Caller]) {
+        
         <span class="hljs-comment">// 原gRPC链路</span>
         <span class="hljs-keyword">return</span> c.GrpcClient.SayHello(ctx, req, opts...)
-}
+    }
 
-<span class="hljs-comment">// Dubbo-go治理链路</span>
-out := <span class="hljs-built_in">new</span>(SayHelloResp)
-err := c.DubboClient.SayHello(ctx, req, out)
-<span class="hljs-keyword">return</span> out, err
+    <span class="hljs-comment">// Dubbo-go治理链路</span>
+    out := <span class="hljs-built_in">new</span>(SayHelloResp)
+    err := c.DubboClient.SayHello(ctx, req, out)
+    <span class="hljs-keyword">return</span> out, err
 }
 </code></pre>
 <h3>项目集成</h3>
 <p>以下是基于现有项目结构集成 Dubbo-go 框架示例。</p>
 <p><strong>provider</strong></p>
 <pre><code class="language-go"><span class="hljs-keyword">type</span> HelloWorldService <span class="hljs-keyword">struct</span> {
-*pb.UnimplementedHelloWorldServiceServer
-*pb.HelloWorldServiceClientImpl
-*pb.HelloWorldServiceProviderBase
+    *pb.UnimplementedHelloWorldServiceServer
+    *pb.HelloWorldServiceClientImpl
+    *pb.HelloWorldServiceProviderBase
 }
 
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewHelloWorldService</span><span class="hljs-params">()</span> *<span class="hljs-title">HelloWorldService</span></span> {
-<span class="hljs-keyword">return</span> &amp;HelloWorldService{
-HelloWorldServiceProviderBase: &amp;pb.HelloWorldServiceProviderBase{},
-}
+    <span class="hljs-keyword">return</span> &amp;HelloWorldService{
+        HelloWorldServiceProviderBase: &amp;pb.HelloWorldServiceProviderBase{},
+    }
 }
 </code></pre>
 <p>基于原有服务提供的基础之上加入 Dubbo-go 扩展部分，提供服务注册。</p>
