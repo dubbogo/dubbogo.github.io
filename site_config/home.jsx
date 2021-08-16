@@ -24,6 +24,11 @@ export default {
       desc: '开启GO语言云原生RPC框架新时代',
       img: '/img/intro.jpg',
     },
+    introduction3: {
+      title: 'Dubbo-go-pixiu',
+      desc: '开启GO语言云原生RPC框架新时代',
+      img: '/img/intro.jpg',
+    },
     // features: {
     //   title: '特性一览',
     //   list: [
@@ -64,6 +69,7 @@ export default {
       title: '谁在使用 Dubbo-go',
       desc: <span>请在 <a rel="noopener noreferrer" target="_blank" href="https://github.com/apache/dubbo-go/issues/2">Dubbo-go 用户列表</a> 上提供信息来帮助 Dubbo 做的更好。</span>,
       list: [
+        '/img/users_dingding.png',
         '/img/users_ctrip.png',
         '/img/users_haozhuo.png',
         '/img/users_tuya.png'
@@ -133,6 +139,7 @@ export default {
       title: 'Who is using Dubbo-go',
       desc: <span>Providing your info on <a rel="noopener noreferrer" target="_blank" href="https://github.com/apache/dubbo-go/issues/2">dubbo-go user list</a> to help improving dubbo better</span>,
       list: [
+        '/img/users_dingding.png',
         '/img/users_ctrip.png',
         '/img/users_haozhuo.png',
         '/img/users_tuya.png'
