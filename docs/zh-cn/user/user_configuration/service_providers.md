@@ -83,6 +83,30 @@ description: 提示用户配置服务提供者
    ```go
    func main() {
    	config.Load()
+   	initSignal()
+   }
+   
+   func initSignal() {
+   	signals := make(chan os.Signal, 1)
+   	// It is not possible to block SIGKILL or syscall.SIGSTOP
+   	signal.Notify(signals, os.Interrupt, os.Kill, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
+   	for {
+   		sig := <-signals
+   		logger.Infof("get signal %s", sig.String())
+   		switch sig {
+   		case syscall.SIGHUP:
+   			// reload()
+   		default:
+   			time.AfterFunc(time.Duration(survivalTimeout), func() {
+   				logger.Warnf("app exit now by force...")
+   				os.Exit(1)
+   			})
+   
+   			// The program exits normally or timeout forcibly exits.
+   			fmt.Println("provider app exit now...")
+   			return
+   		}
+   	}
    }
    ```
 
@@ -199,5 +223,6 @@ description: 提示用户配置服务提供者
    export APP_LOG_CONF_FILE="xxx"
    ```
 
-   
+
+本文章源码详情见git：https://github.com/apache/dubbo-go-samples/tree/3.0/helloworld/go-server
 

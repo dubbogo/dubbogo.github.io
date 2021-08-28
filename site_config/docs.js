@@ -160,8 +160,12 @@ export default {
                         title: '配置',
                         children: [
                             {
-                                title: '提供者',
+                                title: '服务提供者',
                                 link: '/zh-cn/docs/user/configuration/provider.html'
+                            },
+                            {
+                                title: '客户端',
+                                link: '/zh-cn/docs/user/configuration/client.html'
                             }
                         ],
                     },
