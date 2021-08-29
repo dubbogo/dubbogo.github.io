@@ -6,7 +6,7 @@ description: 提示用户配置客户端相关配置
 
 # client
 
-## 第一步：编写客户端 `Provider`
+## 第一步：编写客户端的服务
 
 1. 参考服务端第一步的第一点。
 
@@ -152,6 +152,3 @@ description: 提示用户配置客户端相关配置
    export CONF_CONSUMER_FILE_PATH="xxx"
    export APP_LOG_CONF_FILE="xxx"
    ```
-
-
-本文章源码详情见git：https://github.com/apache/dubbo-go-samples/tree/3.0/helloworld/go-client

@@ -1,12 +1,12 @@
 ---
 title: client
-keywords: 客户端，client provider
-description: 提示用户配置客户端相关配置
+keywords: 消费端，client provider
+description: 提示用户配置消费端相关配置
 ---
 
 # client
 
-## 第一步：编写客户端 `Provider`
+## 第一步：编写消费端的服务
 
 1. 编写需要被编码的结构体，由于使用 `Hessian2` 作为编码协议，`User` 需要实现 `JavaClassName` 方法，它的返回值在dubbo中对应User类的类名。
 
@@ -19,7 +19,7 @@ description: 提示用户配置客户端相关配置
    }
    
    func (u User) JavaClassName() string {
-   	return "com.ikurento.user.User"
+   	return "org.apache.dubbo.User"
    }
    ```
 
@@ -48,7 +48,7 @@ description: 提示用户配置客户端相关配置
    }
    ```
 
-## 第二步：编写客户端主程序
+## 第二步：编写消费端主程序
 
 1. 引入必需的dubbo-go包
 
@@ -191,7 +191,7 @@ description: 提示用户配置客户端相关配置
 
 
 
-2. 把上面的两个配置文件费别配置为环境变量，为防止log的环境变量和服务端的log环境变量冲突，建议所有的环境变量不要做全局配置，在当前起效即可。
+2. 把上面的两个配置文件分别配置为环境变量，为防止log的环境变量和服务端的log环境变量冲突，建议所有的环境变量不要做全局配置，在当前起效即可。
 
    ```shell
    export CONF_CONSUMER_FILE_PATH="xxx"

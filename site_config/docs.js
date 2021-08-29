@@ -100,11 +100,11 @@ export default {
                         title: '用户配置',
                         children: [
                             {
-                                title: '服务提供者',
+                                title: '提供者',
                                 link: '/zh-cn/docs/user/user_configuration/service_providers.html',
                             },
                             {
-                                title: '客户端',
+                                title: '消费端',
                                 link: '/zh-cn/docs/user/user_configuration/client.html',
                             },
                             {
@@ -160,11 +160,11 @@ export default {
                         title: '配置',
                         children: [
                             {
-                                title: '服务提供者',
+                                title: '提供者',
                                 link: '/zh-cn/docs/user/configuration/provider.html'
                             },
                             {
-                                title: '客户端',
+                                title: '消费端',
                                 link: '/zh-cn/docs/user/configuration/client.html'
                             }
                         ],

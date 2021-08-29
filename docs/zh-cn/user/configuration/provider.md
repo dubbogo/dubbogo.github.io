@@ -1,12 +1,12 @@
 ---
 title: service providers
-keywords: 服务端，server provider
-description: 提示用户配置服务提供者
+keywords: 提供端，server provider
+description: 提示用户配置服务提供
 ---
 
 # service providers
 
-## 第一步：编写 `Provider` 结构体和提供服务的方法
+## 第一步：编写提供端的服务
 
 1. 编写需要被编码的结构体，由于使用 `Hessian2` 作为编码协议，`User` 需要实现 `JavaClassName` 方法，它的返回值在dubbo中对应User类的类名。
 
@@ -19,7 +19,7 @@ description: 提示用户配置服务提供者
    }
    
    func (u User) JavaClassName() string {
-   	return "com.ikurento.user.User"
+   	return "org.apache.dubbo.User"
    }
    ```
 
@@ -83,31 +83,6 @@ description: 提示用户配置服务提供者
    ```go
    func main() {
      config.Load()
-     // 启动服务
-     initSignal()
-   }
-   
-   func initSignal() {
-   	signals := make(chan os.Signal, 1)
-   	// It is not possible to block SIGKILL or syscall.SIGSTOP
-   	signal.Notify(signals, os.Interrupt, os.Kill, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
-   	for {
-   		sig := <-signals
-   		logger.Infof("get signal %s", sig.String())
-   		switch sig {
-   		case syscall.SIGHUP:
-   			// reload()
-   		default:
-   			time.AfterFunc(time.Duration(survivalTimeout), func() {
-   				logger.Warnf("app exit now by force...")
-   				os.Exit(1)
-   			})
-   
-   			// The program exits normally or timeout forcibly exits.
-   			fmt.Println("provider app exit now...")
-   			return
-   		}
-   	}
    }
    ```
 
