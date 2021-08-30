@@ -104,7 +104,7 @@ export default {
                                 link: '/zh-cn/docs/user/user_configuration/service_providers.html',
                             },
                             {
-                                title: '服务消费者',
+                                title: '消费者',
                                 link: '/zh-cn/docs/user/user_configuration/client.html',
                             },
                             {
