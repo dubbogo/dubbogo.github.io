@@ -226,7 +226,7 @@ message HelloRequest {
 }
 
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *GreeterProvider)</span> <span class="hljs-title">SayHello</span><span class="hljs-params">(ctx context.Context, in *protobuf.HelloRequest)</span> <span class="hljs-params">(*protobuf.User, error)</span></span> {
-	logger.Infof(<span class="hljs-string">"Dubbo3 GreeterProvider get user name = %s\n"</span> + in.Name)
+	logger.Infof(<span class="hljs-string">"Dubbo3 GreeterProvider get user name = %s\n"</span>, in.Name)
 	fmt.Println(<span class="hljs-string">"get triple header tri-req-id = "</span>, ctx.Value(tripleConstant.TripleCtxKey(tripleConstant.TripleRequestID)))
 	fmt.Println(<span class="hljs-string">"get triple header tri-service-version = "</span>, ctx.Value(tripleConstant.TripleCtxKey(tripleConstant.TripleServiceVersion)))
 	<span class="hljs-keyword">return</span> &amp;protobuf.User{Name: <span class="hljs-string">"Hello "</span> + in.Name, Id: <span class="hljs-string">"12345"</span>, Age: <span class="hljs-number">21</span>}, <span class="hljs-literal">nil</span>
