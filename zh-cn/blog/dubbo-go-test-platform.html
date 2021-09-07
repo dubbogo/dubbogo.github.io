@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="&#34;dubbo-go&#34;, &#34;dubbo 接口测试&#34;" />
+	<meta name="description" content="本文介绍了滴滴出行使用 dubbo-go 搭建 dubbo 接口测试平台的实践" />
+	<!-- 网页标签标题 -->
+	<title>使用 dubbo-go 搭建 dubbo 接口测试平台</title>
+	<link rel="shortcut icon" href="/img/dubbo.ico"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html">文档</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><section class="blog-content markdown-body"><h1>背景</h1>
+<p>http 接口测试只需要一个 <code>curl</code> 命令，但 dubbo 协议没有这样的现成接口测试工具。通常公司内的 dubbo 控制台或其他平台会集成一个 dubbo 接口测试工具。</p>
+<p>调用一个 dubbo 接口，需要知道服务名 <code>service</code>、方法名 <code>method</code> 和参数 <code>args</code>。</p>
+<p>正常的调用，调用方需引入服务提供方定义的接口 jar 包。</p>
+<p>作为接口测试平台，没办法引入所有提供方定义的接口 jar 包，可以有以下方案来解决：</p>
+<ol>
+<li>dubbo 支持 telnet 协议调用 dubbo 接口</li>
+<li>dubbo 的泛化调用可以在不引入提供方接口定义 jar 包的情况下对接口进行调用</li>
+</ol>
+<p>对于方案1，实现成本很低，甚至可以在服务器上直接用 telnet 测试</p>
+<p><img src="../../img/blog/dubbo-go-test-platform.resources/p1.png" alt=""></p>
+<p>它也有缺点</p>
+<ul>
+<li>调用无法经过 filter</li>
+<li>无法携带隐式参数 attachment</li>
+</ul>
+<p>刚好我们把方案1的优缺点都踩了，我们的 dubbo 控制台是go语言编写，短时间快速实现，就采用了 telnet 的方式。</p>
+<p>随着业务的发展，流量染色，或标签路由等需要携带隐式参数。</p>
+<p>没有走自定义 filter，导致业务接口执行不符合预期等都迫使我们升级为泛化调用。</p>
+<p>dubbo 接口泛化调用在控制台是go编写的情况下也有两个方案可选：</p>
+<ol>
+<li>单独起一个 java 进程，暴露 http 端口，与go进程进行交互，泛化调用使用 dubbo 的 java sdk 进行编写</li>
+<li>控制台引入 dubbo-go，使用 dubbo-go 进行泛化调用</li>
+</ol>
+<p>出于对 dubbo java 版本的了解，方案1肯定可行，只是架构变得复杂。</p>
+<p>而方案2由于 dubbo-go 还是比较新的项目，并不是很了解，所以不确定其可行性和兼容性，但如果能实现，会大大降低架构的复杂度。</p>
+<h1>dubbo-go介绍</h1>
+<p>dubbo-go 是 dubbo 的 golang 实现版本，它出现的初衷是为了让 golang 和 java 的 dubbo 生态互通。</p>
+<p>如今 dubbo-go 支持 provider 和 consumer 端，可以作为一个独立的 rpc 框架使用，同时社区也是 dubbo 生态中最火的一个。</p>
+<p>如果要说它的意义，我觉得除了和java互通外还有一点非常重要，那就是它能发挥 golang <code>协程</code>的巨大作用，这一点可以用在 dubbo 网关上，如果用 dubbo-go 实现 dubbo 网关，就无需纠结线程池、异步等问题。</p>
+<h1>泛化调用的使用</h1>
+<p>首先 provider 端提供一个接口，这个不再赘述，非常简单，接口定义如下</p>
+<pre><code class="language-java"><span class="hljs-keyword">package</span> org.newboo.basic.api;
+
+<span class="hljs-keyword">import</span> org.newboo.basic.model.RpcResult;
+<span class="hljs-keyword">import</span> org.newboo.basic.model.User;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">MyDemoService</span> </span>{
+    <span class="hljs-function">RpcResult&lt;String&gt; <span class="hljs-title">call</span><span class="hljs-params">(User user)</span></span>;
+}
+</code></pre>
+<pre><code class="language-java"><span class="hljs-keyword">package</span> org.newboo.basic.model;
+
+<span class="hljs-keyword">import</span> java.io.Serializable;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>{
+    <span class="hljs-keyword">private</span> String uid;
+    <span class="hljs-keyword">private</span> String name;
+    <span class="hljs-keyword">private</span> String remoteServiceTag;
+    ...
+}
+</code></pre>
+<p>再来编写 java 版的泛化调用代码，不引入 provider 方的 jar 包：</p>
+<pre><code class="language-java">ReferenceConfig&lt;GenericService&gt; reference = <span class="hljs-keyword">new</span> ReferenceConfig&lt;&gt;();
+<span class="hljs-comment">// ①引用服务名</span>
+reference.setInterface(<span class="hljs-string">"org.newboo.basic.api.MyDemoService"</span>);
+<span class="hljs-comment">// ②设置泛化调用标志</span>
+reference.setGeneric(<span class="hljs-string">"true"</span>);
+
+DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+bootstrap.application(<span class="hljs-keyword">new</span> ApplicationConfig(<span class="hljs-string">"dubbo-demo-api-consumer"</span>))
+        .registry(<span class="hljs-keyword">new</span> RegistryConfig(<span class="hljs-string">"zookeeper://127.0.0.1:2181"</span>))
+        .reference(reference)
+        .start();
+
+GenericService genericService = ReferenceConfigCache.getCache().get(reference);
+String[] ps = <span class="hljs-keyword">new</span> String[<span class="hljs-number">1</span>];
+<span class="hljs-comment">// ③参数类型</span>
+ps[<span class="hljs-number">0</span>] = <span class="hljs-string">"org.newboo.basic.model.User"</span>;
+Object[] ags = <span class="hljs-keyword">new</span> Object[<span class="hljs-number">1</span>];
+<span class="hljs-comment">// ④pojo参数使用map构造</span>
+Map&lt;String, String&gt; user = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+user.put(<span class="hljs-string">"uid"</span>, <span class="hljs-string">"1"</span>);
+user.put(<span class="hljs-string">"name"</span>, <span class="hljs-string">"roshi"</span>);
+user.put(<span class="hljs-string">"remoteServiceTag"</span>, <span class="hljs-string">"tag"</span>);
+ags[<span class="hljs-number">0</span>] = user;
+<span class="hljs-comment">// ⑤发起调用</span>
+Object res = genericService.$invoke(<span class="hljs-string">"call"</span>, ps, ags);
+System.out.println(res);
+</code></pre>
+<blockquote>
+<p>关键的步骤已在代码注释中标明</p>
+</blockquote>
+<p>golang 版本</p>
+<blockquote>
+<p>直接修改的 dubbo-go-samples 代码，参考 <a href="https://github.com/apache/dubbo-go-samples">https://github.com/apache/dubbo-go-samples</a>
+启动时需要设置配置文件路径 ENV</p>
+</blockquote>
+<pre><code class="language-go"><span class="hljs-keyword">var</span> (
+	appName         = <span class="hljs-string">"UserConsumer"</span>
+	referenceConfig = config.ReferenceConfig{
+		InterfaceName: <span class="hljs-string">"org.newboo.basic.api.MyDemoService"</span>,
+		Cluster:       <span class="hljs-string">"failover"</span>,
+    <span class="hljs-comment">// registry需要配置文件</span>
+		Registry:      <span class="hljs-string">"demoZk"</span>,
+		Protocol:      dubbo.DUBBO,
+		Generic:       <span class="hljs-literal">true</span>,
+	}
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
+	referenceConfig.GenericLoad(appName) <span class="hljs-comment">//appName is the unique identification of RPCService</span>
+	time.Sleep(<span class="hljs-number">1</span> * time.Second)
+}
+
+<span class="hljs-comment">// need to setup environment variable "CONF_CONSUMER_FILE_PATH" to "conf/client.yml" before run</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	call()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">call</span><span class="hljs-params">()</span></span> {
+  <span class="hljs-comment">// 设置attachment</span>
+	ctx := context.WithValue(context.TODO(), constant.AttachmentKey, <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>{<span class="hljs-string">"tag"</span>:<span class="hljs-string">"test"</span>})
+
+	resp, err := referenceConfig.GetRPCService().(*config.GenericService).Invoke(
+		ctx,
+		[]<span class="hljs-keyword">interface</span>{}{
+			<span class="hljs-string">"call"</span>,
+			[]<span class="hljs-keyword">string</span>{<span class="hljs-string">"org.newboo.basic.model.User"</span>},
+			[]<span class="hljs-keyword">interface</span>{}{<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>{<span class="hljs-string">"uid"</span>:<span class="hljs-string">"111"</span>,<span class="hljs-string">"name"</span>:<span class="hljs-string">"roshi"</span>,<span class="hljs-string">"remoteServiceTag"</span>:<span class="hljs-string">"hello"</span>}},
+		},
+	)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	gxlog.CInfo(<span class="hljs-string">"success called res: %+v\n"</span>, resp)
+}
+</code></pre>
+<p>这里我设置了一个 attachment，也能正常被 provider 识别</p>
+<p><img src="../../img/blog/dubbo-go-test-platform.resources/p2.png" alt=""></p>
+<h1>泛化调用原理</h1>
+<p>泛化调用 <code>GenericService</code> 是 dubbo 默认提供的一个服务。</p>
+<p>其提供了一个名为 <code>$invoke</code> 的方法，该方法参数有三个，第一个参数是真实要调用的方法名，第二个是参数类型数组，第三个是真实的参数数组，其定义为</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">GenericService</span> </span>{
+    Object $invoke(String method, String[] parameterTypes, Object[] args) <span class="hljs-keyword">throws</span> GenericException;
+    ...
+}
+</code></pre>
+<p>有了这三个参数，利用反射就能调用到真实的接口了。</p>
+<h3>java版实现细节</h3>
+<p>实现这种泛化调用主要涉及到两个 filter：</p>
+<ul>
+<li>consumer 端的 GenericImplFilter</li>
+<li>provider 端的 GenericFilter</li>
+</ul>
+<p>consumer 端的 filter 将 generic 标志设置到 attachment 中，并封装调用为 <code>GenericService.$invoke</code></p>
+<p>provider 端 filter 判断请求是 generic 时进行拦截，获取调用方法名、参数、参数值，先序列化为 pojo 对象，再进行反射调用真实接口。</p>
+<h3>dubbo-go版细节</h3>
+<p>与 java 实现基本一致，其中 generic_filter 充当 consumer 端的 filter，也是将调用封装为 GenericService.$invoke，其中还涉及到一个参数类型的转换，将 map 转换为 <code>dubbo-go-hessian2.Object</code>，这样 provider 端就可以将其反序列化为 Object 对象。</p>
+<p>与其相关的版本变更如下</p>
+<ul>
+<li>v1.3.0 开始支持泛化调用</li>
+<li>v1.4.0 开始支持用户设置 attachement</li>
+<li>v1.5.1 开始支持动态 tag 路由</li>
+<li>v1.5.7-rc1 修复了直连 provider 时无法走 filter 的 bug</li>
+</ul>
+<blockquote>
+<p>踩坑：v1.5.7-rc1 之前如果使用直连 provider 的方式，不会走 filter，导致参数序列化出错，provider 端会报类型转换异常</p>
+</blockquote>
+<h1>结论</h1>
+<p>dubbo-go 的泛化调用推荐使用 &gt;=v1.5.7-rc1 版本，其功能几乎已和 java 版打平，甚至其实现都与 java 类似。</p>
+<p>使用 dubbo-go 构建网关、接口测试平台、或者打通 golang 与 java 技术生态，不失为一个好的选择。</p>
+<hr>
+<blockquote>
+<p>作者简介</p>
+<p><strong>李康</strong> (GitHubID lkxiaolou)，目前就职于滴滴出行基础架构部，公众号 <strong>捉虫大师</strong> 作者</p>
+</blockquote>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><img class="apache" src="/img/apache_logo.png"/><div class="cols-container"><div class="col col-12"><h3></h3><p></p></div><div class="col col-4"><dl><dt>ASF</dt><dd><a href="http://www.apache.org" target="_self">基金会</a></dd><dd><a href="http://www.apache.org/licenses/" target="_self">证书</a></dd><dd><a href="http://www.apache.org/events/current-event" target="_self">事件</a></dd><dd><a href="http://www.apache.org/foundation/sponsorship.html" target="_self">赞助</a></dd><dd><a href="http://www.apache.org/foundation/thanks.html" target="_self">致谢</a></dd></dl></div><div class="col col-4"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/user/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/dev/build.html" target="_self">开发者指南</a></dd><dd><a href="/zh-cn/docs/admin/ops/dubbo-ops.html" target="_self">运维管理</a></dd><dd><a href="https://github.com/dubbogo/dubbo-go-website/issues/new" target="_self">报告文档问题</a></dd><dd><a href="https://github.com/dubbogo/dubbo-go-website" target="_self">编辑此文档</a></dd></dl></div><div class="col col-4"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.apache.org/security" target="_self">安全</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018-2020 The Apache Software Foundation. Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+  <script src="/build/blogDetail.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112489517-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-112489517-1');
+	</script>
+</body>
+</html>
