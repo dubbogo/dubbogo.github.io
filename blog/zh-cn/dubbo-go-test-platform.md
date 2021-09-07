@@ -1,7 +1,7 @@
 ---
-title: 使用dubbo-go搭建dubbo接口测试平台
-keywords: "dubbo-go", "dubbo接口测试"
-description: 本文介绍了滴滴出行使用dubbo-go搭建dubbo接口测试平台的实践。
+title: 使用 dubbo-go 搭建 dubbo 接口测试平台
+keywords: "dubbo-go", "dubbo 接口测试"
+description: 本文介绍了滴滴出行使用 dubbo-go 搭建 dubbo 接口测试平台的实践
 ---
 # 背景
 http 接口测试只需要一个 `curl` 命令，但 dubbo 协议没有这样的现成接口测试工具。通常公司内的 dubbo 控制台或其他平台会集成一个 dubbo 接口测试工具。
@@ -102,8 +102,8 @@ System.out.println(res);
 > 关键的步骤已在代码注释中标明
 
 golang 版本
-> 直接修改的dubbo-go-samples代码，参考https://github.com/apache/dubbo-go-samples
-> 启动时需要设置配置文件路径ENV
+> 直接修改的 dubbo-go-samples 代码，参考 https://github.com/apache/dubbo-go-samples
+> 启动时需要设置配置文件路径 ENV
 ```go
 var (
 	appName         = "UserConsumer"
@@ -180,7 +180,7 @@ provider 端 filter 判断请求是 generic 时进行拦截，获取调用方法
 - v1.3.0 开始支持泛化调用
 - v1.4.0 开始支持用户设置 attachement
 - v1.5.1 开始支持动态 tag 路由
-- v1.5.7-rc1 修复了直连provider时无法走 filter 的 bug
+- v1.5.7-rc1 修复了直连 provider 时无法走 filter 的 bug
 
 > 踩坑：v1.5.7-rc1 之前如果使用直连 provider 的方式，不会走 filter，导致参数序列化出错，provider 端会报类型转换异常
 
