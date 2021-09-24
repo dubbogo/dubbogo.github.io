@@ -4,6 +4,13 @@ export default {
         postsTitle: 'All posts',
         list: [
             {
+                title: '使用dubbo-go搭建dubbo接口测试平台',
+                author: '@李康',
+                dateStr: 'July 21st, 2021',
+                desc: '本文介绍了滴滴出行使用dubbo-go搭建dubbo接口测试平台的实践',
+                link: '/zh-cn/blog/dubbo-go-test-platform.html',
+            },
+            {
                 title: 'dubbo-go 是怎么炼成的',
                 author: '@于雨',
                 dateStr: 'June 28th, 2021',
@@ -128,6 +135,13 @@ export default {
         barText: '博客',
         postsTitle: '所有文章',
         list: [
+            {
+                title: '使用dubbo-go搭建dubbo接口测试平台',
+                author: '@李康',
+                dateStr: 'July 21st, 2021',
+                desc: '本文介绍了滴滴出行使用dubbo-go搭建dubbo接口测试平台的实践',
+                link: '/zh-cn/blog/dubbo-go-test-platform.html',
+            },
             {
                 title: 'dubbo-go 是怎么炼成的',
                 author: '@于雨',

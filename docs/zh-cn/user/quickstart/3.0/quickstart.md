@@ -252,7 +252,7 @@ func (s *GreeterProvider) SayHelloStream(svr protobuf.Greeter_SayHelloStreamServ
 }
 
 func (s *GreeterProvider) SayHello(ctx context.Context, in *protobuf.HelloRequest) (*protobuf.User, error) {
-	logger.Infof("Dubbo3 GreeterProvider get user name = %s\n" + in.Name)
+	logger.Infof("Dubbo3 GreeterProvider get user name = %s\n", in.Name)
 	fmt.Println("get triple header tri-req-id = ", ctx.Value(tripleConstant.TripleCtxKey(tripleConstant.TripleRequestID)))
 	fmt.Println("get triple header tri-service-version = ", ctx.Value(tripleConstant.TripleCtxKey(tripleConstant.TripleServiceVersion)))
 	return &protobuf.User{Name: "Hello " + in.Name, Id: "12345", Age: 21}, nil
