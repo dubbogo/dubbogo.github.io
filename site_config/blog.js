@@ -491,6 +491,13 @@ export default {
                 dateStr: 'Jun 6th, 2020',
                 desc: '介绍 Dubbo/Dubbo-go 应用如何接入 MOSN',
                 link: '/zh-cn/docs/md/service-governance/zero-cost-access-to-mosn-for-dubbo-go.html',
+            },
+            {
+                title: 'dubbo-go github action集成测试',
+                author: '@彭笳鑫',
+                dateStr: 'Sep 28th, 2021',
+                desc: '介绍 dubbo-go-samples 集成测试的流程',
+                link: '/zh-cn/blog/dubbo-go-github-action-集成测试.html',
             }
         ]
     },
