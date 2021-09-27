@@ -14,7 +14,7 @@ ASF1.0 主要针对 Java 应用，支持使用 Dubbo 和 Spring Cloud 进行接�
 
 如下图所示，深蓝色虚线框内为 ASF 提供的主要功能，绿色虚线框是即将要交付的功能。
 
-![image.png](../../img/blog/duubo-go-autohome/1.jpeg)
+![image1.jpeg](../../img/blog/duubo-go-autohome/1.jpeg)
 
 
 # 3. ASF 的特点和优势
