@@ -1,3 +1,9 @@
+---
+title: 汽车之家基于dubbo-go云平台的探索和实践
+keywords: "asf-go", "dubbo-go"
+description: 汽车之家基于dubbo-go云平台的探索和实践
+---
+
 # 1. ASF 是什么
 
 之家云微服务平台**ASF（AutoHome Service Framework**），提供服务注册和发现、服务治理、可观测、动态配置等能力，致力于帮助之家用户一站式构建微服务体系以及服务上云的能力。
@@ -8,7 +14,7 @@ ASF1.0 主要针对 Java 应用，支持使用 Dubbo 和 Spring Cloud 进行接�
 
 如下图所示，深蓝色虚线框内为 ASF 提供的主要功能，绿色虚线框是即将要交付的功能。
 
-![](../../img/blog/duubo-go-autohome/1.jpeg)
+![image.png](../../img/blog/duubo-go-autohome/1.jpeg)
 
 
 # 3. ASF 的特点和优势
@@ -191,12 +197,12 @@ dubbo-go 和 dubbo 一样支持导出服务的元数据，通过元数据我们�
 
 例如，通过 ASF 控制台可以查看服务（接口）所属的应用，提供者和消费者数量、语言类型、最后一次发布时间，如下图：
 
-![](../../img/blog/duubo-go-autohome/2.png)
+![image.png](../../img/blog/duubo-go-autohome/2.png)
 
 
 查看服务提供者/消费者IP地址、所在集群（Availability Zone）、接口的元数据（方法名、参数列表、返回值，如下图：
 
-![](../../img/blog/duubo-go-autohome/3.png)
+![image.png](../../img/blog/duubo-go-autohome/3.png)
 
 
 ## 3.4. 服务治理
@@ -205,7 +211,7 @@ dubbo-go 和 dubbo 一样支持导出服务的元数据，通过元数据我们�
 
 注册中心我们依旧使用的是 Zookeeper（以下简称 ZK），而 Zk 使用的是基于Leader的单点写一致性协议（ZAB 协议），所以无法通过水平扩展来增加注册中心的写性能。另外当集群中 Follow 服务器数量逐渐增多，集群处理创建数据节点等事务性请求操作的性能就会逐渐下降。这是因为集群在处理事务性请求操作时，要在集群中对该事务性的请求发起投票，只有超过半数的 Follow 服务器投票一致，才会执行该条写入操作，然后才会向客户端做出响应。所以在[ZK 跨地域部署上](https://mp.weixin.qq.com/s/05-ko4KyeHOTkrAbl8dQwQ "跨地域场景下，如何解决分布式系统的一致性？")我们采用了 **多服务+Partition&单地域部署+Learner**的部署方式，结合dubbo-go 和 dubbo 的多注册中心机制（multiple-registry）来保证ZK跨地域部署时较高的可用性和较高的写入效率。
 
-![](../../img/blog/duubo-go-autohome/4.jpeg)
+![image.png](../../img/blog/duubo-go-autohome/4.jpeg)
 
 ### 3.4.2. 区域优先负载均衡
 
@@ -240,20 +246,20 @@ dubbo.registry.use-as-config-center=false
    
 2. 如下图所示，始发集群 AZ 节点数量大于上游集群 AZ 节点数量。AZ1 中的 consumer 节点数量远大于 AZ1 的provider 数量，此时如果将流量全部路由到 AZ1 中的 provider 会导致明显的负载均衡不均匀，因此我们需要将多余的流量路由到 AZ2。
 
-![](../../img/blog/duubo-go-autohome/6.jpeg)
+![image.png](../../img/blog/duubo-go-autohome/6.jpeg)
 
 
 ### 3.4.3. 只注册和服务禁用
 
 ASF 控制台提供了服务禁用功能，当实例负载较高的时候，可通服务禁用功能对实例进行手工下线，待负载恢复正常后再执行上线。
 
-![](../../img/blog/duubo-go-autohome/7.png)
+![image.png](../../img/blog/duubo-go-autohome/7.png)
 
 # 3.5. 可观测性
 
 下图为 ASF 服务监控图表：
 
-![](../../img/blog/duubo-go-autohome/8.png)
+![image.png](../../img/blog/duubo-go-autohome/8.png)
 
 dubbo-go 的 metrics 模块提供了基于Prometheus 的 metrics 采集，ASF 基于 dubbo-go 的metrics 进行了重新设计：
 
@@ -278,7 +284,7 @@ dubbo-go 的 metrics 模块提供了基于Prometheus 的 metrics 采集，ASF �
 
 3. 故障自愈能力，我们希望负载均衡算法能够自动摘除故障的节点，并具备故障自愈能力。
 
-![](../../img/blog/duubo-go-autohome/9.jpeg)
+![image.png](../../img/blog/duubo-go-autohome/9.jpeg)
 
 针对上述问题，我们希望负载均衡算法能做到以下几点：
 
@@ -297,7 +303,7 @@ dubbo-go 的 metrics 模块提供了基于Prometheus 的 metrics 采集，ASF �
 
 ### EWMA (指数加权移动平均算法）
 
-![](../../img/blog/duubo-go-autohome/5.png)
+![image.png](../../img/blog/duubo-go-autohome/5.png)
 
 `vt`代表第t次请求的指数加权值，`vt-1`代表上次请求的指数加权平均值，`θt`代表第t次请求的值。
 
@@ -315,7 +321,7 @@ dubbo-go 的 metrics 模块提供了基于Prometheus 的 metrics 采集，ASF �
 
 dubbo（or dubbo-go）在启动时（spring 容器启动/config.Load()加载）即会引用服务也会暴露服务，但是在生产环境中我们往往需要做一些预热操作（例如 mysql、redis连接池的初始化等），等到预热操作结束后或者 k8s 的`readinessProbe` 再去暴露服务。否则再上线时可能会出现大量的调用错误。
 
-![](../../img/blog/duubo-go-autohome/10.jpeg)
+![image.png](../../img/blog/duubo-go-autohome/10.jpeg)
 
 
 在 dubbo 中我们可以使用`延迟暴露`和`Qos`来解决上述问题，但是延迟暴露依赖于一个经验值，而QOS则依赖于发布系统，似乎都不是很完美。未来在 ASF 中将可以直接通过Bootstarp做到无损上线，实例如下：
