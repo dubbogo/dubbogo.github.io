@@ -101,8 +101,8 @@ services:
     group: "demo"
     protocol: "grpc"
     interface: "asf.smc.cloud.base.special"
-	cluster: failover # 集群容错策略
-	loadbalance: random # 负载均衡策略
+    cluster: failover # 集群容错策略
+    loadbalance: random # 负载均衡策略
 ```
 
 ## 3.2. Dubbo-go 配置优化
