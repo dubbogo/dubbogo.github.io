@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="dubbogo,测试,集成测试" />
+	<meta name="description" content="本文主要从dubbo-go-sample为demo分析集成测试的作" />
+	<!-- 网页标签标题 -->
+	<title>dubbo-go-github-action-集成测试</title>
+	<link rel="shortcut icon" href="/img/dubbo.ico"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html">文档</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><section class="blog-content markdown-body"><blockquote>
+<blockquote>
+<p>本文主要从dubbo-go-sample为demo分析集成测试的作用</p>
+</blockquote>
+</blockquote>
+<h1><strong>概览</strong></h1>
+<p>为了保障一个系统的稳定需要引入多种测试方式，测试又跟随场景对象和思路可以分为黑盒测试，白盒测试，性能测试，单元测试，集成测试等等。本文主要讨论集成测试的相关概念。</p>
+<p><strong>集成测试</strong>又称<strong>组装测试</strong>，即对程序模块采用一次性或增值方式组装起来，对系统的接口进行正确性检验的测试工作。整合测试一般在单元测试之后、系统测试之前进行。实践表明，有时模块虽然可以单独工作，但是并不能保证组装起来也可以同时工作。</p>
+<h1><strong>测试流程</strong></h1>
+<p>在<code>dubbo-go-sample</code>这个repo中，整个集成测试的流程是通过脚本去启动docker容器，然后启动不同sample对应的server，在通过跑integrate_test中的测试代码来检验这个sample的测试用例是否有问题，如果没有问题，所有的TEST会是PASS状态，否则对应的TEST会处于失败的状态并且退出测试，脚本会停止并清空所有的容器。为了方便理解，流程如下：</p>
+<p><a href="../../img/blog/dubbo-go-samples-action-%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95.resources/test_flow.jpg"><img src="../../img/blog/dubbo-go-samples-action-%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95.resources/test_flow.jpg" alt="test_flow"></a></p>
+<p>集成测试流程图</p>
+<h1><strong>项目结构</strong></h1>
+<h2><strong>dubbo-go-sample的目录结构</strong></h2>
+<p>本段主要讨论各个目录的功能，以及开发者如何在添加对应的测试代码。<code>dubbo-go-sample</code>的树结构如下</p>
+<pre><code>.
+├── ...
+├── helloworld
+├── integrate_test
+├── ...
+└── tracing
+
+</code></pre>
+<p><strong>integrate_test</strong> 存放了sample的测试代码，<strong>其他目录</strong>存放的是server的代码，下面笔者会按照helloworld项目为例子去讲解，所以其他sample被<code>...</code>给替换了。</p>
+<h2><strong>integrate_test的目录结构</strong></h2>
+<p>如下是<strong>integrate_test</strong>的目录结构，其中需要启动容器都会配置在<strong>dockercompose</strong>中，避免每次启动服务都需要重新启动容器的问题，其他的目录都存放了不同项目的测试代码</p>
+<pre><code>.
+├──  ...
+├── dockercompose
+├── helloworld
+├── ...
+└── rpc
+</code></pre>
+<h2><strong>helloworld的目录结构</strong></h2>
+<p>与<strong>integrate_test</strong>同目录下面的<strong>helloworld</strong>的目录结构如下，其中需要用到的是<strong>go-server</strong>中的代码，集成测试的脚本会找到<strong>go-server</strong>里面的服务代码并且启动他。</p>
+<pre><code>.
+├── go-client
+├── go-server
+├── java-client
+└── java-server
+
+</code></pre>
+<h1><strong>如何添加一个测试</strong></h1>
+<p>基于上面章节的讲解，集成测试主要是从<strong>integrate_test</strong>找测试代码，从<strong>integrate_test</strong>的同级目录下面找server去启动，所以要写一个测试需要增加一个server，增加一份测试代码和在测试脚本里面增加需要测试的sample代码。所以我下面会详细讲解path的注意点。</p>
+<p>integrate_test.sh 主要会从固定的path下面去找配置和代码，下文会以helloworld为demo分别会从server，test和config三个部分去讲解需要添加的元素。</p>
+<h2><strong>Sample Server</strong></h2>
+<p>开发者需要关注helloworld目录的下级目录是否有<strong>go-server</strong>，如果有这个目录，集成测试的脚本会从<strong>go-server</strong>这个目录下面找<strong>cmd</strong>和<strong>conf</strong>，<strong>cmd</strong>是存放server代码的目录，<strong>conf</strong>是存放dubbogo.yml这个文件的地方。</p>
+<pre><code>.
+├── go-client
+│   ├── cmd
+│   └── conf
+├── go-server
+│   ├── cmd
+│       └── your server code
+│   ├── conf
+│       └── dubbogo.yml
+│   └── dist
+</code></pre>
+<h2><strong>Sample Test</strong></h2>
+<p>在<strong>integrate_test</strong>这个目录下面需要与Server的名字一致，比如上面的Server是helloworld，那么这个test的目录也是helloworld，在helloworld这个目录下面需要添加一个tests/integration这个路径去存放对应的测试代码，docker目录下面存放的是docker容器的探活脚本。</p>
+<pre><code>.
+├── docker
+└── tests
+    └── integration
+       └── your test code
+</code></pre>
+<h2><strong>Sample Config</strong></h2>
+<p>为了减少冗余配置，需要优先启动的容器建议存放在<strong>dockercompose</strong>这个目录下面的<code>docker-compose.yml</code>这个文件当中，脚本会启动配置文件的服务来帮助集成测试的进行。</p>
+<pre><code>├── dockercompose
+       └── docker-compose.yml // please add your service config
+</code></pre>
+<h1>优化点</h1>
+<p>在流程图中，没有完全能保证server启动的机制，如果server没启动，client启动的话，则整个集成测试就会FAIL。</p>
+<p>集成测试的入口换成shell脚本，这样可以解耦不同语言，脚本侧只需要关心是否有shell文件即可。</p>
+<h1>引用</h1>
+<p><a href="https://zh.wikipedia.org/wiki/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95">https://zh.wikipedia.org/wiki/集成测试</a></p>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><img class="apache" src="/img/apache_logo.png"/><div class="cols-container"><div class="col col-12"><h3></h3><p></p></div><div class="col col-4"><dl><dt>ASF</dt><dd><a href="http://www.apache.org" target="_self">基金会</a></dd><dd><a href="http://www.apache.org/licenses/" target="_self">证书</a></dd><dd><a href="http://www.apache.org/events/current-event" target="_self">事件</a></dd><dd><a href="http://www.apache.org/foundation/sponsorship.html" target="_self">赞助</a></dd><dd><a href="http://www.apache.org/foundation/thanks.html" target="_self">致谢</a></dd></dl></div><div class="col col-4"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/user/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/dev/build.html" target="_self">开发者指南</a></dd><dd><a href="/zh-cn/docs/admin/ops/dubbo-ops.html" target="_self">运维管理</a></dd><dd><a href="https://github.com/dubbogo/dubbo-go-website/issues/new" target="_self">报告文档问题</a></dd><dd><a href="https://github.com/dubbogo/dubbo-go-website" target="_self">编辑此文档</a></dd></dl></div><div class="col col-4"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.apache.org/security" target="_self">安全</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018-2020 The Apache Software Foundation. Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+  <script src="/build/blogDetail.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112489517-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-112489517-1');
+	</script>
+</body>
+</html>
