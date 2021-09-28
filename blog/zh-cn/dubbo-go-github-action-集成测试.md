@@ -16,7 +16,7 @@ description: 本文主要从dubbo-go-sample为demo分析集成测试的作
 
 在`dubbo-go-sample`这个repo中，整个集成测试的流程是通过脚本去启动docker容器，然后启动不同sample对应的server，在通过跑integrate_test中的测试代码来检验这个sample的测试用例是否有问题，如果没有问题，所有的TEST会是PASS状态，否则对应的TEST会处于失败的状态并且退出测试，脚本会停止并清空所有的容器。为了方便理解，流程如下：
 
-![Untitled Diagram.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/307a6ffd-3c33-4e2a-849f-c253002d0021/Untitled_Diagram.jpg)
+[![test_flow](../../img/blog/dubbo-go-samples-action-集成测试.resources/test_flow.jpg)](../../img/blog/dubbo-go-samples-action-集成测试.resources/test_flow.jpg)
 
 集成测试流程图
 
