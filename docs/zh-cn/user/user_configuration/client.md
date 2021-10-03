@@ -6,11 +6,11 @@ description: 提示用户配置客户端相关配置
 
 # client
 
-## 第一步：编写客户端 `Provider`
+## 第一步：编写客户端的服务
 
 1. 参考服务端第一步的第一点。
 
-2. 与服务端不同的是，提供服务的方法作为结构体的参数，不需要编写具体业务逻辑。另外，`Provider` 不对应dubbo中的接口，而是对应一个实现。
+2. 与服务端不同的是，提供服务的方法作为结构体的参数，不需要编写具体业务逻辑。另外，`Provider` 不对应dubbo中的实现，而是对应一个接口。
 
    ```go
    type UserProvider struct {
@@ -152,5 +152,3 @@ description: 提示用户配置客户端相关配置
    export CONF_CONSUMER_FILE_PATH="xxx"
    export APP_LOG_CONF_FILE="xxx"
    ```
-
-   
