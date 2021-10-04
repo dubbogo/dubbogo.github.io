@@ -1,38 +1,26 @@
 ---
-title: dubbo-go 3.0 samples
-keywords: dubbo-go 3.0 示例
-description: dubbo-go 3.0 示例
+title: dubbo-go 3.0 示例仓库
+keywords: dubbo-go 3.0 示例仓库
+description: dubbo-go 3.0 示例仓库
 ---
 
-[【Dubbo-go-samples 仓库地址】](https://github.com/apache/dubbo-go-samples/tree/3.0)
+为了方便 Dubbogo 框架用户的使用，我们提供了 Samples 仓库以供用户参考：
 
-## 1. 本工程包含的示例
+[【Dubbo-go-samples 仓库地址】](https://github.com/apache/dubbo-go-samples)
 
-* async: 异步调用
-* attachment: 如何通过 attachment 把用户数据从调用方传递给服务方
-* chain: 展示一个简单的调用链
+## 1. Samples 仓库包含的例子
+
 * config-api: 使用 API 进行配置初始化
 * configcenter: 使用不同的配置中心，目前支持三种：zookeeper、apollo、和 nacos
-* context: 如何使用上下文
+* context: 如何使用上下文传递 attachment
 * direct: 直连模式
-* docker: 如何使用 docker 打包运行 Dubbo-go 应用
-* filter: 使用和扩展不同的 filter，目前包含了 custom_filter 和 tpslimit
 * game: 游戏服务例子
-* general: 通用例子，展示 zookeeper 注册中心的使用以及不同的配置项
 * generic: 泛化调用
-* group: 服务分组
+* rpc: RPC 调用例子, 包含 Triple、Dubbo等协议以及跨语言/gRPC互通示例
 * helloworld: 入门例子
-* metric: 在 Dubbo-go 中使用 metrics
-* multi-registry: 多注册
-* multi-zone: 多区域
-* openzipkin: Zipkin 在 Dubbo-go 应用示例，收集 Dubbo-go 服务中的延迟问题所需的链路时序数据
-* registry: 展示与不同注册中心的对接，包含了 nacos、etcd、kubernetes 和 servicediscovery
-* router: 展示了不同的路由，包含了 condition 和 tag
-* seata: 展示了与 seata 的对接
-* shopping-order: 一个在线商店的完整的例子
-* tls: 在 Dubbo-go 中使用 TLS
+* logger: 日志例子
+* registry: 展示与不同注册中心的对接，包含了 zk、nacos、etcd
 * tracing: 链路追踪
-* version: 多版本服务调用示例
 
 ## 2. 如何运行
 
@@ -42,7 +30,7 @@ description: dubbo-go 3.0 示例
 2. 在 IDE 中快速开始，这也是**推荐**的方式: 在工程 ".run" 子目录下，提供了所有示例的 GoLand 运行配置文件，因此用户可以简单在 IDE 中单击运行所有的示例。
 3. 在 IDE 中手工配置并运行: 为了完整性的目的，也为了万一您不使用 GoLand 而使用其他的 IDE，这里也提供了如何一步一步的配置的指南，帮助用户理解如何在 IDE 中配置，运行或者调试 dubbo-go 的示例。
 
-### 1. 通过 makefile 快速开始
+### 2.1 通过 makefile 快速开始
 
 *前置条件：需要 docker 环境就绪*
 
@@ -72,10 +60,10 @@ description: dubbo-go 3.0 示例
 
 2. **启动服务提供方**
 
-   ```bash
-   cd attachment/go-server
-   make -f ../../build/Makefile start
-   ```
+    ```bash
+    cd attachment/go-server
+    make -f ../../build/Makefile start
+    ```
 
    当看到类似下面的输出信息时，就表明服务提供方启动就绪了。
 
@@ -89,7 +77,7 @@ description: dubbo-go 3.0 示例
 
 3. **运行服务调用方**
 
-   ```bash
+    ```bash
    cd attachment/go-client
    make -f ../../build/Makefile run 
    ```
@@ -105,7 +93,7 @@ description: dubbo-go 3.0 示例
    response result: &{A001 Alex Stocks 18 2020-10-27 14:51:37.52 +0800 CST}
    ```
 
-4. **集成测试**
+3. **集成测试**
    本项目 dubbo-go-samples 除了用来展示如何使用 dubbo-go 中的功能和特性之外，还被用于 apache/dubbo-go 的集成测试。可以按照以下的步骤来运行针对 `go-server` 设计的集成测试:
 
    ```bash
@@ -123,8 +111,7 @@ description: dubbo-go 3.0 示例
    ok      github.com/apache/dubbo-go-samples/attachment/go-server/tests/integration   3.603s
    ```
 
-5. **关闭并清理**
-
+4. **关闭并清理**
    ```bash
    cd attachment/go-server
    make -f ../../build/Makefile clean docker-down
@@ -132,22 +119,21 @@ description: dubbo-go 3.0 示例
 
 *以下的两种运行方式都与 IDE 有关。这里我们以 Intellij GoLand 为例来讨论。*
 
-### 2. 在 IDE 中快速开始
+### 2.2 在 IDE 中快速开始
 
 一旦在 GoLand 中打开本项目，可以发现，在 "Run Configuration" 弹出菜单中已经存在了一系列事先配置好了的用来运行相关服务提供方和调用方的选项，例如："helloworld-go-server" 和 "helloworld-go-client"。
 
-![run-configuration.png](https://raw.githubusercontent.com/apache/dubbo-go-samples/master/.images/run-configurations.png)
+![run-configuration.png](https://github.com/apache/dubbo-go-samples/raw/master/.images/run-configurations.png)
 
 可以选择其中的任意一个快速启动相关示例。当然在运行之前，假设需要的注册中心已经事先启动了，不然用例将会失败。您可以选择手动自行启动的方式，也可以利用工程中提供的 "docker-compose.yml" 在启动注册中心的 docker 实例。选择后者的话，可以参考[第三种方式](#3-manually-run-in-ide)中的细节。
 
-### 3. 在 IDE 中手工运行
+### 2.3 在 IDE 中手工运行
 
 这里以 *Intellij GoLand* 为例。在 GoLand 中打开 dubbo-go-samples 工程之后，按照以下的步骤来运行/调试本示例:
 
 1. **启动 zookeeper 服务器**
 
    打开 "attachment/go-server/docker/docker-compose.yaml" 这个文件，然后点击位于编辑器左边 gutter 栏位中的 ▶︎▶︎ 图标运行，"Service" Tab 应当会弹出并输出类似下面的文本信息:
-
    ```
    Deploying 'Compose: docker'...
    /usr/local/bin/docker-compose -f .../dubbo-go-samples/attachment/go-server/docker/docker-compose.yml up -d
@@ -159,24 +145,22 @@ description: dubbo-go 3.0 示例
 2. **启动服务提供方**
 
    打开 "attachment/go-server/cmd/server.go" 文件，然后点击左边 gutter 栏位中紧挨着 "main" 函数的 ▶︎ 图标，并从弹出的菜单中选择 "Modify Run Configuration..."，并确保以下配置的准确:
-
-    * Working Directory: "attachment/go-server" 目录的绝对路径，比如： */home/dubbo-go-samples/attachment/go-server*
-    * Environment: CONF_PROVIDER_FILE_PATH=conf/server.yml, 另外也可以指定这个环境变量 "APP_LOG_CONF_FILE=conf/log.yml"
+   * Working Directory: "attachment/go-server" 目录的绝对路径，比如： */home/dubbo-go-samples/attachment/go-server*
+   * Environment: CONF_PROVIDER_FILE_PATH=conf/server.yml, 另外也可以指定这个环境变量 "APP_LOG_CONF_FILE=conf/log.yml"
 
    这样示例中的服务端就准备就绪，随时可以运行了。
 
 3. **运行服务消费方**
 
    打开 "attachment/go-client/cmd/client.go" 这个文件，然后从左边 gutter 栏位中点击紧挨着 "main" 函数的 ▶︎ 图标，然后从弹出的菜单中选择 "Modify Run Configuration..."，并确保以下配置的准确:
-
-    * Working Directory: "attachment/go-client" 目录的绝对路径，比如： */home/dubbo-go-samples/attachment/go-client*
-    * Environment: CONF_CONSUMER_FILE_PATH=conf/client.yml, 另外也可以指定这个环境变量 "APP_LOG_CONF_FILE=conf/log.yml"
+   * Working Directory: "attachment/go-client" 目录的绝对路径，比如： */home/dubbo-go-samples/attachment/go-client*
+   * Environment: CONF_CONSUMER_FILE_PATH=conf/client.yml, 另外也可以指定这个环境变量 "APP_LOG_CONF_FILE=conf/log.yml"
 
    然后就可以运行并调用远端的服务了，如果调用成功，将会有以下的输出:
-
    ```
    [2021-02-03/16:19:30 main.main: client.go: 66] response result: &{A001 Alex Stocks 18 2020-02-04 16:19:30.422 +0800 CST}
    ```
 
 如果需要调试该示例或者 dubbo-go 框架，可以在 IDE 中从 "Run" 切换到 "Debug"。如果要结束的话，直接点击 ◼︎ 就好了。
 
+下一章：[【Go-Java 3.0 互通示例】](./go_java_interactive.html)

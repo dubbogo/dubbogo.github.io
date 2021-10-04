@@ -83,13 +83,13 @@ export default {
                         title: '简介',
                         children: [
                             {
-                                title: 'Dubbo-go 3.0 简介',
+                                title: '新特性介绍',
                                 link: '/zh-cn/docs/user/preface/3.0_feature.html'
                             },
                             {
                                 title: '架构',
                                 link: '/zh-cn/docs/user/preface/architecture.html'
-                            },
+                            }
                         ]
                     },
                     {
@@ -97,33 +97,38 @@ export default {
                         link: '/zh-cn/docs/user/quickstart/3.0/quickstart.html',
                     },
                     {
-                        title: '用户配置',
+                        title: '基本概念',
                         children: [
                             {
-                                title: '服务提供者',
-                                link: '/zh-cn/docs/user/user_configuration/service_providers.html',
+                                title: '服务层级',
+                                link: '/zh-cn/docs/user/concept/app_and_interface.html',
                             },
                             {
-                                title: '消费者',
-                                link: '/zh-cn/docs/user/user_configuration/client.html',
-                            },
-                            {
-                                title: '协议选择',
-                                link: '/zh-cn/docs/user/user_configuration/protocol_selection.html',
+                                title: '网络协议',
+                                link: '/zh-cn/docs/user/concept/protocol.html',
                             },
                             {
                                 title: '注册中心',
-                                link: '/zh-cn/docs/user/user_configuration/registry.html',
+                                link: '/zh-cn/docs/user/concept/registry.html',
                             },
                             {
-                                title: '路由规则',
-                                link: '/zh-cn/docs/user/user_configuration/routing_rules.html',
+                                title: '框架配置',
+                                link: '/zh-cn/docs/user/concept/configuration.html',
                             }
                         ]
                     },
                     {
-                        title: '示例项目',
-                        link: '/zh-cn/docs/user/samples/samples.html',
+                        title: '功能示例',
+                        children: [
+                            {
+                                title: 'Samples 仓库介绍',
+                                link: '/zh-cn/docs/user/samples/samples_repo.html',
+                            },
+                            {
+                                title: 'Go-Java 3.0 互通示例',
+                                link: '/zh-cn/docs/user/samples/go_java_interactive.html'
+                            }
+                        ]
                     },
                     {
                         title: '开发者指南',
@@ -132,26 +137,13 @@ export default {
                                 title: '框架设计',
                                 link: '/zh-cn/docs/developer/design.html'
                             }
-                        ],
+                        ]
                     },
                 ]
             },
             {
                 title: 'Dubbo-go 1.5',
                 children: [
-                    {
-                        title: '简介',
-                        children: [
-                            {
-                                title: 'dubbo-go 1.5 简介',
-                                link: '/zh-cn/docs/user/preface/1.5_introduce.html'
-                            },
-                            {
-                                title: '架构',
-                                link: '/zh-cn/docs/user/preface/architecture.html'
-                            },
-                        ]
-                    },
                     {
                         title: '快速开始',
                         link: '/zh-cn/docs/user/quickstart/1.5/quick-start.html'
@@ -168,31 +160,15 @@ export default {
                                 link: '/zh-cn/docs/user/configuration/client.html'
                             }
                         ],
-                    },
+                    }
+                ]
+            },
+            {
+                title: 'Dubbo-go 生态项目',
+                children: [
                     {
-                        title: '注册中心参考手册',
-                        children: [
-                            {
-                                title: '介绍',
-                                link: '/zh-cn/docs/user/registry/introduction.html',
-                            },
-                            {
-                                title: 'Zookeeper 注册中心',
-                                link: '/zh-cn/docs/user/registry/zookeeper.html',
-                            },
-                            {
-                                title: 'Nacos 注册中心',
-                                link: '/zh-cn/docs/user/registry/nacos.html',
-                            },
-                            {
-                                title: 'Consul 注册中心',
-                                link: '/zh-cn/docs/user/registry/consul.html',
-                            },
-                            {
-                                title: 'Etcdv3 注册中心',
-                                link: '/zh-cn/docs/user/registry/etcdv3.html',
-                            }
-                        ]
+                        title: 'Dubbo-go 生态项目',
+                        link: '/zh-cn/docs/user/ecology/ecology.html'
                     }
                 ]
             }
