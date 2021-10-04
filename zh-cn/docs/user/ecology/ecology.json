@@ -1,0 +1,10 @@
+{
+  "filename": "ecology.md",
+  "__html": "<h1>Dubbo-go 生态项目</h1>\n<h3>Dubbo-go / Dubbo-go 3.0</h3>\n<p><a href=\"https://github.com/apache/dubbo-go\">github.com/apache/dubbo-go</a></p>\n<p>Apache Dubbo Go 语言实现，架起 Java 和 Golang 之间的桥梁。</p>\n<h3>Dubbo-go-pixiu</h3>\n<p><a href=\"https://github.com/apache/dubbo-go-pixiu\">github.com/apache/dubbo-go-pixiu</a></p>\n<p>dubbo-go-pixiu 网关支持以 dubbo 协议和 http 协议调用 dubbo/dubbo-go 集群</p>\n<h3>Dubbo-getty</h3>\n<p><a href=\"https://github.com/apache/dubbo-getty\">github.com/apache/dubbo-getty</a></p>\n<p>dubbo-getty 是一个Go语言异步网络 io 库，支持 tcp/udp/websocket 协议。</p>\n<h3>Dubbo-go-hessian2</h3>\n<p><a href=\"https://github.com/apache/dubbo-go-hessian2\">github.com/apache/dubbo-go-hessian2</a></p>\n<p>Dubbo-go-hessian2 是一个Go语言 hessian2 序列化协议库</p>\n<h3>Dubbogo-tools</h3>\n<p><a href=\"https://github.com/dubbogo/tools\">github.com/dubbogo/tools</a></p>\n<p>Dubbogo-tools 包括</p>\n<ul>\n<li>dubbo-cli 工具</li>\n<li>imports-formatter Go语言 imports 块格式化工具</li>\n<li>protoc-gen-triple PB编译插件</li>\n<li>protoc-gen-dubbo3grpc PB编译插件</li>\n</ul>\n<h3>Triple-go</h3>\n<p><a href=\"https://github.com/dubbogo/triple\">github.com/dubbogo/triple</a></p>\n<p>Triple-go 为 Go 语言实现的 Triple (Dubbo3) 网络协议库，基于 HTTP2 协议。</p>\n",
+  "link": "/zh-cn/docs/user/ecology/ecology.html",
+  "meta": {
+    "title": "Dubbogo 生态组件",
+    "keywords": "Dubbogo 生态组件",
+    "description": "Dubbogo 生态组件"
+  }
+}
