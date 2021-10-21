@@ -12,8 +12,8 @@
 	<link rel="stylesheet" href="/build/documentation.css" />
 </head>
 <body>
-	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><span>文档</span><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Dubbo-go 3.0</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>简介<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/preface/3.0_feature.html" target="_self">新特性介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/preface/architecture.html" target="_self">架构</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html" target="_self">快速开始</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>基本概念<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/app_and_interface.html" target="_self">服务层级</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/protocol.html" target="_self">网络协议</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/registry.html" target="_self">注册中心</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/configuration.html" target="_self">框架配置</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>功能示例<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/samples_repo.html" target="_self">Samples 仓库介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/go_java_interactive.html" target="_self">Go-Java 3.0 互通示例</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开发者指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/developer/design.html" target="_self">框架设计</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>Dubbo-go 1.5</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/1.5/quick-start.html" target="_self">快速开始</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/configuration/provider.html" target="_self">服务提供者</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/configuration/client.html" target="_self">消费者</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>Dubbo-go 生态项目</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/ecology/ecology.html" target="_self">Dubbo-go 生态项目</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Go-Java 互通示例</h1>
-<h2>前提条件</h2>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><span>文档</span><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Dubbo-go 3.0</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>简介<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/preface/3.0_feature.html" target="_self">新特性介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/preface/architecture.html" target="_self">架构</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html" target="_self">快速开始</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>基本概念<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/app_and_interface.html" target="_self">服务层级</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/protocol.html" target="_self">网络协议</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/registry.html" target="_self">注册中心</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/configuration.html" target="_self">框架配置</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>高级使用<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/samples_repo.html" target="_self">Samples 仓库介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/go_java_interactive.html" target="_self">Go-Java 互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/config-center-dynamic.html" target="_self">配置中心和配置监听</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-filter.html" target="_self">Filter</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-logger.html" target="_self">日志</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/generic.html" target="_self">泛化调用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/service-discovery.html" target="_self">应用级服务发现</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开发者指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/developer/design.html" target="_self">框架设计</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>Dubbo-go 1.5</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/1.5/quick-start.html" target="_self">快速开始</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/configuration/provider.html" target="_self">服务提供者</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/configuration/client.html" target="_self">消费者</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>Dubbo-go 生态项目</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/ecology/ecology.html" target="_self">Dubbo-go 生态项目</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Go-Java 互通示例</h1>
+<h2>准备工作</h2>
 <h3>环境</h3>
 <p>JDK 8，Golang &gt;= 1.11，Dubbo 3.0.2，zookeeper 启动，</p>
 <h3>Go- Java 互通前提</h3>
@@ -116,7 +116,7 @@
 </code></pre>
 </li>
 </ul>
-<h2>1. 基于 Triple 协议互通</h2>
+<h2>1. 基于 Triple 协议互通 (PB序列化)</h2>
 <p>参考 <a href="https://github.com/apache/dubbo-go-samples/tree/master/helloworld">dubbo-go-samples/helloworld</a></p>
 <h3>1.1 Go-Client -&gt; Java-Server</h3>
 <h4>Java-Server 启动</h4>
@@ -222,7 +222,7 @@
 <pre><code>main  INFO bootstrap.DubboBootstrap:  [DUBBO] DubboBootstrap has started., dubbo version: 3.0.2, current host: 192.168.0.108
 dubbo service started
 </code></pre>
-<h3>Go-Client 启动</h3>
+<h4>Go-Client 启动</h4>
 <p>对于已经启动的Dubbo服务，如需要开发与其对应的Go-client，需要进行如下步骤：</p>
 <ol>
 <li>
@@ -397,88 +397,387 @@ message HelloRequest {
     }
 }
 </code></pre>
-<h3>1.3 Dubbogo 泛化调用 Java Server</h3>
-<p>可参考Dubbogo 3.0 <a href="https://www.yuque.com/docs/share/f4e72670-74ab-45b9-bc0c-4b42249ed953?#">泛化调用文档</a></p>
-<h4>Java-Server启动</h4>
+<h2>2. 基于 Dubbo 协议互通 (Hessian2序列化)</h2>
+<p>参考 <a href="https://github.com/apache/dubbo-go-samples/tree/rpc/dubbo">dubbo-go-samples/rpc/dubbo</a></p>
+<h3>2.1 Go-Client -&gt; Java-Server</h3>
+<h4>Java-Server 启动</h4>
 <ol>
-<li>传输结构定义</li>
+<li>定义 Java 接口、参数和返回值，可参考 <a href="https://dubbo.apache.org/zh/docs/quick-start/">Dubbo 快速开始</a></li>
 </ol>
 <pre><code class="language-java"><span class="hljs-keyword">package</span> org.apache.dubbo;
 
-<span class="hljs-keyword">import</span> java.io.Serializable;
-<span class="hljs-keyword">import</span> java.util.Date;
+<span class="hljs-comment">// 需要暴露的服务接口</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserProvider</span> </span>{
+    <span class="hljs-function">User <span class="hljs-title">getUser</span><span class="hljs-params">(<span class="hljs-keyword">int</span> usercode)</span></span>;
+}
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>{
-	<span class="hljs-keyword">private</span> String id;
+</code></pre>
+<pre><code class="language-java"><span class="hljs-keyword">package</span> org.apache.dubbo;
 
-  <span class="hljs-keyword">private</span> String name;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span>  </span>{
 
-  <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;
+    <span class="hljs-keyword">private</span> String id;
 
-  <span class="hljs-keyword">private</span> Date time = <span class="hljs-keyword">new</span> Date();
+    <span class="hljs-keyword">private</span> String name;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;
+
+    <span class="hljs-keyword">private</span> Date time = <span class="hljs-keyword">new</span> Date();
+		<span class="hljs-comment">/* ... */</span>
 }
 </code></pre>
 <ol start="2">
-<li>接口定义</li>
+<li>实现服务接口:</li>
 </ol>
+<p>UserProviderImpl.java</p>
+<pre><code class="language-java">
+<span class="hljs-keyword">package</span> org.apache.dubbo;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserProviderImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UserProvider</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">getUser</span><span class="hljs-params">(<span class="hljs-keyword">int</span> userCode)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> User(String.valueOf(userCode), <span class="hljs-string">"userCode get"</span>, <span class="hljs-number">48</span>);
+    }
+}
+
+</code></pre>
+<ol start="3">
+<li>使用SpringBoot 启动</li>
+</ol>
+<p>Provider.java</p>
 <pre><code class="language-java"><span class="hljs-keyword">package</span> org.apache.dubbo;
 
-<span class="hljs-keyword">import</span> java.util.ArrayList;
-<span class="hljs-keyword">import</span> java.util.List;
-<span class="hljs-keyword">import</span> java.util.Map;
-<span class="hljs-comment">//import org.apache.dubbo.rpc.filter.GenericFilter;</span>
+<span class="hljs-comment">// use when config by API</span>
+<span class="hljs-comment">/* 
+import java.util.concurrent.CountDownLatch;
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserProvider</span> </span>{
-	<span class="hljs-function">User <span class="hljs-title">GetUser1</span><span class="hljs-params">(String userId)</span></span>;
+import org.apache.dubbo.common.constants.CommonConstants;
+import org.apache.dubbo.config.ApplicationConfig;
+import org.apache.dubbo.config.ProtocolConfig;
+import org.apache.dubbo.config.RegistryConfig;
+import org.apache.dubbo.config.ServiceConfig;
+*/</span>
+<span class="hljs-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Provider</span> </span>{
+    <span class="hljs-comment">// main function, config from spring boot</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        ClassPathXmlApplicationContext context = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-keyword">new</span> String[]{<span class="hljs-string">"META-INF/spring/dubbo.provider.xml"</span>});
+        context.start();
+        System.in.read(); <span class="hljs-comment">// press any key to exit</span>
+    }
+
+  
+<span class="hljs-comment">//    config by API</span>
+<span class="hljs-comment">//    public static void startComplexService() throws InterruptedException {</span>
+<span class="hljs-comment">//        ServiceConfig&lt;ComplexProvider&gt; service = new ServiceConfig&lt;&gt;();</span>
+<span class="hljs-comment">//        service.setInterface(ComplexProvider.class);</span>
+<span class="hljs-comment">//        service.setRef(new ComplexProviderImpl());</span>
+<span class="hljs-comment">//        service.setProtocol(new ProtocolConfig(CommonConstants.DUBBO_PROTOCOL, 20001));</span>
+<span class="hljs-comment">//        service.setApplication(new ApplicationConfig("demo-provider"));</span>
+<span class="hljs-comment">//        service.setRegistry(new RegistryConfig("zookeeper://127.0.0.1:2181"));</span>
+<span class="hljs-comment">//        service.export();</span>
+<span class="hljs-comment">//        System.out.println("dubbo service started");</span>
+<span class="hljs-comment">//        new CountDownLatch(1).await();</span>
+<span class="hljs-comment">//    }</span>
 }
+
 </code></pre>
-<h3>Go-Client 泛化调用</h3>
-<p>此处展示以 API 的形式构造泛化接口引用</p>
-<pre><code class="language-go"><span class="hljs-comment">// 初始化 Reference 配置</span>
-refConf := config.NewReferenceConfigBuilder().
-  SetInterface(<span class="hljs-string">"org.apache.dubbo.UserProvider"</span>).
-  SetRegistryIDs(<span class="hljs-string">"zk"</span>).
-  SetProtocol(tripleConst.TRIPLE).
-  SetGeneric(<span class="hljs-literal">true</span>).
-  SetSerialization(<span class="hljs-string">"hessian2"</span>).
-  Build()
+<ol start="4">
+<li>
+<p>通过Spring 配置 Dubbo 参数</p>
+<p>Resources/META-INF.spring/dubbo.provider.xml</p>
+</li>
+</ol>
+<pre><code class="language-xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-comment">&lt;!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-<span class="hljs-comment">// 构造 Root 配置，引入注册中心模块</span>
-rootConfig := config.NewRootConfigBuilder().
-  AddRegistry(<span class="hljs-string">"zk"</span>, config.NewRegistryConfigWithProtocolDefaultPort(<span class="hljs-string">"zookeeper"</span>)).
-  Build()
+       http://www.apache.org/licenses/LICENSE-2.0
 
-<span class="hljs-comment">// Reference 配置初始化，因为需要使用注册中心进行服务发现，需要传入经过配置的 rootConfig</span>
-<span class="hljs-keyword">if</span> err := refConf.Init(rootConfig); err != <span class="hljs-literal">nil</span>{
-  <span class="hljs-built_in">panic</span>(err)
-}
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--&gt;</span>
 
-<span class="hljs-comment">// 泛化调用加载、服务发现</span>
-refConf.GenericLoad(appName)
+<span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span>
+	   <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	   <span class="hljs-attr">xmlns:dubbo</span>=<span class="hljs-string">"http://code.alibabatech.com/schema/dubbo"</span>
+	   <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"</span>&gt;</span>
 
-time.Sleep(time.Second)
+	<span class="hljs-comment">&lt;!-- 应用名 --&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:application</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"user-info-server"</span>/&gt;</span>
+	<span class="hljs-comment">&lt;!-- 连接到哪个本地注册中心 --&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:registry</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"dubbogo"</span>  <span class="hljs-attr">address</span>=<span class="hljs-string">"zookeeper://127.0.0.1:2181"</span> /&gt;</span>
+	<span class="hljs-comment">&lt;!-- 用dubbo协议在20880端口暴露服务 --&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:protocol</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"dubbo"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"dubbo"</span> <span class="hljs-attr">host</span>=<span class="hljs-string">"127.0.0.1"</span> <span class="hljs-attr">port</span>=<span class="hljs-string">"20010"</span> /&gt;</span>
+	<span class="hljs-comment">&lt;!-- 声明需要暴露的服务接口 --&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:service</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"aaa"</span> <span class="hljs-attr">registry</span>=<span class="hljs-string">"dubbogo"</span> <span class="hljs-attr">timeout</span>=<span class="hljs-string">"3000"</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">"org.apache.dubbo.UserProvider"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"demoService"</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:service</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"bbb"</span> <span class="hljs-attr">registry</span>=<span class="hljs-string">"dubbogo"</span> <span class="hljs-attr">timeout</span>=<span class="hljs-string">"3000"</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">"org.apache.dubbo.UserProvider"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"otherService"</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"2.0"</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:service</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"ccc"</span> <span class="hljs-attr">registry</span>=<span class="hljs-string">"dubbogo"</span> <span class="hljs-attr">timeout</span>=<span class="hljs-string">"3000"</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">"org.apache.dubbo.UserProvider"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"otherService"</span> <span class="hljs-attr">group</span>=<span class="hljs-string">"as"</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"2.0"</span>/&gt;</span>
 
-<span class="hljs-comment">// 发起泛化调用</span>
-resp, err := refConf.GetRPCService().(*generic.GenericService).Invoke(
-  context.TODO(),
-  <span class="hljs-string">"getUser1"</span>,
-  []<span class="hljs-keyword">string</span>{<span class="hljs-string">"java.lang.String"</span>},
-  []hessian.Object{<span class="hljs-string">"A003"</span>},
+	<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"demoService"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.apache.dubbo.UserProviderImpl"</span> /&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"otherService"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"org.apache.dubbo.UserProviderAnotherImpl"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span>
+</code></pre>
+<p>启动Provider类，可看到输出如下日志，代表 Dubbo Server 启动成功</p>
+<pre><code>[DUBBO] DubboBootstrap is ready., dubbo version: 2.7.7, current host: 127.0.0.1
+[DUBBO] DubboBootstrap has started., dubbo version: 2.7.7, current host: 127.0.0.1
+</code></pre>
+<h4>Go-Client 启动</h4>
+<p>对于已经启动的Dubbo服务，如需要开发与其对应的Go-client，需要进行如下步骤：</p>
+<ol>
+<li>编写与 Java 适配的 POJO 类 User</li>
+</ol>
+<pre><code class="language-go"><span class="hljs-keyword">import</span>(
+  hessian <span class="hljs-string">"github.com/apache/dubbo-go-hessian2"</span>
 )
 
-<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
-  <span class="hljs-built_in">panic</span>(err)
+<span class="hljs-comment">// 字段需要与 Java 侧对应，首字母大写</span>
+<span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+	ID   <span class="hljs-keyword">string</span>
+	Name <span class="hljs-keyword">string</span>
+	Age  <span class="hljs-keyword">int32</span>
+	Time time.Time
 }
-logger.Infof(<span class="hljs-string">"GetUser1(userId string) res: %+v"</span>, resp)
+
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *User)</span> <span class="hljs-title">JavaClassName</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> {
+	<span class="hljs-keyword">return</span> <span class="hljs-string">"org.apache.dubbo.User"</span> <span class="hljs-comment">// 需要与 Java 侧 User 类名对应</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span>{
+	hessian.RegisterPOJO(&amp;pkg.User{}) <span class="hljs-comment">// 注册 POJO</span>
+}
 </code></pre>
-<p>GenericService 的 Invoke 方法包括三个参数：context.Context, []string, []hessian.Object,</p>
-<p>其中第二个参数为对应参数的 Java 类名，例如java.lang.String、org.apache.dubbo.User，第三个参数为参数列表，hessian.Object 即为 interface。第二、第三个参数应与方法签名一致，按顺序对应。</p>
-<p>获得map结构的返回结果</p>
-<pre><code>INFO    cmd/client.go:89        GetUser1(userId string) res: map[age:48 class:org.apache.dubbo.User id:A003 name:Joe sex:MAN time:2021-10-04 14:03:03.37 +0800 CST]
+<ol start="2">
+<li>
+<p>编写与 Java 侧一致的客户端存根类，其接口方法需要与Java侧对应</p>
+<p>规定第一个参数必须为 context.Context，最后一个返回值必须为 error</p>
+</li>
+</ol>
+<pre><code class="language-go">
+<span class="hljs-keyword">import</span>(
+	<span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/config"</span>
+)
+
+<span class="hljs-keyword">var</span> (
+	userProvider = &amp;pkg.UserProvider{}
+)
+
+<span class="hljs-comment">// UserProvider 客户端存根类</span>
+<span class="hljs-keyword">type</span> UserProvider <span class="hljs-keyword">struct</span> {
+  <span class="hljs-comment">// dubbo标签，用于适配go侧客户端大写方法名 -&gt; java侧小写方法名，只有 dubbo 协议客户端才需要使用</span>
+	GetUser  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, req <span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(*User, error)</span> `<span class="hljs-title">dubbo</span>:"<span class="hljs-title">getUser</span>"`</span> 
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span>{
+  <span class="hljs-comment">// 注册客户端存根类到框架，实例化客户端接口指针 userProvider</span>
+	config.SetConsumerService(userProvider)
+}
+
 </code></pre>
-<h2>2. 基于 Dubbo 协议互通</h2>
-<p>// TODO</p>
-</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><img class="apache" src="/img/apache_logo.png"/><div class="cols-container"><div class="col col-12"><h3></h3><p></p></div><div class="col col-4"><dl><dt>ASF</dt><dd><a href="http://www.apache.org" target="_self">基金会</a></dd><dd><a href="http://www.apache.org/licenses/" target="_self">证书</a></dd><dd><a href="http://www.apache.org/events/current-event" target="_self">事件</a></dd><dd><a href="http://www.apache.org/foundation/sponsorship.html" target="_self">赞助</a></dd><dd><a href="http://www.apache.org/foundation/thanks.html" target="_self">致谢</a></dd></dl></div><div class="col col-4"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/user/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/dev/build.html" target="_self">开发者指南</a></dd><dd><a href="/zh-cn/docs/admin/ops/dubbo-ops.html" target="_self">运维管理</a></dd><dd><a href="https://github.com/dubbogo/dubbo-go-website/issues/new" target="_self">报告文档问题</a></dd><dd><a href="https://github.com/dubbogo/dubbo-go-website" target="_self">编辑此文档</a></dd></dl></div><div class="col col-4"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.apache.org/security" target="_self">安全</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018-2020 The Apache Software Foundation. Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</span></div></div></footer></div></div>
+<ol start="3">
+<li>撰写配置文件: dubbogo.yml</li>
+</ol>
+<pre><code class="language-yaml"><span class="hljs-attr">dubbo:</span>
+  <span class="hljs-attr">registries:</span>
+    <span class="hljs-attr">demoZK:</span> <span class="hljs-comment"># 定义注册中心ID</span>
+      <span class="hljs-attr">protocol:</span> <span class="hljs-string">zookeeper</span>
+      <span class="hljs-attr">timeout:</span> <span class="hljs-string">3s</span>
+      <span class="hljs-attr">address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:2181</span>
+  <span class="hljs-attr">consumer:</span>
+    <span class="hljs-attr">registryIDs:</span> <span class="hljs-comment"># 使用注册中心ID</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">demoZK</span>
+    <span class="hljs-attr">references:</span>
+      <span class="hljs-attr">UserProvider:</span> <span class="hljs-comment"># 存根类名</span>
+        <span class="hljs-attr">protocol:</span> <span class="hljs-string">dubbo</span> <span class="hljs-comment"># dubbo 协议，默认 hessian2 序列化方式</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">org.apache.dubbo.UserProvider</span> <span class="hljs-comment"># 接口需要与Java侧对应</span>
+  <span class="hljs-attr">logger:</span>
+    <span class="hljs-attr">zap-config:</span>
+      <span class="hljs-attr">level:</span> <span class="hljs-string">info</span> <span class="hljs-comment"># 日志级别</span>
+</code></pre>
+<p>或者使用Triple + Hessian2 序列化请求Server。本例子如果跟Java Server互通则不能用Triple。</p>
+<pre><code class="language-yaml"><span class="hljs-attr">dubbo:</span>
+  <span class="hljs-attr">registries:</span>
+    <span class="hljs-attr">demoZK:</span>
+      <span class="hljs-attr">protocol:</span> <span class="hljs-string">zookeeper</span>
+      <span class="hljs-attr">timeout:</span> <span class="hljs-string">3s</span>
+      <span class="hljs-attr">address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:2181</span>
+  <span class="hljs-attr">consumer:</span>
+    <span class="hljs-attr">registryIDs:</span> 
+      <span class="hljs-bullet">-</span> <span class="hljs-string">demoZK</span>
+    <span class="hljs-attr">references:</span>
+      <span class="hljs-attr">UserProvider:</span> 
+        <span class="hljs-attr">protocol:</span> <span class="hljs-string">tri</span> <span class="hljs-comment"># triple 协议</span>
+        <span class="hljs-attr">serialization:</span> <span class="hljs-string">hessian2</span> <span class="hljs-comment"># 序列化方式 hessian2，triple 协议默认为 pb 序列化，不配置会报错</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">org.apache.dubbo.UserProvider</span> 
+  <span class="hljs-attr">logger:</span>
+    <span class="hljs-attr">zap-config:</span>
+      <span class="hljs-attr">level:</span> <span class="hljs-string">info</span>
+</code></pre>
+<ol start="4">
+<li>撰写 main.go 文件，发起调用</li>
+</ol>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+  config.Load()
+	<span class="hljs-keyword">var</span> i <span class="hljs-keyword">int32</span> = <span class="hljs-number">1</span>
+	user, err := userProvider.GetUser2(context.TODO(), i)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	logger.Infof(<span class="hljs-string">"response result: %v"</span>, user)
+}
+</code></pre>
+<ol start="5">
+<li>可查看到调用成功的日志,符合预期</li>
+</ol>
+<ul>
+<li>go-client</li>
+</ul>
+<pre><code class="language-bash">response result: User{ID:1, Name:userCode get, Age:48, Time:2021-10-21 20:25:26.009 +0800 CST}
+</code></pre>
+<h3>2.2 Java-Client -&gt; Go-Server</h3>
+<h4>Go-Server 启动</h4>
+<ol>
+<li>定义配置文件</li>
+</ol>
+<pre><code class="language-yaml"><span class="hljs-attr">dubbo:</span>
+  <span class="hljs-attr">registries:</span>
+    <span class="hljs-attr">demoZK:</span>
+      <span class="hljs-attr">protocol:</span> <span class="hljs-string">zookeeper</span>
+      <span class="hljs-attr">timeout:</span> <span class="hljs-string">3s</span>
+      <span class="hljs-attr">address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:2181</span>
+  <span class="hljs-attr">protocols:</span>
+    <span class="hljs-attr">dubbo:</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo</span>
+      <span class="hljs-attr">port:</span> <span class="hljs-number">20000</span>
+  <span class="hljs-attr">provider:</span>
+    <span class="hljs-attr">registryIDs:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">demoZK</span>
+    <span class="hljs-attr">services:</span>
+      <span class="hljs-attr">UserProvider:</span>
+        <span class="hljs-attr">protocol:</span> <span class="hljs-string">dubbo</span> <span class="hljs-comment"># 或者改成 tri, 下一行增加 serialization: hessian2</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">org.apache.dubbo.UserProvider</span>
+  <span class="hljs-attr">logger:</span>
+    <span class="hljs-attr">zap-config:</span>
+      <span class="hljs-attr">level:</span> <span class="hljs-string">info</span>
+</code></pre>
+<ol start="2">
+<li>引入传输结构，定义服务以及方法名映射</li>
+</ol>
+<pre><code class="language-go">
+<span class="hljs-keyword">type</span> UserProvider <span class="hljs-keyword">struct</span> {
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserProvider)</span> <span class="hljs-title">GetUser</span><span class="hljs-params">(ctx context.Context, req <span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(*User, error)</span></span> {
+	<span class="hljs-keyword">var</span> err error
+	logger.Infof(<span class="hljs-string">"req:%#v"</span>, req)
+	user := &amp;User{}
+	user.ID = strconv.Itoa(<span class="hljs-keyword">int</span>(req))
+	<span class="hljs-keyword">return</span> user, err
+}
+
+<span class="hljs-comment">// MethodMapper 定义方法名映射，从 Go 的方法名映射到 Java 小写方法名，只有 dubbo 协议服务接口才需要使用</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *UserProvider)</span> <span class="hljs-title">MethodMapper</span><span class="hljs-params">()</span> <span class="hljs-title">map</span>[<span class="hljs-title">string</span>]<span class="hljs-title">string</span></span> {
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>{
+		<span class="hljs-string">"GetUser"</span>: <span class="hljs-string">"getUser"</span>,
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span>{
+  config.SetProviderService(&amp;pkg.UserProvider{})
+}
+
+</code></pre>
+<ol start="3">
+<li>启动服务</li>
+</ol>
+<pre><code class="language-go"><span class="hljs-comment">// export DUBBO_GO_CONFIG_PATH=dubbogo.yml</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	<span class="hljs-keyword">if</span> err := config.Load(); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	<span class="hljs-keyword">select</span> {}
+}
+</code></pre>
+<h4>Java-Client 启动</h4>
+<ol>
+<li>
+<p>Java 客户端 Spring 配置</p>
+<p>resources/META-INF.spring/dubbo.consumer.xml</p>
+<pre><code class="language-xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-comment">&lt;!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span>
+	<span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	<span class="hljs-attr">xmlns:dubbo</span>=<span class="hljs-string">"http://code.alibabatech.com/schema/dubbo"</span>
+	<span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"</span>&gt;</span>
+
+
+	<span class="hljs-comment">&lt;!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 --&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:application</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"user-info-client"</span> /&gt;</span>
+	<span class="hljs-comment">&lt;!-- 连接到哪个本地注册中心 --&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:registry</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"dubbogo"</span>  <span class="hljs-attr">address</span>=<span class="hljs-string">"zookeeper://127.0.0.1:2181"</span> /&gt;</span>
+	<span class="hljs-comment">&lt;!-- dubbo.registry.address from dubbo.properties --&gt;</span>
+	<span class="hljs-comment">&lt;!-- dubbo:registry address="${dubbo.registry.address}" / --&gt;</span>
+
+	<span class="hljs-comment">&lt;!-- 用dubbo协议在20880端口暴露服务 --&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:protocol</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"dubbo"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"dubbo"</span> /&gt;</span>
+
+	<span class="hljs-comment">&lt;!-- 声明需要使用的服务接口 --&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:reference</span> <span class="hljs-attr">registry</span>=<span class="hljs-string">"dubbogo"</span> <span class="hljs-attr">check</span>=<span class="hljs-string">"false"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"userProvider"</span> <span class="hljs-attr">protocol</span>=<span class="hljs-string">"dubbo"</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">"org.apache.dubbo.UserProvider"</span>&gt;</span>
+		<span class="hljs-comment">&lt;!--&lt;dubbo:parameter key="heartbeat" value="10000"/ --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dubbo:reference</span>&gt;</span>
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:reference</span> <span class="hljs-attr">registry</span>=<span class="hljs-string">"dubbogo"</span> <span class="hljs-attr">check</span>=<span class="hljs-string">"false"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"userProvider1"</span> <span class="hljs-attr">protocol</span>=<span class="hljs-string">"dubbo"</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"2.0"</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">"org.apache.dubbo.UserProvider"</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">dubbo:reference</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">dubbo:reference</span> <span class="hljs-attr">registry</span>=<span class="hljs-string">"dubbogo"</span> <span class="hljs-attr">check</span>=<span class="hljs-string">"false"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"userProvider2"</span> <span class="hljs-attr">protocol</span>=<span class="hljs-string">"dubbo"</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"2.0"</span> <span class="hljs-attr">group</span>=<span class="hljs-string">"as"</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">"org.apache.dubbo.UserProvider"</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">dubbo:reference</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span>
+
+</code></pre>
+</li>
+<li>
+<p>发起调用</p>
+</li>
+</ol>
+<pre><code class="language-java">
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Consumer</span> </span>{
+    <span class="hljs-comment">// Define a private variable (Required in Spring)</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> UserProvider userProvider;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        ClassPathXmlApplicationContext context = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-keyword">new</span> String[]{<span class="hljs-string">"META-INF/spring/dubbo.consumer.xml"</span>});
+        userProvider = (UserProvider)context.getBean(<span class="hljs-string">"userProvider"</span>);
+        testGetUser();
+    }
+  
+ 
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetUser</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        User user = userProvider.getUser(<span class="hljs-number">1</span>);
+        System.out.println(user.getId());
+    }
+}
+</code></pre>
+<p>下一章: <a href="./config-center-dynamic.html">【配置中心和配置监听】</a></p>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><img class="apache" src="/img/apache_logo.png"/><div class="cols-container"><div class="col col-12"><h3></h3><p></p></div><div class="col col-4"><dl><dt>ASF</dt><dd><a href="http://www.apache.org" target="_self">基金会</a></dd><dd><a href="http://www.apache.org/licenses/" target="_self">证书</a></dd><dd><a href="http://www.apache.org/events/current-event" target="_self">事件</a></dd><dd><a href="http://www.apache.org/foundation/sponsorship.html" target="_self">赞助</a></dd><dd><a href="http://www.apache.org/foundation/thanks.html" target="_self">致谢</a></dd></dl></div><div class="col col-4"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/user/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/dev/build.html" target="_self">开发者指南</a></dd><dd><a href="/zh-cn/docs/admin/ops/dubbo-ops.html" target="_self">运维管理</a></dd><dd><a href="https://github.com/dubbogo/dubbogo.github.io/issues/new" target="_self">报告文档问题</a></dd><dd><a href="https://github.com/dubbogo/dubbogo.github.io" target="_self">编辑此文档</a></dd></dl></div><div class="col col-4"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.apache.org/security" target="_self">安全</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018-2020 The Apache Software Foundation. Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
 	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
 	<script>
