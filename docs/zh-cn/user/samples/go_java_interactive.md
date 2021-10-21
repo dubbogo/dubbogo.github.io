@@ -6,7 +6,7 @@ description: go-java 3.0 互通示例
 
 # Go-Java 互通示例
 
-## 前提条件
+## 准备工作
 
 ### 环境
 
@@ -139,7 +139,7 @@ JDK 8，Golang >= 1.11，Dubbo 3.0.2，zookeeper 启动，
     interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
   ```
 
-## 1. 基于 Triple 协议互通
+## 1. 基于 Triple 协议互通 (PB序列化)
 
 参考 [dubbo-go-samples/helloworld](https://github.com/apache/dubbo-go-samples/tree/master/helloworld)
 
@@ -254,7 +254,7 @@ main  INFO bootstrap.DubboBootstrap:  [DUBBO] DubboBootstrap has started., dubbo
 dubbo service started
 ```
 
-### Go-Client 启动
+#### Go-Client 启动
 
 对于已经启动的Dubbo服务，如需要开发与其对应的Go-client，需要进行如下步骤：
 
@@ -442,99 +442,418 @@ public class ApiConsumer {
 }
 ```
 
-### 1.3 Dubbogo 泛化调用 Java Server
+## 2. 基于 Dubbo 协议互通 (Hessian2序列化)
 
-可参考Dubbogo 3.0 [泛化调用文档](https://www.yuque.com/docs/share/f4e72670-74ab-45b9-bc0c-4b42249ed953?#)
+参考 [dubbo-go-samples/rpc/dubbo](https://github.com/apache/dubbo-go-samples/tree/rpc/dubbo)
 
-#### Java-Server启动
+### 2.1 Go-Client -> Java-Server
 
-1. 传输结构定义
+#### Java-Server 启动
 
-```java
-package org.apache.dubbo;
-
-import java.io.Serializable;
-import java.util.Date;
-
-public class User implements Serializable {
-	private String id;
-
-  private String name;
-
-  private int age;
-
-  private Date time = new Date();
-}
-```
-
-2. 接口定义
+1. 定义 Java 接口、参数和返回值，可参考 [Dubbo 快速开始](https://dubbo.apache.org/zh/docs/quick-start/)
 
 ```java
 package org.apache.dubbo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-//import org.apache.dubbo.rpc.filter.GenericFilter;
-
+// 需要暴露的服务接口
 public interface UserProvider {
-	User GetUser1(String userId);
+    User getUser(int usercode);
+}
+
+```
+
+```java
+package org.apache.dubbo;
+
+public class User implements Serializable  {
+
+    private String id;
+
+    private String name;
+
+    private int age;
+
+    private Date time = new Date();
+		/* ... */
 }
 ```
 
-### Go-Client 泛化调用
+2. 实现服务接口: 
 
-此处展示以 API 的形式构造泛化接口引用
+UserProviderImpl.java
+
+```java
+
+package org.apache.dubbo;
+public class UserProviderImpl implements UserProvider {
+    public User getUser(int userCode) {
+        return new User(String.valueOf(userCode), "userCode get", 48);
+    }
+}
+
+```
+
+3. 使用SpringBoot 启动
+
+Provider.java
+
+```java
+package org.apache.dubbo;
+
+// use when config by API
+/* 
+import java.util.concurrent.CountDownLatch;
+
+import org.apache.dubbo.common.constants.CommonConstants;
+import org.apache.dubbo.config.ApplicationConfig;
+import org.apache.dubbo.config.ProtocolConfig;
+import org.apache.dubbo.config.RegistryConfig;
+import org.apache.dubbo.config.ServiceConfig;
+*/
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Provider {
+    // main function, config from spring boot
+    public static void main(String[] args) throws Exception {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"META-INF/spring/dubbo.provider.xml"});
+        context.start();
+        System.in.read(); // press any key to exit
+    }
+
+  
+//    config by API
+//    public static void startComplexService() throws InterruptedException {
+//        ServiceConfig<ComplexProvider> service = new ServiceConfig<>();
+//        service.setInterface(ComplexProvider.class);
+//        service.setRef(new ComplexProviderImpl());
+//        service.setProtocol(new ProtocolConfig(CommonConstants.DUBBO_PROTOCOL, 20001));
+//        service.setApplication(new ApplicationConfig("demo-provider"));
+//        service.setRegistry(new RegistryConfig("zookeeper://127.0.0.1:2181"));
+//        service.export();
+//        System.out.println("dubbo service started");
+//        new CountDownLatch(1).await();
+//    }
+}
+
+```
+
+4. 通过Spring 配置 Dubbo 参数
+
+   Resources/META-INF.spring/dubbo.provider.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 应用名 -->
+	<dubbo:application name="user-info-server"/>
+	<!-- 连接到哪个本地注册中心 -->
+	<dubbo:registry id="dubbogo"  address="zookeeper://127.0.0.1:2181" />
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol id="dubbo" name="dubbo" host="127.0.0.1" port="20010" />
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service id="aaa" registry="dubbogo" timeout="3000" interface="org.apache.dubbo.UserProvider" ref="demoService"/>
+	<dubbo:service id="bbb" registry="dubbogo" timeout="3000" interface="org.apache.dubbo.UserProvider" ref="otherService" version="2.0"/>
+	<dubbo:service id="ccc" registry="dubbogo" timeout="3000" interface="org.apache.dubbo.UserProvider" ref="otherService" group="as" version="2.0"/>
+
+	<bean id="demoService" class="org.apache.dubbo.UserProviderImpl" />
+	<bean id="otherService" class="org.apache.dubbo.UserProviderAnotherImpl"/>
+
+</beans>
+```
+
+
+
+启动Provider类，可看到输出如下日志，代表 Dubbo Server 启动成功
+
+```
+[DUBBO] DubboBootstrap is ready., dubbo version: 2.7.7, current host: 127.0.0.1
+[DUBBO] DubboBootstrap has started., dubbo version: 2.7.7, current host: 127.0.0.1
+```
+
+#### Go-Client 启动
+
+对于已经启动的Dubbo服务，如需要开发与其对应的Go-client，需要进行如下步骤：
+
+1. 编写与 Java 适配的 POJO 类 User
+
 
 ```go
-// 初始化 Reference 配置
-refConf := config.NewReferenceConfigBuilder().
-  SetInterface("org.apache.dubbo.UserProvider").
-  SetRegistryIDs("zk").
-  SetProtocol(tripleConst.TRIPLE).
-  SetGeneric(true).
-  SetSerialization("hessian2").
-  Build()
-
-// 构造 Root 配置，引入注册中心模块
-rootConfig := config.NewRootConfigBuilder().
-  AddRegistry("zk", config.NewRegistryConfigWithProtocolDefaultPort("zookeeper")).
-  Build()
-
-// Reference 配置初始化，因为需要使用注册中心进行服务发现，需要传入经过配置的 rootConfig
-if err := refConf.Init(rootConfig); err != nil{
-  panic(err)
-}
-
-// 泛化调用加载、服务发现
-refConf.GenericLoad(appName)
-
-time.Sleep(time.Second)
-
-// 发起泛化调用
-resp, err := refConf.GetRPCService().(*generic.GenericService).Invoke(
-  context.TODO(),
-  "getUser1",
-  []string{"java.lang.String"},
-  []hessian.Object{"A003"},
+import(
+  hessian "github.com/apache/dubbo-go-hessian2"
 )
 
-if err != nil {
-  panic(err)
+// 字段需要与 Java 侧对应，首字母大写
+type User struct {
+	ID   string
+	Name string
+	Age  int32
+	Time time.Time
 }
-logger.Infof("GetUser1(userId string) res: %+v", resp)
+
+
+func (u *User) JavaClassName() string {
+	return "org.apache.dubbo.User" // 需要与 Java 侧 User 类名对应
+}
+
+func init(){
+	hessian.RegisterPOJO(&pkg.User{}) // 注册 POJO
+}
 ```
 
-GenericService 的 Invoke 方法包括三个参数：context.Context, []string, []hessian.Object, 
+2. 编写与 Java 侧一致的客户端存根类，其接口方法需要与Java侧对应
 
-其中第二个参数为对应参数的 Java 类名，例如java.lang.String、org.apache.dubbo.User，第三个参数为参数列表，hessian.Object 即为 interface。第二、第三个参数应与方法签名一致，按顺序对应。
+   规定第一个参数必须为 context.Context，最后一个返回值必须为 error
 
-获得map结构的返回结果
+```go
+
+import(
+	"dubbo.apache.org/dubbo-go/v3/config"
+)
+
+var (
+	userProvider = &pkg.UserProvider{}
+)
+
+// UserProvider 客户端存根类
+type UserProvider struct {
+  // dubbo标签，用于适配go侧客户端大写方法名 -> java侧小写方法名，只有 dubbo 协议客户端才需要使用
+	GetUser  func(ctx context.Context, req int32) (*User, error) `dubbo:"getUser"` 
+}
+
+func init(){
+  // 注册客户端存根类到框架，实例化客户端接口指针 userProvider
+	config.SetConsumerService(userProvider)
+}
 
 ```
-INFO    cmd/client.go:89        GetUser1(userId string) res: map[age:48 class:org.apache.dubbo.User id:A003 name:Joe sex:MAN time:2021-10-04 14:03:03.37 +0800 CST]
+
+3. 撰写配置文件: dubbogo.yml
+
+```yaml
+dubbo:
+  registries:
+    demoZK: # 定义注册中心ID
+      protocol: zookeeper
+      timeout: 3s
+      address: 127.0.0.1:2181
+  consumer:
+    registryIDs: # 使用注册中心ID
+      - demoZK
+    references:
+      UserProvider: # 存根类名
+        protocol: dubbo # dubbo 协议，默认 hessian2 序列化方式
+        interface: org.apache.dubbo.UserProvider # 接口需要与Java侧对应
+  logger:
+    zap-config:
+      level: info # 日志级别
 ```
 
-## 2. 基于 Dubbo 协议互通
+或者使用Triple + Hessian2 序列化请求Server。本例子如果跟Java Server互通则不能用Triple。
 
-// TODO
+```yaml
+dubbo:
+  registries:
+    demoZK:
+      protocol: zookeeper
+      timeout: 3s
+      address: 127.0.0.1:2181
+  consumer:
+    registryIDs: 
+      - demoZK
+    references:
+      UserProvider: 
+        protocol: tri # triple 协议
+        serialization: hessian2 # 序列化方式 hessian2，triple 协议默认为 pb 序列化，不配置会报错
+        interface: org.apache.dubbo.UserProvider 
+  logger:
+    zap-config:
+      level: info
+```
+
+4. 撰写 main.go 文件，发起调用
+
+```go
+func main(){
+  config.Load()
+	var i int32 = 1
+	user, err := userProvider.GetUser2(context.TODO(), i)
+	if err != nil {
+		panic(err)
+	}
+	logger.Infof("response result: %v", user)
+}
+```
+
+5. 可查看到调用成功的日志,符合预期
+
+- go-client
+
+```bash
+response result: User{ID:1, Name:userCode get, Age:48, Time:2021-10-21 20:25:26.009 +0800 CST}
+```
+
+### 2.2 Java-Client -> Go-Server
+
+#### Go-Server 启动
+
+1. 定义配置文件
+
+```yaml
+dubbo:
+  registries:
+    demoZK:
+      protocol: zookeeper
+      timeout: 3s
+      address: 127.0.0.1:2181
+  protocols:
+    dubbo:
+      name: dubbo
+      port: 20000
+  provider:
+    registryIDs:
+      - demoZK
+    services:
+      UserProvider:
+        protocol: dubbo # 或者改成 tri, 下一行增加 serialization: hessian2
+        interface: org.apache.dubbo.UserProvider
+  logger:
+    zap-config:
+      level: info
+```
+
+2. 引入传输结构，定义服务以及方法名映射
+
+```go
+
+type UserProvider struct {
+}
+
+func (u *UserProvider) GetUser(ctx context.Context, req int32) (*User, error) {
+	var err error
+	logger.Infof("req:%#v", req)
+	user := &User{}
+	user.ID = strconv.Itoa(int(req))
+	return user, err
+}
+
+// MethodMapper 定义方法名映射，从 Go 的方法名映射到 Java 小写方法名，只有 dubbo 协议服务接口才需要使用
+func (s *UserProvider) MethodMapper() map[string]string {
+	return map[string]string{
+		"GetUser": "getUser",
+	}
+}
+
+func init(){
+  config.SetProviderService(&pkg.UserProvider{})
+}
+
+```
+
+3. 启动服务
+
+```go
+// export DUBBO_GO_CONFIG_PATH=dubbogo.yml
+func main() {
+	if err := config.Load(); err != nil {
+		panic(err)
+	}
+	select {}
+}
+```
+
+
+
+#### Java-Client 启动
+
+1. Java 客户端 Spring 配置
+
+   resources/META-INF.spring/dubbo.consumer.xml
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!--
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+   
+          http://www.apache.org/licenses/LICENSE-2.0
+   
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+   -->
+   <beans xmlns="http://www.springframework.org/schema/beans"
+   	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+   	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+   	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+   
+   
+   	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+   	<dubbo:application name="user-info-client" />
+   	<!-- 连接到哪个本地注册中心 -->
+   	<dubbo:registry id="dubbogo"  address="zookeeper://127.0.0.1:2181" />
+   	<!-- dubbo.registry.address from dubbo.properties -->
+   	<!-- dubbo:registry address="${dubbo.registry.address}" / -->
+   
+   	<!-- 用dubbo协议在20880端口暴露服务 -->
+   	<dubbo:protocol id="dubbo" name="dubbo" />
+   
+   	<!-- 声明需要使用的服务接口 -->
+   	<dubbo:reference registry="dubbogo" check="false" id="userProvider" protocol="dubbo" interface="org.apache.dubbo.UserProvider">
+   		<!--<dubbo:parameter key="heartbeat" value="10000"/ -->
+       </dubbo:reference>
+   
+   	<dubbo:reference registry="dubbogo" check="false" id="userProvider1" protocol="dubbo" version="2.0" interface="org.apache.dubbo.UserProvider">
+   	</dubbo:reference>
+   	<dubbo:reference registry="dubbogo" check="false" id="userProvider2" protocol="dubbo" version="2.0" group="as" interface="org.apache.dubbo.UserProvider">
+   	</dubbo:reference>
+   </beans>
+   
+   ```
+
+2. 发起调用
+
+```java
+
+public class Consumer {
+    // Define a private variable (Required in Spring)
+    private static UserProvider userProvider;
+
+    public static void main(String[] args) throws Exception {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"META-INF/spring/dubbo.consumer.xml"});
+        userProvider = (UserProvider)context.getBean("userProvider");
+        testGetUser();
+    }
+  
+ 
+    private static void testGetUser() throws Exception {
+        User user = userProvider.getUser(1);
+        System.out.println(user.getId());
+    }
+}
+```
+
+下一章: [【配置中心和配置监听】](./config-center-dynamic.html)
+

@@ -83,11 +83,11 @@ export default {
         },
         {
           text: 'Report a Doc Issue',
-          link: 'https://github.com/dubbogo/dubbo-go-website/issues/new',
+          link: 'https://github.com/dubbogo/dubbogo.github.io/issues/new',
         },
         {
           text: 'Edit This Page on GitHub',
-          link: 'https://github.com/dubbogo/dubbo-go-website',
+          link: 'https://github.com/dubbogo/dubbogo.github.io',
         },
       ],
     },
@@ -189,11 +189,11 @@ export default {
         },
         {
           text: '报告文档问题',
-          link: 'https://github.com/dubbogo/dubbo-go-website/issues/new',
+          link: 'https://github.com/dubbogo/dubbogo.github.io/issues/new',
         },
         {
           text: '编辑此文档',
-          link: 'https://github.com/dubbogo/dubbo-go-website',
+          link: 'https://github.com/dubbogo/dubbogo.github.io',
         },
       ]
     },

@@ -118,15 +118,35 @@ export default {
                         ]
                     },
                     {
-                        title: '功能示例',
+                        title: '高级使用',
                         children: [
                             {
                                 title: 'Samples 仓库介绍',
                                 link: '/zh-cn/docs/user/samples/samples_repo.html',
                             },
                             {
-                                title: 'Go-Java 3.0 互通示例',
+                                title: 'Go-Java 互通',
                                 link: '/zh-cn/docs/user/samples/go_java_interactive.html'
+                            },
+                            {
+                                title: '配置中心和配置监听',
+                                link: '/zh-cn/docs/user/samples/config-center-dynamic.html'
+                            },
+                            {
+                                title: 'Filter',
+                                link: '/zh-cn/docs/user/samples/custom-filter.html'
+                            },
+                            {
+                                title: '日志',
+                                link: '/zh-cn/docs/user/samples/custom-logger.html'
+                            },
+                            {
+                                title: '泛化调用',
+                                link: '/zh-cn/docs/user/samples/generic.html'
+                            },
+                            {
+                                title: '应用级服务发现',
+                                link: '/zh-cn/docs/user/samples/service-discovery.html'
                             }
                         ]
                     },
