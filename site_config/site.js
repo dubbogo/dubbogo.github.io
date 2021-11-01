@@ -177,7 +177,7 @@ export default {
       list: [
         {
           text: '快速开始',
-          link: '/zh-cn/docs/user/quick-start.html',
+          link: '/zh-cn/docs/user/quickstart/3.0/quickstart.html',
         },
         {
           text: '开发者指南',

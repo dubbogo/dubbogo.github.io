@@ -4,7 +4,7 @@ keywords: dubbogo 快速开始
 description: 介绍dubbo-go快速开始的过程
 ---
 
-# [快速开始](https://dubbogo.github.io/dubbo-go-website/zh-cn/docs/user/quick-start.html)
+# [快速开始](https://dubbogo.github.io/dubbo-go-website/zh-cn/docs/user/quickstart/3.0/quickstart.html)
 
 通过一个 `hellowworld` 例子带领大家快速上手 Dubbo-go 框架。
 

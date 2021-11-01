@@ -135,7 +135,7 @@ JDK 8，Golang >= 1.11，Dubbo 3.0.2，zookeeper 启动，
   ```yaml
   services:
     GreeterProvider:
-    protocolIDs: tripleProtocol
+    protocol-ids: tripleProtocol
     interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
   ```
 
@@ -305,7 +305,7 @@ dubbo:
       timeout: 3s
       address: 127.0.0.1:2181
   consumer:
-    registryIDs:
+    registry-ids:
       - demoZK
     references:
       GreeterClientImpl:
@@ -371,11 +371,11 @@ dubbo:
       name: tri
       port: 20000
   provider:
-    registryIDs:
+    registry-ids:
       - demoZK
     services:
       GreeterProvider:
-        protocolIDs: triple
+        protocol-ids: triple
         interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
 ```
 
@@ -656,7 +656,7 @@ dubbo:
       timeout: 3s
       address: 127.0.0.1:2181
   consumer:
-    registryIDs: # 使用注册中心ID
+    registry-ids: # 使用注册中心ID
       - demoZK
     references:
       UserProvider: # 存根类名
@@ -677,7 +677,7 @@ dubbo:
       timeout: 3s
       address: 127.0.0.1:2181
   consumer:
-    registryIDs: 
+    registry-ids: 
       - demoZK
     references:
       UserProvider: 
@@ -729,11 +729,11 @@ dubbo:
       name: dubbo
       port: 20000
   provider:
-    registryIDs:
+    registry-ids:
       - demoZK
     services:
       UserProvider:
-        protocol: dubbo # 或者改成 tri, 下一行增加 serialization: hessian2
+        protocol-ids: dubbo # 或者改成 tri, 下一行增加 serialization: hessian2
         interface: org.apache.dubbo.UserProvider
   logger:
     zap-config:

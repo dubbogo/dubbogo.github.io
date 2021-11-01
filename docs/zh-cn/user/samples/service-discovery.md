@@ -25,7 +25,7 @@ dubbo:
     protocol: nacos # 元数据中心可选nacos/zk
     address: 127.0.0.1:8848
   consumer:
-    registryIDs:
+    registry-ids:
       - demoZK
     references:
       GreeterClientImpl:
@@ -52,12 +52,14 @@ dubbo:
       name: tri
       port: 20000
   provider:
-    registryIDs:
+    registry-ids:
       - demoZK
     services:
       GreeterProvider:
-        protocolIDs: triple
+        protocol-ids: triple
         interface: com.apache.dubbo.sample.basic.IGreeter 
 ```
 
 相比于常规配置，定义好registry-type: service, 并且定义好元数据中心后，将会使用应用级服务注册/服务发现。
+
+下一章: [【路由规则】](./mesh_router.html)

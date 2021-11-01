@@ -74,7 +74,7 @@ Dubbogo 3.0 版本支持的注册中心类型如下：
 
 ### 使用配置 API
 
-- 客户端使用配置 API 设置注册中心=
+- 客户端使用配置 API 设置注册中心
 
 可通过调用config.NewRegistryConfigWithProtocolDefaultPort方法，快速设置用于调试的注册中心，支持zookeeper(127.0.0.1:2181) 和nacos(127.0.0.1:8848)
 
@@ -148,7 +148,7 @@ rc := config.NewRootConfigBuilder().
 ```yaml
 dubbo:
   registries:
-    demoZK: # define registryID 'demoZK'
+    demoZK: # define registry-id 'demoZK'
       protocol: zookeeper # set registry protocol
       timeout: 3s
       address: 127.0.0.1:2181
@@ -157,15 +157,15 @@ dubbo:
       name: tri
       port: 20000
   provider:
-    registryIDs:
-      - demoZK # use registryID 'demoZK'
+    registry-ids:
+      - demoZK # use registry-id 'demoZK'
     services:
       GreeterProvider:
-        protocolIDs: triple
+        protocol-ids: triple
         interface: com.apache.dubbo.sample.basic.IGreeter 
   consumer:
-    registryIDs:
-      - demoZK # use registryID 'demoZK'
+    registry-ids:
+      - demoZK # use registry-id 'demoZK'
     references:
       GreeterClientImpl:
         protocol: tri

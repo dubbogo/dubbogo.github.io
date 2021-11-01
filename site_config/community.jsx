@@ -231,7 +231,7 @@ export default {
         {
           img: '/img/documents.png',
           title: '文档',
-          content: <span>优化Dubbo <a href="/zh-cn/docs/user/quick-start.html"> 文档</a>。</span>,
+          content: <span>优化Dubbo <a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html"> 文档</a>。</span>,
         },
         {
           img: '/img/pullrequest.png',

@@ -141,12 +141,20 @@ export default {
                                 link: '/zh-cn/docs/user/samples/custom-logger.html'
                             },
                             {
+                                title: 'Metrics 数据上报',
+                                link: '/zh-cn/docs/user/samples/metrics.html'
+                            },
+                            {
                                 title: '泛化调用',
                                 link: '/zh-cn/docs/user/samples/generic.html'
                             },
                             {
                                 title: '应用级服务发现',
                                 link: '/zh-cn/docs/user/samples/service-discovery.html'
+                            },
+                            {
+                                title: '路由规则',
+                                link: '/zh-cn/docs/user/samples/mesh_router.html'
                             }
                         ]
                     },

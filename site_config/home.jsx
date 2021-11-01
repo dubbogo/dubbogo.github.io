@@ -45,7 +45,7 @@ export default {
       img: '/img/quick_start.png',
       button: {
         text: '阅读更多',
-        link: '/zh-cn/docs/user/quick-start.html',
+        link: '/zh-cn/docs/user/quickstart/3.0/quickstart.html',
       },
     },
     // blogs: {

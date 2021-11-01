@@ -22,23 +22,32 @@ description: Dubbogo的配置
 
 ![](../../pic/3.0/config-consumer-config.png)
 
-### 1.2 全部配置例子
+### 1.2 配置例子
 
 ```yaml
 dubbo:
-  application:
+  application: # 应用配置
     name: dubbo-go
     module: local
-    version: 1.0.0
+    version: 1.0.0 
     owner: zhaoyunxing
+    organization: dubbo-go 
+    metadata-type: local # 元数据上报方式，默认为本地
+  metadata-report: # 元数据上报配置, 不包含此字段则不开启元数据上报，应用级服务发现依赖此字段，参考例子：https://github.com/apache/dubbo-go-samples/tree/master/registry/servicediscovery
+    protocol: nacos # 元数据上报方式，支持nacos/zookeeper 
+    address: 127.0.0.1:8848 
+    username: ""
+    password: ""
+    timeout: "3s"
+    group: "dubbo"
   protocols:
-    tripleProtocol:
-      name: tri
+    tripleProtocol: # triple协议定义，参考例子https://github.com/apache/dubbo-go-samples/tree/master/rpc/tri
+      name: tri # 网络协议，支持tri/dubbo/jsonrpc/grpc
       port: 20001
-    dubboProtocol:
+    dubboProtocol:  # dubbo协议定义，参考例子https://github.com/apache/dubbo-go-samples/tree/master/rpc/dubbo
       name: dubbo
       port: 20000
-      params:
+      params: # dubbo 传输层配置，此字段不配置则使用协议默认值
         reconnect-interval: 0
         connection-number: 1
         heartbeat-period: 5s
@@ -59,8 +68,8 @@ dubbo:
           wait-timeout: 1s
           max-msg-len: 1024000
           session-name: client
-  center-config:
-    protocol: nacos
+  config-center: # 配置中心，参考例子：https://github.com/apache/dubbo-go-samples/tree/master/configcenter
+    protocol: nacos # 支持 nacos/zookeeper/apollo
     address: 127.0.0.1:8848
     group: dubbo
     namespace: dubbo
@@ -68,33 +77,52 @@ dubbo:
     params:
       username: nacos
       password: 123456
-  registries:
+  registries: # 注册中心配置，参考例子 https://github.com/apache/dubbo-go-samples/tree/master/metrics
     zk:
       protocol: zookeeper
       timeout: 3s
       address: 127.0.0.1:2181
     nacos:
       timeout: 5s
-      address: nacos://127.0.0.1:8848
-  consumer:
-    registryIDs: zk
+      address: 127.0.0.1:8848
+    etcd:
+      address: 127.0.0.1:2379
+  consumer: # 客户端配置
+    request_timeout: 3s
+    filter: myClientFilter # 客户端 filters name，多个则逗号隔开
+    registry-ids: zk # 使用上面定义的注册中心id
+    max-wait-time-for-service-discovery: 3s # 服务发现最长等待时间
     references:
       GreeterImpl:
         protocol: dubboProtocol
-        serialization: hessian2
-        interface: com.apache.dubbo.sample.basic.IGreeter
-  provider:
-    register: true
-    registryIDs: zk
+        serialization: hessian2 # 序列化方式
+        interface: com.apache.dubbo.sample.basic.IGreeter # 接口名，需要与服务端一致
+  provider: # 服务端配置
+    registry-ids: zk # 使用上面定义的注册中心id
     services:
       DubboGreeterImpl:
-        protocolIDs: dubboProtocol
-        serialization: hessian2
-        interface: com.apache.dubbo.sample.basic.IGreeter
+        filter: myServerFilter, myServerFilter2 # server filters name 
+        protocol-ids: dubboProtocol # 使用上面定义的协议id
+        serialization: hessian2 # hessian 序列化方式
+        interface: com.apache.dubbo.sample.basic.IGreeter # 接口名，需要与客户端一致
       TripleGreeterImpl:
-        protocolIDs: tripleProtocol
-        serialization: protobuf
-        interface: com.apache.dubbo.sample.basic.TripleService
+        protocol-ids: tripleProtocol # 使用上面定义的协议id
+        serialization: protobuf # pb 序列化方式
+        interface: com.apache.dubbo.sample.basic.TripleService # 接口名，需要与客户端一致
+  logger: # 日志配置，参考例子：https://github.com/apache/dubbo-go-samples/tree/master/logger
+    zap-config:
+      level: info # 日志级别
+    lumberjack-config: 
+      filename: logs.log # 文件输出目录
+      maxSize: 1
+      maxAge: 3
+      maxBackups: 5
+      localTime: true
+      compress: false
+   metrics: # 数据上报配置，参考例子：https://github.com/apache/dubbo-go-samples/tree/master/metrics
+     enable: true # 数据上报开关，默认开启
+     path: /custom-metrics-path # 拉模式数据上报本地监听path 默认/metrics
+     port: 9091 # 拉模式数据上报本地监听端口，默认9090
  
 ```
 
@@ -115,9 +143,6 @@ func main() {
     if err := config.Load(); err != nil {
         panic(err)
     }
-    
-    // waiting for service discovery finished
-    time.Sleep(3 * time.Second)
     
     logger.Info("start to test dubbo")
     req := &api.HelloRequest{
@@ -155,9 +180,6 @@ func main() {
         panic(err)
     }
     
-    // waiting for service discovery
-    time.Sleep(time.Second*3)
-    
     // run rpc invocation
     testSayHello()
 }
@@ -190,7 +212,7 @@ rc := config.NewRootConfigBuilder().
 
 Dubbogo 服务框架支持将配置文件 'dubbogo.yml' 的内容预先放入配置中心，再通过配置注册中心的地址。在本地 dubbogo.yml 配置文件内只需写入配置中心的信息即可，目前支持作为配置中心的中间件有：apollo、nacos、zookeeper
 
-可参考[配置中心Samples](https://github.com/apache/dubbo-go-samples/tree/master/configcenter)
+可参考[配置中心Samples](https://github.com/apache/dubbo-go-samples/tree/master/configcenter)，凡是正确配置了config-center 配置的服务，都会优先从配置中心加载整个配置文件。
 
 ```yaml
 dubbo:
@@ -200,6 +222,7 @@ dubbo:
     app-id: demo_server
     cluster: default
     namespace: demo-provider-config
+# 框架从apollo配置中最更新对应位置加载配置文件，并根据该配置文件启动
 ```
 
 下一章：[【Dubbogo Samples 介绍】](../samples/samples_repo.html)
