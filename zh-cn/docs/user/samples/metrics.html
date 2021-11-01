@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="dubbogo 数据上报" />
+	<meta name="description" content="提示用户dubbo使用的数据上报方式" />
+	<!-- 网页标签标题 -->
+	<title>Dubbo-go 数据上报</title>
+	<link rel="shortcut icon" href="/img/dubbo.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><span>文档</span><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Dubbo-go 3.0</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>简介<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/preface/3.0_feature.html" target="_self">新特性介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/preface/architecture.html" target="_self">架构</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html" target="_self">快速开始</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>基本概念<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/app_and_interface.html" target="_self">服务层级</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/protocol.html" target="_self">网络协议</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/registry.html" target="_self">注册中心</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/configuration.html" target="_self">框架配置</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>高级使用<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/samples_repo.html" target="_self">Samples 仓库介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/go_java_interactive.html" target="_self">Go-Java 互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/config-center-dynamic.html" target="_self">配置中心和配置监听</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-filter.html" target="_self">Filter</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-logger.html" target="_self">日志</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/metrics.html" target="_self">Metrics 数据上报</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/generic.html" target="_self">泛化调用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/service-discovery.html" target="_self">应用级服务发现</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/mesh_router.html" target="_self">路由规则</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开发者指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/developer/design.html" target="_self">框架设计</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>Dubbo-go 1.5</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/1.5/quick-start.html" target="_self">快速开始</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/configuration/provider.html" target="_self">服务提供者</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/configuration/client.html" target="_self">消费者</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>Dubbo-go 生态项目</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/ecology/ecology.html" target="_self">Dubbo-go 生态项目</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Dubbogo 3.0 数据上报</h1>
+<p>参考Samples： <a href="https://github.com/apache/dubbo-go-samples/tree/master/metrics">dubbo-go-samples/metrics</a></p>
+<h2>1. 数据上报配置</h2>
+<p>在不指定 metrics: 字段的时候，默认开启拉模式 prometheus 数据上报，端口默认为9090，监听path默认为/metrics。可参考如下服务端配置例子来定制化。</p>
+<pre><code class="language-yaml"><span class="hljs-attr">dubbo:</span>
+  <span class="hljs-attr">application:</span>
+    <span class="hljs-attr">version:</span> <span class="hljs-number">3.0</span><span class="hljs-number">.0</span><span class="hljs-string">-rc3</span> <span class="hljs-comment"># 版本号</span>
+  <span class="hljs-attr">metrics:</span>
+    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># default is true</span>
+    <span class="hljs-attr">path:</span> <span class="hljs-string">/custom-metrics-path</span> <span class="hljs-comment"># default is /metrics</span>
+    <span class="hljs-attr">port:</span> <span class="hljs-number">9091</span> <span class="hljs-comment"># default is 9090</span>
+    <span class="hljs-attr">namespace:</span> <span class="hljs-string">dubbo</span> <span class="hljs-comment"># default is dubbo 作为数据上报 metrics 的前缀</span>
+  <span class="hljs-attr">registries:</span>
+    <span class="hljs-attr">myzk:</span>
+      <span class="hljs-attr">protocol:</span> <span class="hljs-string">zookeeper</span>
+      <span class="hljs-attr">address:</span> <span class="hljs-string">localhost:2181</span>
+  <span class="hljs-attr">protocols:</span>
+    <span class="hljs-attr">triple:</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span>
+      <span class="hljs-attr">port:</span> <span class="hljs-number">20000</span>
+  <span class="hljs-attr">provider:</span>
+    <span class="hljs-attr">registry-ids:</span> <span class="hljs-string">myzk</span>
+    <span class="hljs-attr">services:</span>
+      <span class="hljs-attr">GreeterProvider:</span>
+        <span class="hljs-attr">group:</span> <span class="hljs-string">dubbo-go</span>  <span class="hljs-comment"># 所属 group，需要与客户端一致</span>
+        <span class="hljs-attr">protocol-ids:</span> <span class="hljs-string">triple</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">com.apache.dubbo.HelloService</span>  <span class="hljs-comment"># 接口名</span>
+</code></pre>
+<h2>2. 默认数据上报指标</h2>
+<p>本地启动上述服务端后，可于 localhost:9091/custom-metrics-path 收集到默认数据指标，包含gc、goroutine数目，内存占用情况等。</p>
+<pre><code class="language-yaml"><span class="hljs-comment"># HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.</span>
+<span class="hljs-comment"># TYPE go_gc_duration_seconds summary</span>
+<span class="hljs-string">go_gc_duration_seconds{quantile="0"}</span> <span class="hljs-number">3.0916e-05</span>
+<span class="hljs-string">go_gc_duration_seconds{quantile="0.25"}</span> <span class="hljs-number">3.0916e-05</span>
+<span class="hljs-string">go_gc_duration_seconds{quantile="0.5"}</span> <span class="hljs-number">3.1167e-05</span>
+<span class="hljs-string">go_gc_duration_seconds{quantile="0.75"}</span> <span class="hljs-number">0.000164084</span>
+<span class="hljs-string">go_gc_duration_seconds{quantile="1"}</span> <span class="hljs-number">0.000164084</span>
+<span class="hljs-string">go_gc_duration_seconds_sum</span> <span class="hljs-number">0.000226167</span>
+<span class="hljs-string">go_gc_duration_seconds_count</span> <span class="hljs-number">3</span>
+<span class="hljs-comment"># HELP go_goroutines Number of goroutines that currently exist.</span>
+<span class="hljs-comment"># TYPE go_goroutines gauge</span>
+<span class="hljs-string">go_goroutines</span> <span class="hljs-number">25</span>
+<span class="hljs-comment"># HELP go_info Information about the Go environment.</span>
+<span class="hljs-comment"># TYPE go_info gauge</span>
+<span class="hljs-string">go_info{version="go1.17.2"}</span> <span class="hljs-number">1</span>
+<span class="hljs-comment"># HELP go_memstats_alloc_bytes Number of bytes allocated and still in use.</span>
+<span class="hljs-comment"># TYPE go_memstats_alloc_bytes gauge</span>
+<span class="hljs-string">go_memstats_alloc_bytes</span> <span class="hljs-number">6.195808e+06</span>
+<span class="hljs-comment"># HELP go_memstats_alloc_bytes_total Total number of bytes allocated, even if freed.</span>
+<span class="hljs-comment"># TYPE go_memstats_alloc_bytes_total counter</span>
+<span class="hljs-string">go_memstats_alloc_bytes_total</span> <span class="hljs-number">9.482768e+06</span>
+<span class="hljs-comment"># HELP go_memstats_buck_hash_sys_bytes Number of bytes used by the profiling bucket hash table.</span>
+<span class="hljs-comment"># TYPE go_memstats_buck_hash_sys_bytes gauge</span>
+<span class="hljs-string">go_memstats_buck_hash_sys_bytes</span> <span class="hljs-number">1.449179e+06</span>
+<span class="hljs-comment"># HELP go_memstats_frees_total Total number of frees.</span>
+<span class="hljs-comment"># TYPE go_memstats_frees_total counter</span>
+<span class="hljs-string">go_memstats_frees_total</span> <span class="hljs-number">29419</span>
+<span class="hljs-comment"># HELP go_memstats_gc_cpu_fraction The fraction of this program's available CPU time used by the GC since the program started.</span>
+<span class="hljs-comment"># TYPE go_memstats_gc_cpu_fraction gauge</span>
+<span class="hljs-string">go_memstats_gc_cpu_fraction</span> <span class="hljs-number">0.022937924367975027</span>
+<span class="hljs-comment"># HELP go_memstats_gc_sys_bytes Number of bytes used for garbage collection system metadata.</span>
+<span class="hljs-comment"># TYPE go_memstats_gc_sys_bytes gauge</span>
+<span class="hljs-string">go_memstats_gc_sys_bytes</span> <span class="hljs-number">5.235864e+06</span>
+<span class="hljs-comment"># HELP go_memstats_heap_alloc_bytes Number of heap bytes allocated and still in use.</span>
+<span class="hljs-comment"># TYPE go_memstats_heap_alloc_bytes gauge</span>
+<span class="hljs-string">go_memstats_heap_alloc_bytes</span> <span class="hljs-number">6.195808e+06</span>
+<span class="hljs-comment"># HELP go_memstats_heap_idle_bytes Number of heap bytes waiting to be used.</span>
+<span class="hljs-comment"># TYPE go_memstats_heap_idle_bytes gauge</span>
+<span class="hljs-string">go_memstats_heap_idle_bytes</span> <span class="hljs-number">3.792896e+06</span>
+<span class="hljs-comment"># HELP go_memstats_heap_inuse_bytes Number of heap bytes that are in use.</span>
+<span class="hljs-comment"># TYPE go_memstats_heap_inuse_bytes gauge</span>
+<span class="hljs-string">go_memstats_heap_inuse_bytes</span> <span class="hljs-number">8.036352e+06</span>
+<span class="hljs-comment"># HELP go_memstats_heap_objects Number of allocated objects.</span>
+<span class="hljs-comment"># TYPE go_memstats_heap_objects gauge</span>
+<span class="hljs-string">go_memstats_heap_objects</span> <span class="hljs-number">16489</span>
+<span class="hljs-comment"># HELP go_memstats_heap_released_bytes Number of heap bytes released to OS.</span>
+<span class="hljs-comment"># TYPE go_memstats_heap_released_bytes gauge</span>
+<span class="hljs-string">go_memstats_heap_released_bytes</span> <span class="hljs-number">3.416064e+06</span>
+<span class="hljs-comment"># HELP go_memstats_heap_sys_bytes Number of heap bytes obtained from system.</span>
+<span class="hljs-comment"># TYPE go_memstats_heap_sys_bytes gauge</span>
+<span class="hljs-string">go_memstats_heap_sys_bytes</span> <span class="hljs-number">1.1829248e+07</span>
+<span class="hljs-comment"># HELP go_memstats_last_gc_time_seconds Number of seconds since 1970 of last garbage collection.</span>
+<span class="hljs-comment"># TYPE go_memstats_last_gc_time_seconds gauge</span>
+<span class="hljs-string">go_memstats_last_gc_time_seconds</span> <span class="hljs-number">1.635778234064745e+09</span>
+<span class="hljs-comment"># HELP go_memstats_lookups_total Total number of pointer lookups.</span>
+<span class="hljs-comment"># TYPE go_memstats_lookups_total counter</span>
+<span class="hljs-string">go_memstats_lookups_total</span> <span class="hljs-number">0</span>
+<span class="hljs-comment"># HELP go_memstats_mallocs_total Total number of mallocs.</span>
+<span class="hljs-comment"># TYPE go_memstats_mallocs_total counter</span>
+<span class="hljs-string">go_memstats_mallocs_total</span> <span class="hljs-number">45908</span>
+<span class="hljs-comment"># HELP go_memstats_mcache_inuse_bytes Number of bytes in use by mcache structures.</span>
+<span class="hljs-comment"># TYPE go_memstats_mcache_inuse_bytes gauge</span>
+<span class="hljs-string">go_memstats_mcache_inuse_bytes</span> <span class="hljs-number">9600</span>
+<span class="hljs-comment"># HELP go_memstats_mcache_sys_bytes Number of bytes used for mcache structures obtained from system.</span>
+<span class="hljs-comment"># TYPE go_memstats_mcache_sys_bytes gauge</span>
+<span class="hljs-string">go_memstats_mcache_sys_bytes</span> <span class="hljs-number">16384</span>
+<span class="hljs-comment"># HELP go_memstats_mspan_inuse_bytes Number of bytes in use by mspan structures.</span>
+<span class="hljs-comment"># TYPE go_memstats_mspan_inuse_bytes gauge</span>
+<span class="hljs-string">go_memstats_mspan_inuse_bytes</span> <span class="hljs-number">116144</span>
+<span class="hljs-comment"># HELP go_memstats_mspan_sys_bytes Number of bytes used for mspan structures obtained from system.</span>
+<span class="hljs-comment"># TYPE go_memstats_mspan_sys_bytes gauge</span>
+<span class="hljs-string">go_memstats_mspan_sys_bytes</span> <span class="hljs-number">131072</span>
+<span class="hljs-comment"># HELP go_memstats_next_gc_bytes Number of heap bytes when next garbage collection will take place.</span>
+<span class="hljs-comment"># TYPE go_memstats_next_gc_bytes gauge</span>
+<span class="hljs-string">go_memstats_next_gc_bytes</span> <span class="hljs-number">7.935184e+06</span>
+<span class="hljs-comment"># HELP go_memstats_other_sys_bytes Number of bytes used for other system allocations.</span>
+<span class="hljs-comment"># TYPE go_memstats_other_sys_bytes gauge</span>
+<span class="hljs-string">go_memstats_other_sys_bytes</span> <span class="hljs-number">1.426069e+06</span>
+<span class="hljs-comment"># HELP go_memstats_stack_inuse_bytes Number of bytes in use by the stack allocator.</span>
+<span class="hljs-comment"># TYPE go_memstats_stack_inuse_bytes gauge</span>
+<span class="hljs-string">go_memstats_stack_inuse_bytes</span> <span class="hljs-number">753664</span>
+<span class="hljs-comment"># HELP go_memstats_stack_sys_bytes Number of bytes obtained from system for stack allocator.</span>
+<span class="hljs-comment"># TYPE go_memstats_stack_sys_bytes gauge</span>
+<span class="hljs-string">go_memstats_stack_sys_bytes</span> <span class="hljs-number">753664</span>
+<span class="hljs-comment"># HELP go_memstats_sys_bytes Number of bytes obtained from system.</span>
+<span class="hljs-comment"># TYPE go_memstats_sys_bytes gauge</span>
+<span class="hljs-string">go_memstats_sys_bytes</span> <span class="hljs-number">2.084148e+07</span>
+<span class="hljs-comment"># HELP go_threads Number of OS threads created.</span>
+<span class="hljs-comment"># TYPE go_threads gauge</span>
+<span class="hljs-string">go_threads</span> <span class="hljs-number">12</span>
+</code></pre>
+<h2>3. 调用指标 RT</h2>
+<p>启动例子中的客户端，经过几次调用后，会发现增加了对应的数据指标，以默认namespace dubbo 为前缀。</p>
+<pre><code class="language-yaml"><span class="hljs-comment"># HELP dubbo_provider_service_rt </span>
+<span class="hljs-comment"># TYPE dubbo_provider_service_rt gauge</span>
+<span class="hljs-string">dubbo_provider_service_rt{group="dubbo-go",method="SayHello",service="com.apache.dubbo.HelloService",timeout="",version="3.0.0-rc3"}</span> <span class="hljs-number">127542</span>
+</code></pre>
+<p>可看到对应接口名、方法名的请求rt时间。该部分调用指标待后续完善。</p>
+<h2>4. 手动数据上报</h2>
+<p>可在业务代码中调用API进行手动数据上报。支持Counter、Summary、Gauge 类型，并支持多个标签。上报后即可收集。</p>
+<pre><code class="language-go"><span class="hljs-keyword">import</span> <span class="hljs-string">"dubbo.apache.org/dubbo-go/v3/metrics/prometheus"</span>
+
+<span class="hljs-keyword">for</span> {
+		<span class="hljs-comment">// metrics refresh per second</span>
+		time.Sleep(time.Second)
+		prometheus.IncSummary(<span class="hljs-string">"test_summary"</span>, rand.Float64())
+		prometheus.IncSummaryWithLabel(<span class="hljs-string">"test_summary_with_label"</span>, rand.Float64(), <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>{
+			<span class="hljs-string">"summarylabel1"</span>: <span class="hljs-string">"value1"</span>, <span class="hljs-comment">// label and value for this summary</span>
+			<span class="hljs-string">"summarylabel2"</span>: <span class="hljs-string">"value2"</span>,
+		})
+
+		prometheus.IncCounter(<span class="hljs-string">"test_counter"</span>)
+		prometheus.IncCounterWithLabel(<span class="hljs-string">"test_counter_with_label"</span>, <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>{
+			<span class="hljs-string">"counterlabel1"</span>: <span class="hljs-string">"value1"</span>, <span class="hljs-comment">// label and value for this counter</span>
+			<span class="hljs-string">"counterlabel2"</span>: <span class="hljs-string">"value2"</span>,
+		})
+
+		prometheus.SetGauge(<span class="hljs-string">"test_gauge"</span>, rand.Float64())
+		prometheus.SetGaugeWithLabel(<span class="hljs-string">"test_gauge_with_label"</span>, rand.Float64(), <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>{
+			<span class="hljs-string">"gaugelabel1"</span>: <span class="hljs-string">"value1"</span>,
+			<span class="hljs-string">"gaugelabel2"</span>: <span class="hljs-string">"value2"</span>,
+		})
+	}
+</code></pre>
+<p>运行一段时间后，可以收集到如下用户定义指标</p>
+<pre><code class="language-yaml"><span class="hljs-comment"># HELP dubbo_test_counter </span>
+<span class="hljs-comment"># TYPE dubbo_test_counter counter</span>
+<span class="hljs-string">dubbo_test_counter</span> <span class="hljs-number">463</span>
+<span class="hljs-comment"># HELP dubbo_test_counter_with_label </span>
+<span class="hljs-comment"># TYPE dubbo_test_counter_with_label counter</span>
+<span class="hljs-string">dubbo_test_counter_with_label{counterlabel1="value1",counterlabel2="value2"}</span> <span class="hljs-number">463</span>
+<span class="hljs-comment"># HELP dubbo_test_gauge </span>
+<span class="hljs-comment"># TYPE dubbo_test_gauge gauge</span>
+<span class="hljs-string">dubbo_test_gauge</span> <span class="hljs-number">0.7402836247772934</span>
+<span class="hljs-comment"># HELP dubbo_test_gauge_with_label </span>
+<span class="hljs-comment"># TYPE dubbo_test_gauge_with_label gauge</span>
+<span class="hljs-string">dubbo_test_gauge_with_label{gaugelabel1="value1",gaugelabel2="value2"}</span> <span class="hljs-number">0.8360973807546456</span>
+<span class="hljs-comment"># HELP dubbo_test_summary </span>
+<span class="hljs-comment"># TYPE dubbo_test_summary summary</span>
+<span class="hljs-string">dubbo_test_summary_sum</span> <span class="hljs-number">228.1800106582441</span>
+<span class="hljs-string">dubbo_test_summary_count</span> <span class="hljs-number">463</span>
+<span class="hljs-comment"># HELP dubbo_test_summary_with_label </span>
+<span class="hljs-comment"># TYPE dubbo_test_summary_with_label summary</span>
+<span class="hljs-string">dubbo_test_summary_with_label{summarylabel1="value1",summarylabel2="value2",quantile="0.5"}</span> <span class="hljs-number">0.5174757569778469</span>
+<span class="hljs-string">dubbo_test_summary_with_label{summarylabel1="value1",summarylabel2="value2",quantile="0.75"}</span> <span class="hljs-number">0.734268575017709</span>
+<span class="hljs-string">dubbo_test_summary_with_label{summarylabel1="value1",summarylabel2="value2",quantile="0.9"}</span> <span class="hljs-number">0.9059918694279894</span>
+<span class="hljs-string">dubbo_test_summary_with_label{summarylabel1="value1",summarylabel2="value2",quantile="0.98"}</span> <span class="hljs-number">0.9761803018478838</span>
+<span class="hljs-string">dubbo_test_summary_with_label{summarylabel1="value1",summarylabel2="value2",quantile="0.99"}</span> <span class="hljs-number">0.9820270046489341</span>
+<span class="hljs-string">dubbo_test_summary_with_label{summarylabel1="value1",summarylabel2="value2",quantile="0.999"}</span> <span class="hljs-number">0.9986025122460248</span>
+<span class="hljs-string">dubbo_test_summary_with_label_sum{summarylabel1="value1",summarylabel2="value2"}</span> <span class="hljs-number">233.609026131067</span>
+<span class="hljs-string">dubbo_test_summary_with_label_count{summarylabel1="value1",summarylabel2="value2"}</span> <span class="hljs-number">463</span>
+</code></pre>
+<p>下一章: <a href="./generic.html">【泛化调用】</a></p>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><img class="apache" src="/img/apache_logo.png"/><div class="cols-container"><div class="col col-12"><h3></h3><p></p></div><div class="col col-4"><dl><dt>ASF</dt><dd><a href="http://www.apache.org" target="_self">基金会</a></dd><dd><a href="http://www.apache.org/licenses/" target="_self">证书</a></dd><dd><a href="http://www.apache.org/events/current-event" target="_self">事件</a></dd><dd><a href="http://www.apache.org/foundation/sponsorship.html" target="_self">赞助</a></dd><dd><a href="http://www.apache.org/foundation/thanks.html" target="_self">致谢</a></dd></dl></div><div class="col col-4"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/user/quickstart/3.0/quickstart.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/dev/build.html" target="_self">开发者指南</a></dd><dd><a href="/zh-cn/docs/admin/ops/dubbo-ops.html" target="_self">运维管理</a></dd><dd><a href="https://github.com/dubbogo/dubbogo.github.io/issues/new" target="_self">报告文档问题</a></dd><dd><a href="https://github.com/dubbogo/dubbogo.github.io" target="_self">编辑此文档</a></dd></dl></div><div class="col col-4"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.apache.org/security" target="_self">安全</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018-2020 The Apache Software Foundation. Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+  <script src="/build/documentation.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112489517-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-112489517-1');
+	</script>
+</body>
+</html>

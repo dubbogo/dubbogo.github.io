@@ -93,13 +93,13 @@ dubbo:
 ```yaml
 dubbo:
   protocols:
-    triple: # define protcolID 'triple'
+    triple: # define protcol-id 'triple'
       name: tri # set protcol to tri
       port: 20000 # set port to be listened
   provider:
     services:
       GreeterProvider:
-        protocolIDs: triple # use protcolID named 'triple'
+        protocol-ids: triple # use protocol-ids named 'triple'
         interface: com.apache.dubbo.sample.basic.IGreeter
 ```
 

@@ -10,7 +10,9 @@ description: 快速上手dubbo-go3.0，编写一个简单的helloworld应用
 
 ### 1.1 安装Go语言环境
 
-go version >= go 1.11
+建议使用最新版 go 1.17
+
+go version >= go 1.13
 
 [【Go 语言官网下载地址】](https://golang.google.cn/)
 
@@ -20,28 +22,29 @@ go version >= go 1.11
 
 [【protoc 下载地址】](https://github.com/protocolbuffers/protobuf/releases)
 
-### 1.3 安装 proto-gen-triple 编译插件
+### 1.3 安装 protoc-gen-go, proto-gen-go-triple 编译插件
 
  ```shell
 export GO111MODULE="on"
-export GOPROXY="http://goproxy.io"
-go get -u github.com/dubbogo/tools/cmd/protoc-gen-triple
+export GOPROXY="https://goproxy.cn"
+go install github.com/golang/protobuf/protoc-gen-go@latest 
+go install github.com/dubbogo/tools/cmd/protoc-gen-go-triple@latest
  ```
 
-确保上述protoc 和 protoc-gen-triple在系统环境变量内
+确保上述protoc 和安装的 protoc-gen-go-triple 位于$(GOPATH)/bin, 在系统环境变量内
 
 ```bash
 $ protoc --version
 libprotoc 3.14.0
-$  protoc-gen-triple
-WARNING: Package "github.com/golang/protobuf/protoc-gen-go/generator" is deprecated.
-        A future release of golang/protobuf will delete this package,
-        which has long been excluded from the compatibility promise.
+$ protoc-gen-go --version
+protoc-gen-go: unknown argument "--version" (this program should be run by protoc, not directly)
+$ protoc-gen-go-triple --version
+protoc-gen-go-triple 1.0.0
 ```
 
 ### 1.4 启动zookeeper
 
-选择您喜欢的方式启动zk，如您安装docker-compose可直接从文件启动
+选择您喜欢的方式启动zk，如您安装docker-compose可直接从文件启动: 
 
 zookeeper.yml:
 
@@ -65,21 +68,21 @@ docker-compose -f ./zookeeper.yml up -d
 
 ```protobuf
 syntax = "proto3";
-package api;
+
+option go_package="./;api"; // 必须填写，这里的意义为：生成代码在./（当前目录） 使用'api'作为package名
 
 // The greeting service definition.
 service Greeter {
-  // Sends a greeting
   rpc SayHello (HelloRequest) returns (User) {}
   rpc SayHelloStream (stream HelloRequest) returns (stream User) {}
 }
 
-// The request message containing the user's name.
+// The request message
 message HelloRequest {
   string name = 1;
 }
 
-// The response message containing the greetings
+// The response message
 message User {
   string name = 1;
   string id = 2;
@@ -87,23 +90,34 @@ message User {
 }
 ```
 
-### 2.2 使用安装好的编译工具编译接口
+### 2.2 使用安装好的编译工具编译接
+
+参数意义：`--go_out=.` 使用上述安装的 `protoc-gen-go` 插件，生成文件到当前目录，`--go-triple_out=.`使用上述安装的 `protoc-gen-go-triple` 插件，生成文件到当前目录。
 
 ```bash
-protoc -I . helloworld.proto --triple_out=plugins=triple:.
+protoc --go_out=. --go-triple_out=. ./helloworld.proto
 ```
 
-将生成 helloworld.pb.go 文件
+执行该指令后，会生成两个文件，分别是helloworld.pb (包含 proto 结构) 和 helloworld_triple.pb.go (包含 triple 协议接口)。
+
+代码生成和使用方式与 grpc 类似。
 
 ## 3. 开启一次RPC调用
 
-新建一个项目，运行 ` go mod init dubbo3-demo `
-
 建立如下文件目录：
 
-![](../../../pic/3.0/overview.png)
+```text
+quickstart
+├── api
+│   ├── helloworld.pb.go
+│   ├── helloworld.proto
+│   └── helloworld_triple.pb.go
+├── client
+│   └── client.go
+└── server
+    └── server.go
 
-
+```
 
 client.go文件：
 
@@ -112,7 +126,6 @@ package main
 
 import (
 	"context"
-	"time"
 )
 
 import (
@@ -149,9 +162,6 @@ func main() {
 	if err := rc.Init(); err != nil{
 		panic(err)
 	}
-
-	// waiting for service discovery
-	time.Sleep(time.Second*3)
 
 	// run rpc invocation
 	testSayHello()
@@ -216,7 +226,7 @@ func main() {
 }
 
 type GreeterProvider struct {
-	api.GreeterProviderBase
+	api.UnimplementedGreeterServer
 }
 
 func (s *GreeterProvider) SayHelloStream(svr api.Greeter_SayHelloStreamServer) error {
@@ -255,17 +265,33 @@ func (s *GreeterProvider) SayHello(ctx context.Context, in *api.HelloRequest) (*
 }
 ```
 
-执行 `export GOPROXY="https://goproxy.cn" `设置PROXY
+quickstart 目录下，执行 `go mod init dubbo3-demo`
+
+如果弹出 go mod detected 弹窗，需要勾选 Enable Go modules integration ，设置GOPROXY，保证 Goland 可以正确拉取到依赖，方便开发。或者在设置中按照如下位置设置。
+
+![](../../../../../img/doc-module.png)
+
+命令行执行 `export GOPROXY="https://goproxy.cn" `设置PROXY
 
 执行`go mod tidy`
 
-执行 ` go get dubbo.apache.org/dubbo-go/v3@3.0 `更新依赖
+最终文件目录：
 
-如go get 3.0 分支出现错误，则查尝试更换网络环境或者代理
+```text
+quickstart
+├── api
+│   ├── helloworld.pb.go
+│   ├── helloworld.proto
+│   └── helloworld_triple.pb.go
+├── client
+│   └── client.go
+├── go.mod
+├── go.sum
+└── server
+    └── server.go
+```
 
-
-
-分别启动服务端和客户端。可在客户端看到输出：
+先后启动服务端和客户端（在 server 和 client 文件夹下分别执行 `go run .`) , 可在客户端看到输出：
 
 ```
  Receive user = {Name:Hello laurence Id:12345 Age:21 ...}
