@@ -67,7 +67,7 @@ dubbo:
 
 zookeeper 注册时，provider 端将接口信息注册在` /$(group)/$(interface)/providers` 节点，以上面配置为例，注册的 zk  path 为 `/myGroup/com.apache.dubbo.sample.basic.IGreeter/providers/`
 
-consumer 端注册在 /$(group)/$(interface)/consumer 作统计用。
+consumer 端注册在 /$(group)/$(interface)/consumers 作统计用。
 
 - **ETCD 注册中心**
 

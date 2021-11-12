@@ -29,8 +29,6 @@
     <span class="hljs-attr">protocol:</span> <span class="hljs-string">nacos</span> <span class="hljs-comment"># 元数据中心可选nacos/zk</span>
     <span class="hljs-attr">address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:8848</span>
   <span class="hljs-attr">consumer:</span>
-    <span class="hljs-attr">registry-ids:</span>
-      <span class="hljs-bullet">-</span> <span class="hljs-string">demoZK</span>
     <span class="hljs-attr">references:</span>
       <span class="hljs-attr">GreeterClientImpl:</span>
         <span class="hljs-attr">protocol:</span> <span class="hljs-string">tri</span>
@@ -53,11 +51,8 @@
       <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span>
       <span class="hljs-attr">port:</span> <span class="hljs-number">20000</span>
   <span class="hljs-attr">provider:</span>
-    <span class="hljs-attr">registry-ids:</span>
-      <span class="hljs-bullet">-</span> <span class="hljs-string">demoZK</span>
     <span class="hljs-attr">services:</span>
       <span class="hljs-attr">GreeterProvider:</span>
-        <span class="hljs-attr">protocol-ids:</span> <span class="hljs-string">triple</span>
         <span class="hljs-attr">interface:</span> <span class="hljs-string">com.apache.dubbo.sample.basic.IGreeter</span> 
 </code></pre>
 <p>相比于常规配置，定义好registry-type: service, 并且定义好元数据中心后，将会使用应用级服务注册/服务发现。</p>

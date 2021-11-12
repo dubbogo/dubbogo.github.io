@@ -116,11 +116,8 @@ err = dynamicConfiguration.PublishConfig(<span class="hljs-string">"dubbo.io.MES
       <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span>
       <span class="hljs-attr">port:</span> <span class="hljs-number">20000</span>
   <span class="hljs-attr">provider:</span>
-    <span class="hljs-attr">registry-ids:</span>
-      <span class="hljs-bullet">-</span> <span class="hljs-string">demoZK</span>
     <span class="hljs-attr">services:</span>
       <span class="hljs-attr">GreeterProvider:</span>
-        <span class="hljs-attr">protocol-ids:</span> <span class="hljs-string">triple</span>
         <span class="hljs-attr">interface:</span> <span class="hljs-string">com.apache.dubbo.sample.basic.IGreeter</span> <span class="hljs-comment"># must be compatible with grpc or dubbo-java</span>
         <span class="hljs-attr">params:</span>
           <span class="hljs-attr">env-sign:</span> <span class="hljs-string">zzz</span> <span class="hljs-comment"># server label, 对应 destination Rule中的testing，即兜底逻辑</span>

@@ -131,11 +131,8 @@ dubbo:
       name: tri
       port: 20000
   provider:
-    registry-ids:
-      - demoZK
     services:
       GreeterProvider:
-        protocol-ids: triple
         interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
         params:
           env-sign: zzz # server label, 对应 destination Rule中的testing，即兜底逻辑
