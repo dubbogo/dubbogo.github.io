@@ -10,7 +10,7 @@ description: go-java 3.0 互通示例
 
 ### 环境
 
-JDK 8，Golang >= 1.11，Dubbo 3.0.2，zookeeper 启动，
+JDK 8，Golang >= 1.15，Dubbo 3.0.2，zookeeper 启动，
 
 ### Go- Java 互通前提
 
@@ -89,7 +89,7 @@ JDK 8，Golang >= 1.11，Dubbo 3.0.2，zookeeper 启动，
   }
   ```
 
-  Go client (由protoc-gen-triple 根据 proto 文件自动生成)
+  Go client (由protoc-gen-go-triple 根据 proto 文件自动生成)
 
   ```go
   type GreeterClientImpl struct {
@@ -115,19 +115,23 @@ JDK 8，Golang >= 1.11，Dubbo 3.0.2，zookeeper 启动，
 
   
 
-- Java 的接口全名与Go service/reference 配置的 interface 一致
+- Java 的三元组与Go service/reference 配置的 interface 一致
+
+  三元组，即为接口级别配置的：interface, group, version。**其中需要注意，group 和 version 的概念为 dubbo 接口的 group 和vesion，在启动 dubbo-java 服务时配置于 spring cloud 的 properties 文件中，并非pom.xml 中 mvn 依赖的version。** group 和version 默认为空，在 dubbo-go 框架中，可以在service/reference 的对应位置指定 group 和 version。
 
   例如：
 
-  Java 的接口全名：com.apache.dubbo.sample.basic.IGreeter
+  Java 的接口全名：com.apache.dubbo.sample.basic.IGreeter，接口 version 为v1.0.1, group 为
 
   Go-client: 
 
   ```yaml
   references:
     GreeterClientImpl:
-    protocol: tri
-    interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
+      protocol: tri
+      interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
+      group: dubbogo # 需要与服务端对应 默认为空
+      version: v1.0.1 # 需要与服务端对应 默认为空
   ```
 
   Go-server:
@@ -135,9 +139,13 @@ JDK 8，Golang >= 1.11，Dubbo 3.0.2，zookeeper 启动，
   ```yaml
   services:
     GreeterProvider:
-    protocol-ids: tripleProtocol
-    interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
+      protocol-ids: tripleProtocol
+      interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
+      group: dubbogo # 需要与服务端对应 默认为空
+      version: v1.0.1 # 需要与服务端对应 默认为空
   ```
+
+
 
 ## 1. 基于 Triple 协议互通 (PB序列化)
 
@@ -302,11 +310,8 @@ dubbo:
   registries:
     demoZK:
       protocol: zookeeper
-      timeout: 3s
       address: 127.0.0.1:2181
   consumer:
-    registry-ids:
-      - demoZK
     references:
       GreeterClientImpl:
         protocol: tri
@@ -364,18 +369,14 @@ dubbo:
   registries:
     demoZK:
       protocol: zookeeper
-      timeout: 3s
       address: 127.0.0.1:2181
   protocols:
     triple:
       name: tri
       port: 20000
   provider:
-    registry-ids:
-      - demoZK
     services:
       GreeterProvider:
-        protocol-ids: triple
         interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java
 ```
 
@@ -656,8 +657,6 @@ dubbo:
       timeout: 3s
       address: 127.0.0.1:2181
   consumer:
-    registry-ids: # 使用注册中心ID
-      - demoZK
     references:
       UserProvider: # 存根类名
         protocol: dubbo # dubbo 协议，默认 hessian2 序列化方式
@@ -677,8 +676,6 @@ dubbo:
       timeout: 3s
       address: 127.0.0.1:2181
   consumer:
-    registry-ids: 
-      - demoZK
     references:
       UserProvider: 
         protocol: tri # triple 协议
@@ -722,18 +719,14 @@ dubbo:
   registries:
     demoZK:
       protocol: zookeeper
-      timeout: 3s
       address: 127.0.0.1:2181
   protocols:
     dubbo:
       name: dubbo
       port: 20000
   provider:
-    registry-ids:
-      - demoZK
     services:
       UserProvider:
-        protocol-ids: dubbo # 或者改成 tri, 下一行增加 serialization: hessian2
         interface: org.apache.dubbo.UserProvider
   logger:
     zap-config:

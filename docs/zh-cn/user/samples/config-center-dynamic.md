@@ -22,6 +22,8 @@ dubbo:
     protocol: nacos
     address: 127.0.0.1:8848
     data-id: dubbo-go-samples-configcenter-nacos-server
+    namespace: myNamespaceID # 可选配置  nacos namespace ID, 默认是 public
+    group: mygroup # 可选配置  nacos group, 默认是 DEFAULT_GROUP
 ```
 
 配置中心 nacos 内
@@ -41,14 +43,11 @@ dubbo:
       address: 127.0.0.1:2181
   protocols:
     triple:
-      name: "tri"
+      name: tri
       port: 20000
   provider:
-    registry-ids:
-      - demoZK
     services:
       GreeterProvider:
-        protocol-ids: triple
         interface: com.apache.dubbo.sample.basic.IGreeter 
 ```
 
@@ -59,23 +58,19 @@ dubbo:
 Config API 为 dubbogo 3.0 用来操作配置结构的 API。可使用框架提供的 Config API 进行配置结构的初始化，获取组件实例并使用。一个例子如下，包含了动态配置实例的初始化、发布配置、读取配置、订阅配置操作。
 
 ```go
-const configCenterNacosServerConfig = `# set in config center, group is 'dubbo', dataid is 'dubbo-go-samples-configcenter-nacos-server', namespace is default
+const configCenterNacosServerConfig = `# set in config center, group is 'dubbo', dataid is 'dubbo-go-samples-configcenter-nacos-server', namespace is default 'public'
 dubbo:
   registries:
     demoZK:
       protocol: zookeeper
-      timeout: 3s
       address: 127.0.0.1:2181
   protocols:
     triple:
       name: tri
       port: 20000
   provider:
-    registry-ids:
-      - demoZK
     services:
       GreeterProvider:
-        protocol-ids: triple
         interface: com.apache.dubbo.sample.basic.IGreeter # must be compatible with grpc or dubbo-java`
 
 type GreeterProvider struct {
@@ -93,18 +88,19 @@ func main() {
   dynamicConfig, err := config.NewConfigCenterConfigBuilder().
     SetProtocol("nacos").
     SetAddress("127.0.0.1:8848").
+    SetGroup("dubbo").
     Build().GetDynamicConfiguration()
   if err != nil {
     panic(err)
   }
   
   // 使用 dynamicConfig 结构来发布配置
-  if err := dynamicConfig.PublishConfig("dubbo-go-samples-configcenter-nacos-server", "dubbo", "myConfigData"); err != nil {
+  if err := dynamicConfig.PublishConfig("dubbo-go-samples-configcenter-nacos-server", "dubbo", configCenterNacosServerConfig); err != nil {
     panic(err)
   }
   
    // 使用 dynamicConfig 结构来读取配置
-  data, err := dynamicConfig.GetRule("dubbo-go-samples-configcenter-nacos-server", config_center.WithGroup("dubbo"))
+  data, err := dynamicConfig.GetRule("dubbo-go-samples-configcenter-nacos-server", 	config_center.WithGroup("dubbo"))
   if err != nil{
     panic(err)
   }
@@ -124,6 +120,7 @@ func main() {
     SetConfigCenter(config.NewConfigCenterConfigBuilder().
       SetProtocol("nacos").SetAddress("127.0.0.1:8848"). // 根据配置结构，设置配置中心
       SetDataID("dubbo-go-samples-configcenter-nacos-server"). // 设置配置ID
+      SetGroup("dubbo").
       Build()).
   Build()
 
