@@ -94,7 +94,16 @@ export default {
                     },
                     {
                         title: '快速开始',
-                        link: '/zh-cn/docs/user/quickstart/3.0/quickstart.html',
+                        children: [
+                            {
+                                title: 'Triple 协议快速开始',
+                                link: '/zh-cn/docs/user/quickstart/3.0/quickstart_triple.html',
+                            },
+                            {
+                                title: 'Dubbo 协议快速开始',
+                                link: '/zh-cn/docs/user/quickstart/3.0/quickstart_dubbo.html',
+                            }
+                        ]
                     },
                     {
                         title: '基本概念',
@@ -135,6 +144,14 @@ export default {
                             {
                                 title: 'Filter',
                                 link: '/zh-cn/docs/user/samples/custom-filter.html'
+                            },
+                            {
+                                title: '注册中心配置',
+                                link: '/zh-cn/docs/user/samples/registry.html'
+                            },
+                            {
+                                title: 'Triple 异常回传',
+                                link: '/zh-cn/docs/user/samples/exception_response.html'
                             },
                             {
                                 title: '日志',

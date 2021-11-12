@@ -4,7 +4,7 @@ keywords: 快速开始,helloworld,
 description: 快速上手dubbo-go3.0，编写一个简单的helloworld应用
 ---
 
-# Dubbogo 3.0 快速开始
+# Triple 协议快速开始
 
 ## 1. 环境安装
 
@@ -12,7 +12,7 @@ description: 快速上手dubbo-go3.0，编写一个简单的helloworld应用
 
 建议使用最新版 go 1.17
 
-go version >= go 1.13
+go version >= go 1.15
 
 [【Go 语言官网下载地址】](https://golang.google.cn/)
 
@@ -24,11 +24,18 @@ go version >= go 1.13
 
 ### 1.3 安装 protoc-gen-go, proto-gen-go-triple 编译插件
 
+本章 quick start 按照最新版示例和组件进行介绍。
+
+| 依赖       | Dubbo-go     | Triple | protoc-gen-go-triple |
+| ---------- | ------------ | ------ | -------------------- |
+| 适配版本号 | v3.0.0-rc4-1 | v1.1.3 | v1.0.2               |
+| 适配版本号 | v3.0.0-rc3   | v1.0.9 | v1.0.0               |
+
  ```shell
 export GO111MODULE="on"
 export GOPROXY="https://goproxy.cn"
-go install github.com/golang/protobuf/protoc-gen-go@latest 
-go install github.com/dubbogo/tools/cmd/protoc-gen-go-triple@latest
+go install github.com/golang/protobuf/protoc-gen-go@latest
+go install github.com/dubbogo/tools/cmd/protoc-gen-go-triple@v1.0.2
  ```
 
 确保上述protoc 和安装的 protoc-gen-go-triple 位于$(GOPATH)/bin, 在系统环境变量内
@@ -37,9 +44,9 @@ go install github.com/dubbogo/tools/cmd/protoc-gen-go-triple@latest
 $ protoc --version
 libprotoc 3.14.0
 $ protoc-gen-go --version
-protoc-gen-go: unknown argument "--version" (this program should be run by protoc, not directly)
+protoc-gen-go v1.25.0
 $ protoc-gen-go-triple --version
-protoc-gen-go-triple 1.0.0
+protoc-gen-go-triple 1.0.2
 ```
 
 ### 1.4 启动zookeeper
@@ -142,6 +149,7 @@ var greeterProvider = &api.GreeterClientImpl{}
 
 
 func init() {
+	// validate consumer greeterProvider ptr
 	config.SetConsumerService(greeterProvider)
 }
 
@@ -149,7 +157,6 @@ func main() {
 	// init rootConfig with config api
 	rc := config.NewRootConfigBuilder().
 		SetConsumer(config.NewConsumerConfigBuilder().
-			SetRegistryIDs("zookeeper").
 			AddReference("GreeterClientImpl", config.NewReferenceConfigBuilder().
 				SetInterface("org.apache.dubbo.UserProvider").
 				SetProtocol("tri").
@@ -158,8 +165,8 @@ func main() {
 		AddRegistry("zookeeper", config.NewRegistryConfigWithProtocolDefaultPort("zookeeper")).
 		Build()
 
-	// validate consumer greeterProvider
-	if err := rc.Init(); err != nil{
+	// start dubbo-go framework with configuration
+	if err := config.Load(config.WithRootConfig(rc)); err != nil{
 		panic(err)
 	}
 
@@ -208,9 +215,7 @@ func main() {
 		SetProvider(config.NewProviderConfigBuilder().
 			AddService("GreeterProvider", config.NewServiceConfigBuilder().
 				SetInterface("org.apache.dubbo.UserProvider").
-				SetProtocolIDs("tripleProtocolKey").
 				Build()).
-			SetRegistryIDs("registryKey").
 			Build()).
 		AddProtocol("tripleProtocolKey", config.NewProtocolConfigBuilder().
 			SetName("tri").
@@ -218,7 +223,8 @@ func main() {
 		AddRegistry("registryKey", config.NewRegistryConfigWithProtocolDefaultPort("zookeeper")).
 		Build()
 
-	if err := rc.Init(); err != nil{
+	// start dubbo-go framework with configuration
+	if err := config.Load(config.WithRootConfig(rc)); err != nil{
 		panic(err)
 	}
 
@@ -234,28 +240,32 @@ func (s *GreeterProvider) SayHelloStream(svr api.Greeter_SayHelloStreamServer) e
 	if err != nil {
 		return err
 	}
-	logger.Infof("Dubbo-go3 GreeterProvider recv 1 user, name = %s\n", c.Name)
+	logger.Infof("Dubbo-go GreeterProvider recv 1 user, name = %s\n", c.Name)
 	c2, err := svr.Recv()
 	if err != nil {
 		return err
 	}
-	logger.Infof("Dubbo-go3 GreeterProvider recv 2 user, name = %s\n", c2.Name)
+	logger.Infof("Dubbo-go GreeterProvider recv 2 user, name = %s\n", c2.Name)
 	c3, err := svr.Recv()
 	if err != nil {
 		return err
 	}
-	logger.Infof("Dubbo-go3 GreeterProvider recv 3 user, name = %s\n", c3.Name)
+	logger.Infof("Dubbo-go GreeterProvider recv 3 user, name = %s\n", c3.Name)
 
-	svr.Send(&api.User{
+	if err:= svr.Send(&api.User{
 		Name: "hello " + c.Name,
 		Age:  18,
 		Id:   "123456789",
-	})
-	svr.Send(&api.User{
+	}); err != nil{
+		return err
+	}
+	if err := svr.Send(&api.User{
 		Name: "hello " + c2.Name,
 		Age:  19,
 		Id:   "123456789",
-	})
+	}); err != nil{
+		return err
+	}
 	return nil
 }
 
@@ -275,6 +285,28 @@ quickstart 目录下，执行 `go mod init dubbo3-demo`
 
 执行`go mod tidy`
 
+您可以看到最新的框架依赖
+
+```go
+module dubbo3-demo
+
+go 1.17
+
+require (
+	dubbo.apache.org/dubbo-go/v3 v3.0.0-rc4-1
+	github.com/dubbogo/grpc-go v1.42.5-triple
+	github.com/dubbogo/triple v1.1.3
+	github.com/golang/protobuf v1.5.2
+	google.golang.org/protobuf v1.27.1
+)
+
+require (
+...
+)
+```
+
+
+
 最终文件目录：
 
 ```text
@@ -293,7 +325,7 @@ quickstart
 
 先后启动服务端和客户端（在 server 和 client 文件夹下分别执行 `go run .`) , 可在客户端看到输出：
 
-```
+```shell
  Receive user = {Name:Hello laurence Id:12345 Age:21 ...}
 ```
 
@@ -305,4 +337,4 @@ quickstart
 
 更多samples可以参阅 [【dubbo-go-samples】](../../samples/samples.html)
 
-下一章：[【Dubbogo 基本概念】](../../concept/app_and_interface.html)
+下一章：[【Dubbo 协议快速开始】](./quickstart_dubbo.html)
