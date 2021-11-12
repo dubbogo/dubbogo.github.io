@@ -25,8 +25,6 @@ dubbo:
     protocol: nacos # 元数据中心可选nacos/zk
     address: 127.0.0.1:8848
   consumer:
-    registry-ids:
-      - demoZK
     references:
       GreeterClientImpl:
         protocol: tri
@@ -52,11 +50,8 @@ dubbo:
       name: tri
       port: 20000
   provider:
-    registry-ids:
-      - demoZK
     services:
       GreeterProvider:
-        protocol-ids: triple
         interface: com.apache.dubbo.sample.basic.IGreeter 
 ```
 

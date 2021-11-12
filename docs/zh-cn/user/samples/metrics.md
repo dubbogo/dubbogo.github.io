@@ -30,11 +30,9 @@ dubbo:
       name: tri
       port: 20000
   provider:
-    registry-ids: myzk
     services:
       GreeterProvider:
         group: dubbo-go  # 所属 group，需要与客户端一致
-        protocol-ids: triple
         interface: com.apache.dubbo.HelloService  # 接口名
 ```
 
