@@ -4,7 +4,7 @@ export default {
   'zh-cn': {
     brand: {
       brandName: 'Apache Dubbo-go',
-      briefIntroduction: '一款兼容 Apache Dubbo™ 的高性能 Go RPC 框架。',
+      briefIntroduction: '一款兼容 Apache Dubbo™、gRPC 的高性能 Go RPC 框架。',
       getStartedButton: {
         text: '开始使用',
         link: '/zh-cn/docs/user/preface/3.0_feature.html',
@@ -45,7 +45,7 @@ export default {
       img: '/img/quick_start.png',
       button: {
         text: '阅读更多',
-        link: '/zh-cn/docs/user/quickstart/3.0/quickstart.html',
+        link: '/zh-cn/docs/user/quickstart/3.0/quickstart_triple.html',
       },
     },
     // blogs: {
