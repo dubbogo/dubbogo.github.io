@@ -21,6 +21,9 @@ Dubbo-go 缺省会在启动时检查依赖的服务是否可用，不可用时�
 dubbo:
   consumer:
     check : false
+    reference: 
+      myserivce:
+       check: true 
 ```
 
 
