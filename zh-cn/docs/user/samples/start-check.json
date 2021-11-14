@@ -1,0 +1,10 @@
+{
+  "filename": "start-check.md",
+  "__html": "<h1>启动时检查</h1>\n<p>在启动时检查依赖的服务是否可用</p>\n<p>Dubbo-go 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止应用初始化完成，以便上线时，能及早发现问题，默认 check=&quot;true&quot;，并等待3s。</p>\n<p>可以通过 check=&quot;false&quot; 关闭检查，比如，测试时，有些服务不关心，或者出现了循环依赖，必须有一方先启动。</p>\n<p>关闭 check 后，请注意 provider数量比较多时， consumer 订阅 provider 生成服务字典可能会有一定延迟，如果 consumer 一启动就对外提供服务，\n可能会造成&quot;冷启动&quot;。所以在这个时候，请对服务进行预热。</p>\n<p>示例：</p>\n<pre><code class=\"language-yaml\"><span class=\"hljs-attr\">dubbo:</span>\n  <span class=\"hljs-attr\">consumer:</span>\n    <span class=\"hljs-attr\">check :</span> <span class=\"hljs-literal\">false</span>\n    <span class=\"hljs-attr\">reference:</span> \n      <span class=\"hljs-attr\">myserivce:</span>\n       <span class=\"hljs-attr\">check:</span> <span class=\"hljs-literal\">true</span> \n</code></pre>\n",
+  "link": "/zh-cn/docs/user/samples/start-check.html",
+  "meta": {
+    "title": "dubbogo 3.0  启动时检查",
+    "keywords": "dubbogo 3.0 启动时检查",
+    "description": "dubbogo 3.0 启动时检查"
+  }
+}
