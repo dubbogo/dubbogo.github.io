@@ -34,7 +34,7 @@ go version >= go 1.15
  ```shell
 export GO111MODULE="on"
 export GOPROXY="https://goproxy.cn"
-go install github.com/golang/protobuf/protoc-gen-go@latest
+go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26.0
 go install github.com/dubbogo/tools/cmd/protoc-gen-go-triple@v1.0.2
  ```
 
