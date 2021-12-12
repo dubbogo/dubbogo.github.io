@@ -96,7 +96,7 @@ export default {
                         title: '快速开始',
                         children: [
                             {
-                                title: 'Triple 协议快速开始',
+                                title: 'Dubbo-go 3.0 快速开始',
                                 link: '/zh-cn/docs/user/quickstart/3.0/quickstart_triple.html',
                             },
                             {
@@ -164,6 +164,18 @@ export default {
                             {
                                 title: '泛化调用',
                                 link: '/zh-cn/docs/user/samples/generic.html'
+                            },
+                            {
+                                title: '柔性负载均衡',
+                                link: '/zh-cn/docs/user/samples/adaptive-service.html'
+                            },
+                            {
+                                title: '使用 Pixiu 暴露 Dubbo-go 服务',
+                                link: '/zh-cn/docs/user/samples/pixiu-nacos-triple.html'
+                            },
+                            {
+                                title: '使用 grpc_cli 调试 Dubbo-go 服务',
+                                link: '/zh-cn/docs/user/samples/grpc_cli.html'
                             },
                             {
                                 title: '应用级服务发现',

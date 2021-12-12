@@ -4,7 +4,7 @@ keywords: 快速开始,helloworld,
 description: 快速上手dubbo-go3.0，编写一个简单的helloworld应用
 ---
 
-# Triple 协议快速开始
+# Dubbo-go 3.0 快速开始
 
 ## 1. 环境安装
 
@@ -28,6 +28,7 @@ go version >= go 1.15
 
 | 依赖       | Dubbo-go     | Triple | protoc-gen-go-triple |
 | ---------- | ------------ | ------ | -------------------- |
+| 适配版本号 | v3.0.0       | v1.1.6 | v1.0.5               |
 | 适配版本号 | v3.0.0-rc4-1 | v1.1.3 | v1.0.2               |
 | 适配版本号 | v3.0.0-rc3   | v1.0.9 | v1.0.0               |
 
@@ -35,7 +36,7 @@ go version >= go 1.15
 export GO111MODULE="on"
 export GOPROXY="https://goproxy.cn"
 go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26.0
-go install github.com/dubbogo/tools/cmd/protoc-gen-go-triple@v1.0.2
+go install github.com/dubbogo/tools/cmd/protoc-gen-go-triple@v1.0.5
  ```
 
 确保上述protoc 和安装的 protoc-gen-go-triple 位于$(GOPATH)/bin, 在系统环境变量内
@@ -46,7 +47,7 @@ libprotoc 3.14.0
 $ protoc-gen-go --version
 protoc-gen-go v1.26.0
 $ protoc-gen-go-triple --version
-protoc-gen-go-triple 1.0.2
+protoc-gen-go-triple 1.0.5
 ```
 
 ### 1.4 启动zookeeper
@@ -76,24 +77,29 @@ docker-compose -f ./zookeeper.yml up -d
 ```protobuf
 syntax = "proto3";
 
-option go_package="./;api"; // 必须填写，这里的意义为：生成代码在./（当前目录） 使用'api'作为package名
+option go_package="./;api";
+
+// service and message are under this package name
+package org.apache.dubbo.quickstart.samples; 
 
 // The greeting service definition.
-service Greeter {
+service UserProvider {
+  // Sends a greeting
   rpc SayHello (HelloRequest) returns (User) {}
   rpc SayHelloStream (stream HelloRequest) returns (stream User) {}
 }
 
-// The request message
+// The request message containing the user's name.
 message HelloRequest {
   string name = 1;
 }
 
-// The response message
+// The response message containing the greetings
 message User {
   string name = 1;
   string id = 2;
   int32 age = 3;
+  repeated HelloRequest req = 4;
 }
 ```
 
@@ -145,7 +151,7 @@ import (
 	"dubbo3-demo/api"
 )
 
-var greeterProvider = &api.GreeterClientImpl{}
+var greeterProvider = &api.UserProviderClientImpl{}
 
 
 func init() {
@@ -157,8 +163,7 @@ func main() {
 	// init rootConfig with config api
 	rc := config.NewRootConfigBuilder().
 		SetConsumer(config.NewConsumerConfigBuilder().
-			AddReference("GreeterClientImpl", config.NewReferenceConfigBuilder().
-				SetInterface("org.apache.dubbo.UserProvider").
+			AddReference("UserProviderClientImpl", config.NewReferenceConfigBuilder().
 				SetProtocol("tri").
 				Build()).
 			Build()).
@@ -213,12 +218,11 @@ func main() {
 
 	rc := config.NewRootConfigBuilder().
 		SetProvider(config.NewProviderConfigBuilder().
-			AddService("GreeterProvider", config.NewServiceConfigBuilder().
-				SetInterface("org.apache.dubbo.UserProvider").
-				Build()).
+			AddService("GreeterProvider", config.NewServiceConfigBuilder().Build()).
 			Build()).
 		AddProtocol("tripleProtocolKey", config.NewProtocolConfigBuilder().
 			SetName("tri").
+			SetPort("20001").
 			Build()).
 		AddRegistry("registryKey", config.NewRegistryConfigWithProtocolDefaultPort("zookeeper")).
 		Build()
@@ -232,10 +236,10 @@ func main() {
 }
 
 type GreeterProvider struct {
-	api.UnimplementedGreeterServer
+	api.UnimplementedUserProviderServer
 }
 
-func (s *GreeterProvider) SayHelloStream(svr api.Greeter_SayHelloStreamServer) error {
+func (s *GreeterProvider) SayHelloStream(svr api.UserProvider_SayHelloStreamServer) error {
 	c, err := svr.Recv()
 	if err != nil {
 		return err
@@ -293,10 +297,9 @@ module dubbo3-demo
 go 1.17
 
 require (
-	dubbo.apache.org/dubbo-go/v3 v3.0.0-rc4-1
-	github.com/dubbogo/grpc-go v1.42.5-triple
-	github.com/dubbogo/triple v1.1.3
-	github.com/golang/protobuf v1.5.2
+	dubbo.apache.org/dubbo-go/v3 v3.0.0
+	github.com/dubbogo/grpc-go v1.42.6-triple
+	github.com/dubbogo/triple v1.1.6
 	google.golang.org/protobuf v1.27.1
 )
 
@@ -331,7 +334,64 @@ quickstart
 
 获得调用结果成功
 
-## 4. 更多
+## 4. [可选] 使用 grpc_cli 工具进行 Triple 服务调试
+
+### 4.1 安装grpc_cli
+
+```
+brew install grpc
+```
+
+### 4.2 使用 grpc_cli 进行服务调试
+
+1. 查看 triple 服务的接口定义
+
+```shell
+$ grpc_cli ls localhost:20001 -l
+filename: helloworld.proto
+package: org.apache.dubbo.quickstart.samples;
+service UserProvider {
+  rpc SayHello(org.apache.dubbo.quickstart.samples.HelloRequest) returns (org.apache.dubbo.quickstart.samples.User) {}
+  rpc SayHelloStream(stream org.apache.dubbo.quickstart.samples.HelloRequest) returns (stream org.apache.dubbo.quickstart.samples.User) {}
+}
+```
+
+2. 查看请求参数类型
+
+   例如开发者期望测试上述端口的 SayHello 方法，尝试获取HelloRequest的具体定义，需要执行r如下指令，可查看到对应参数的定义。
+
+```shell
+$ grpc_cli type localhost:20001 org.apache.dubbo.quickstart.samples.HelloRequest
+message HelloRequest {
+  string name = 1 [json_name = "name"];
+}
+```
+
+3. 请求接口
+
+   已经知道了请求参数的具体类型，可以发起调用来测试对应服务。查看返回值是否符合预期。
+
+```shell
+$ grpc_cli call localhost:20001 SayHello "name: 'laurence'"
+connecting to localhost:20001
+name: "Hello laurence"
+id: "12345"
+age: 21
+Received trailing metadata from server:
+accept-encoding : identity,gzip
+adaptive-service.inflight : 0
+adaptive-service.remaining : 50
+grpc-accept-encoding : identity,deflate,gzip
+Rpc succeeded with OK status
+```
+
+​	可看到获得了正确的返回值。在 server 侧可以观察到被正确请求的日志：
+
+```shell
+INFO    server/server.go:78     Dubbo3 GreeterProvider get user name = laurence
+```
+
+## 5. 更多
 
 细心的读者可以发现，以上例子编写的的服务端可以接受来自客户端的普通RPC、流式RPC调用请求。目前只编写了普通调用的Client，读者可以根据samples库中的例子来尝试编写流式客户端发起调用。
 
