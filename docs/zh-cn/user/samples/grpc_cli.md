@@ -4,7 +4,7 @@ keywords: dubbogo 3.0 自定义filter
 description: dubbogo 3.0 自定义filter
 ---
 
-# 使用 grpc_cli 调试 Triple-PB 服务
+# 使用 grpc_cli 调试 Dubbo-go 服务
 
 ## 1. 简介
 

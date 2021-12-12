@@ -1,6 +1,6 @@
 {
   "filename": "grpc_cli.md",
-  "__html": "<h1>使用 grpc_cli 调试 Triple-PB 服务</h1>\n<h2>1. 简介</h2>\n<p>grpc_cli 工具是 gRPC 生态用于调试服务的工具，在 server 开启<a href=\"https://github.com/grpc/grpc/blob/master/doc/server-reflection.md\">反射服务</a>的前提下，可以获取到服务的 proto 文件、服务名、方法名、参数列表，以及发起 gRPC 调用。</p>\n<p>Triple 协议兼容 gRPC 生态，并默认开启 gRPC 反射服务，因此可以直接使用 grpc_cli 调试 triple 服务。</p>\n<h2>2. 安装grpc_cli</h2>\n<p>参考<a href=\"https://github.com/grpc/grpc/blob/master/doc/command_line_tool.md\">官方文档</a></p>\n<h2>3. 例子</h2>\n<p>参考 <a href=\"https://dubbogo.github.io/zh-cn/docs/user/quickstart/3.0/quickstart_triple.html\">3.0 快速开始</a></p>\n<p>下一章: <a href=\"./service-discovery.html\">【应用级服务发现】</a></p>\n",
+  "__html": "<h1>使用 grpc_cli 调试 Dubbo-go 服务</h1>\n<h2>1. 简介</h2>\n<p>grpc_cli 工具是 gRPC 生态用于调试服务的工具，在 server 开启<a href=\"https://github.com/grpc/grpc/blob/master/doc/server-reflection.md\">反射服务</a>的前提下，可以获取到服务的 proto 文件、服务名、方法名、参数列表，以及发起 gRPC 调用。</p>\n<p>Triple 协议兼容 gRPC 生态，并默认开启 gRPC 反射服务，因此可以直接使用 grpc_cli 调试 triple 服务。</p>\n<h2>2. 安装grpc_cli</h2>\n<p>参考<a href=\"https://github.com/grpc/grpc/blob/master/doc/command_line_tool.md\">官方文档</a></p>\n<h2>3. 例子</h2>\n<p>参考 <a href=\"https://dubbogo.github.io/zh-cn/docs/user/quickstart/3.0/quickstart_triple.html\">3.0 快速开始</a></p>\n<p>下一章: <a href=\"./service-discovery.html\">【应用级服务发现】</a></p>\n",
   "link": "/zh-cn/docs/user/samples/grpc_cli.html",
   "meta": {
     "title": "dubbogo 3.0 自定义filter",
