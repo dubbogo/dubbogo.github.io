@@ -1,34 +1,24 @@
-> ```
-> ---
-> title: "Dubbo-go v3.0 正式发布 ——打造国内一流开源 Go 服务框架"
-> linkTitle: "Dubbo-go v3.0 正式发布 ——打造国内一流开源 Go 服务框架"
-> date: 2021-12-21
-> description: >
-> Dubbo-go v3.0 正式发布 ——打造国内一流开源 Go 服务框架
-> ---
-> ```
->
-> ```
-> ## Dubbo-go v3.0 正式发布 ——打造国内一流开源 Go 服务框架
-> ```
->
-> 作者介绍：
->
-> 
->
-> 李志信（github @laurencelizhixin），dubbo-go 3.0 负责人，Apache Dubbo PMC，来自阿里云中间件团队，从事 Go 语言中间件的研发和开源工作。
->
-> 
->
-> 于雨 （github @AlexStocks），dubbo-go 社区负责人，Apache Dubbo PMC，蚂蚁集团可信原生部【TNT】基础设施和中间件研发一线程序员。工作十一年来陆续参与和改进过 Redis/Pika/Pika-Port/etcd/Muduo/Dubbo/dubbo-go/Sentinel-golang/Seata-golang 等知名项目。
->
-> 
->
-> 牛学蔚（github @justxuewei），Apache Dubbo Committer，北邮计算机学院二年级研究生，对中间件、云原生领域有着浓厚的兴趣。
->
-> 
->
-> 董剑辉（github @Mulavar），Apache Dubbo Committer，目前主要关注的开源方向为 Dubbo、Flink、Calcite。
+---
+ title: "Dubbo-go v3.0 正式发布 ——打造国内一流开源 Go 服务框架"
+ linkTitle: "Dubbo-go v3.0 正式发布 ——打造国内一流开源 Go 服务框架"
+ date: 2021-12-21
+ description: >
+ Dubbo-go v3.0 正式发布 ——打造国内一流开源 Go 服务框架
+---
+
+
+
+ ## Dubbo-go v3.0 正式发布 ——打造国内一流开源 Go 服务框架
+ ```
+ 作者介绍：
+
+ 李志信（github @laurencelizhixin），dubbo-go 3.0 负责人，Apache Dubbo PMC，来自阿里云中间件团队，从事 Go 语言中间件的研发和开源工作。
+
+ 于雨 （github @AlexStocks），dubbo-go 社区负责人，Apache Dubbo PMC，蚂蚁集团可信原生部【TNT】基础设施和中间件研发一线程序员。工作十一年来陆续参与和改进过 Redis/Pika/Pika-Port/etcd/Muduo/Dubbo/dubbo-go/Sentinel-golang/Seata-golang 等知名项目。
+
+ 牛学蔚（github @justxuewei），Apache Dubbo Committer，北邮计算机学院二年级研究生，对中间件、云原生领域有着浓厚的兴趣。
+
+ 董剑辉（github @Mulavar），Apache Dubbo Committer，目前主要关注的开源方向为 Dubbo、Flink、Calcite。
 
 
 
