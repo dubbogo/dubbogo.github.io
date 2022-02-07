@@ -1,6 +1,8 @@
-# 小米电商 Apache Dubbo-go 微服务实践
-
-[dubbogo示土区](javascript:void(0);) *2022-01-14 14:15*
+---
+title: 小米电商 Apache Dubbo-go 微服务实践
+keywords: "Dubbo-go", "protocol"
+description: 小米电商 Apache Dubbo-go 微服务实践
+---
 
 以下文章来源于阿里巴巴中间件 ，作者董振兴
 
@@ -114,58 +116,50 @@ https://dubbo.apache.org/zh/docs/languages/golang/dubbo-go-1.5/quick-start/
 
 对于一个 Java 的 Apache Dubbo 服务提供的接口如下：
 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
 
-```
+
+``````golang
+
 public interface DubboHealthService {
-    List<Health> health();    String ping(String param,int param2);    AaRes health1(List<AaReq> list);    Health health2(AaReq aaReq);
+    List<Health> health();    String ping(String param,int param2);   
+    AaRes health1(List<AaReq> list);    Health health2(AaReq aaReq);
 }
-//impl@Service(timeout = 1000, group = "dev", version = "4.0")public class DubboHealthServiceImpl implements DubboHealthService {     ......}
-```
+//impl@Service(timeout = 1000, group = "dev", version = "4.0")
+//public class DubboHealthServiceImpl implements DubboHealthService {     ......}
+
+
+``````
 
 
 
 在 Apache Dubbo-go 的 client 配置文件中，需要的核心配置如下：
 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
 
-```
-# registry configregistries:  "demoNacos":    protocol: "nacos"    timeout: "3s"    address: "xxx.xxx.xxx"    username: "****"    password: "****"    references:  "UserProvider":    registry: "demoNacos"    protocol: "dubbo"    interface: "com.xiaomi.youpin.test0930.api.service.DubboHealthService"    cluster: "failover"    version: "4.0"    group: "dev"    generic: true    methods:      - name: "health"        retries: 0        timeout: "0.5s"     ......
+ 
+
+```golang
+   #registry config
+registries:  
+	"demoNacos": 
+	  protocol: "nacos"   
+      timeout: "3s"   
+      address: "xxx.xxx.xxx"    
+      username: "****"  
+      password: "****"    
+references:  
+	"UserProvider":  
+	registry: "demoNacos"   
+    protocol: "dubbo"    
+    interface: "com.xiaomi.youpin.test0930.api.service.DubboHealthService" 
+    cluster: "failover"   
+    version: "4.0"   
+    group: "dev"  
+    generic: true   
+    methods:    
+	 - name: "health"  
+       retries: 0    
+       timeout: "0.5s"  
+    ......
 ```
 
 
@@ -178,28 +172,21 @@ https://github.com/apache/dubbo-go/pull/1336
 
 配置完成后，泛化调用的方式我们进行了一定的封装：
 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
 
-```
-//......var paramTypes []stringvar paramVals []interface{}for _, param := range req.Params {   paramTypes = append(paramTypes, param.GetKey())   paramVals = append(paramVals, param.GetVal())}//添加context信息m := make(map[string]string)m["xxx(generic_flag)"] = "xxx(flag)"//服务端返回json字符串m["xxx(return_flag)"] = "true" ctx = context.WithValue(context.Background(), constant.DubboCtxKey("attachment"), m)//invoke调用response, err = config.GetRPCService(req.AppName).(*config.GenericService).Invoke(ctx, []interface{}{req.MethodName, paramTypes, paramVals})if err != nil {   err = fmt.Errorf("dubbo call request appName: %s methodName: %s rpc invoke failed,err:%+v", req.AppName, req.MethodName, err)   return}
+
+
+```go
+
+     var paramTypes []stringvar paramVals []interface{}for _, 
+
+     param := range req.Params {   paramTypes = append(paramTypes, param.GetKey()) 
+
+     paramVals = append(paramVals, param.GetVal())}
+     //添加context信息m := make(map[string]string)m["xxx(generic_flag)"] = "xxx(flag)"
+
+     //服务端返回json字符串m["xxx(return_flag)"] = "true" ctx = context.WithValue(context.Background(), constant.DubboCtxKey("attachment"), m)
+
+     //invoke调用response, err = config.GetRPCService(req.AppName).(*config.GenericService).Invoke(ctx, []interface{}{req.MethodName, paramTypes, paramVals})if err != nil {   err = fmt.Errorf("dubbo call request appName: %s methodName: %s rpc invoke failed,err:%+v", req.AppName, req.MethodName, err)   return}
 ```
 
 
@@ -389,18 +376,9 @@ Serverless 是云原生技术发展的高级阶段，使开发者更聚焦在业
 
 上图就是我们目前对于服务 Serverless 化的一个基本的支持逻辑，我们定义了成为 Serverless 服务的 Function 必须实现的接口 execute ：
 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
+ 
 
-```
+```go
 public interface Handler {    Result execute(Event var1, Context var2);
     default void init(Object... objs) {    }
     default String version() {        return "0.0.1";    }}
