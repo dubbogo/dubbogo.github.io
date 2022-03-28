@@ -88,7 +88,7 @@ dubbo:
     etcd:
       address: 127.0.0.1:2379
   consumer: # 客户端配置
-    request_timeout: 3s
+    request-timeout: 3s
     filter: myClientFilter # 客户端 filters name，多个则逗号隔开
     registry-ids: zk # 使用上面定义的注册中心id
     max-wait-time-for-service-discovery: 3s # 服务发现最长等待时间
