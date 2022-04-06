@@ -10,7 +10,7 @@ Dubbogo 服务层级为两个级别：分别是应用级别(App Level)和接口�
 
 如下图所示，可以看到，应用级别的组件以浅红色标注，接建立如下文件目录口级别的组件以浅蓝色标注：
 
-![](../../pic/3.0/dubbogo-concept.png)
+![](../../../pic/3.0/dubbogo-concept.png)
 
 ## 1. 应用级别组件
 
@@ -63,4 +63,4 @@ Dubbogo 服务层级为两个级别：分别是应用级别(App Level)和接口�
 
 暴露的服务是接口级别的，一个用户定义的 Provider Struct/一个用户定义的Consumer Struct，对应一个Service/Reference 模块，一个应用可以同时存在Consumer 模块和 Provider 模块，因此可以同时存在多个Service/Reference 模块。
 
-下一章：[【网络协议】](./protocol.html)
+下一章：[【架构】](./architecture.html)
