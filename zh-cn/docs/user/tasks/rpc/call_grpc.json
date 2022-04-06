@@ -1,0 +1,10 @@
+{
+  "filename": "call_grpc.md",
+  "__html": "<h1>与 gRPC 服务互通</h1>\n<h2>1. 准备工作</h2>\n<ul>\n<li>dubbo-go cli 工具和依赖工具已安装</li>\n<li>创建一个新的 demo 应用</li>\n</ul>\n<h2>2. Dubbo-go 应用与 gRPC 应用互通</h2>\n<p>参考 <a href=\"https://github.com/apache/dubbo-go-samples/tree/master/rpc/triple/pb/dubbogo-grpc\">dubbo-go-samples/rpc/triple/pb/dubbogo-grpc</a></p>\n",
+  "link": "/zh-cn/docs/user/tasks/rpc/call_grpc.html",
+  "meta": {
+    "title": "与 gRPC 服务互通",
+    "keywords": "与 gRPC 服务互通",
+    "description": "与 gRPC 服务互通"
+  }
+}

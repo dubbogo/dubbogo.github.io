@@ -1,0 +1,10 @@
+{
+  "filename": "ingress.md",
+  "__html": "<h1>使用 pixiu 网关接入 ingress 流量</h1>\n<p>下一章：<a href=\"./quickstart_dubbo.html\">【Dubbo 协议快速开始】</a></p>\n",
+  "link": "/zh-cn/docs/user/tasks/mesh/ingress.html",
+  "meta": {
+    "title": "使用 pixiu 网关接入 ingress 流量",
+    "keywords": "使用 pixiu 网关接入 ingress 流量",
+    "description": "使用 pixiu 网关接入 ingress 流量"
+  }
+}

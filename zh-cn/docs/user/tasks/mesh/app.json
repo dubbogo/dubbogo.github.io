@@ -1,0 +1,10 @@
+{
+  "filename": "app.md",
+  "__html": "<h1>Istio 环境部署 Dubbo-go 应用</h1>\n<p>下一章：<a href=\"./quickstart_dubbo.html\">【Dubbo 协议快速开始】</a></p>\n",
+  "link": "/zh-cn/docs/user/tasks/mesh/app.html",
+  "meta": {
+    "title": "Istio 环境部署 Dubbo-go 应用",
+    "keywords": "Istio 环境部署 Dubbo-go 应用",
+    "description": "Istio 环境部署 Dubbo-go 应用"
+  }
+}

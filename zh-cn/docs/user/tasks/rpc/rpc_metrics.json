@@ -1,0 +1,10 @@
+{
+  "filename": "rpc_metrics.md",
+  "__html": "<h1>查看 RPC 调用的监控信息</h1>\n<h2>1. 准备工作</h2>\n<ul>\n<li>dubbo-go cli 工具和依赖工具已安装</li>\n<li>创建一个新的 demo 应用</li>\n</ul>\n<h2>2. 修改客户端逻辑，重复发起调用</h2>\n<p>go-client/cmd/client.go</p>\n<pre><code class=\"language-go\"><span class=\"hljs-function\"><span class=\"hljs-keyword\">func</span> <span class=\"hljs-title\">main</span><span class=\"hljs-params\">()</span></span> {\n\tconfig.SetConsumerService(grpcGreeterImpl)\n\t<span class=\"hljs-keyword\">if</span> err := config.Load(); err != <span class=\"hljs-literal\">nil</span> {\n\t\t<span class=\"hljs-built_in\">panic</span>(err)\n\t}\n\n\tlogger.Info(<span class=\"hljs-string\">\"start to test dubbo\"</span>)\n\treq := &amp;api.HelloRequest{\n\t\tName: <span class=\"hljs-string\">\"laurence\"</span>,\n\t}\n\t<span class=\"hljs-keyword\">for</span>{ <span class=\"hljs-comment\">// 重复发起调用</span>\n\t\treply, err := grpcGreeterImpl.SayHello(context.Background(), req)\n\t\t<span class=\"hljs-keyword\">if</span> err != <span class=\"hljs-literal\">nil</span> {\n\t\t\tlogger.Error(err)\n\t\t}\n\t\tlogger.Infof(<span class=\"hljs-string\">\"client response result: %v\\n\"</span>, reply)\n\t}\n}\n</code></pre>\n<h2>3. 查看请求 RT 信息</h2>\n<p>先后启动服务端、客户端服务应用。浏览器查看 localhost:9090/metrics, 搜索 &quot;dubbo&quot;, 即可查看服务端暴露接口的请求时延，单位 ns。</p>\n<pre><code>$ curl localhost:9090/metrics | grep dubbo\n\n# HELP dubbo_provider_service_rt \n# TYPE dubbo_provider_service_rt gauge\ndubbo_provider_service_rt{group=&quot;&quot;,method=&quot;SayHello&quot;,service=&quot;api.Greeter&quot;,timeout=&quot;&quot;,version=&quot;3.0.0&quot;} 41084\n</code></pre>\n<p>可看到当前最近一次请求 rt 为 41084 ns。</p>\n",
+  "link": "/zh-cn/docs/user/tasks/rpc/rpc_metrics.html",
+  "meta": {
+    "title": "查看 RPC 调用的监控信息",
+    "keywords": "查看 RPC 调用的监控信息",
+    "description": "查看 RPC 调用的监控信息"
+  }
+}

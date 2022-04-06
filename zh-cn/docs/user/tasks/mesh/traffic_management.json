@@ -1,0 +1,10 @@
+{
+  "filename": "traffic_management.md",
+  "__html": "<h1>管理 Dubbo-go 流量</h1>\n<p>下一章：<a href=\"./quickstart_dubbo.html\">【Dubbo 协议快速开始】</a></p>\n",
+  "link": "/zh-cn/docs/user/tasks/mesh/traffic_management.html",
+  "meta": {
+    "title": "管理 Dubbo-go 流量",
+    "keywords": "管理 Dubbo-go 流量",
+    "description": "管理 Dubbo-go 流量"
+  }
+}

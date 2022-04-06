@@ -1,0 +1,10 @@
+{
+  "filename": "compatible_version.md",
+  "__html": "<h1>适配版本号</h1>\n<p>Dubbo-go 发布新版本时更新当前依赖的的版本。</p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align:center\">依赖</th>\n<th>Dubbo-go</th>\n<th>Triple</th>\n<th>protoc-gen-go-triple</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align:center\"></td>\n<td>v3.0.1</td>\n<td>v1.1.8</td>\n<td>v1.0.8</td>\n</tr>\n<tr>\n<td style=\"text-align:center\"></td>\n<td>v3.0.0</td>\n<td>v1.1.6</td>\n<td>v1.0.5</td>\n</tr>\n<tr>\n<td style=\"text-align:center\"></td>\n<td>v3.0.0-rc4-1</td>\n<td>v1.1.3</td>\n<td>v1.0.2</td>\n</tr>\n<tr>\n<td style=\"text-align:center\"></td>\n<td>v3.0.0-rc3</td>\n<td>v1.0.9</td>\n<td>v1.0.0</td>\n</tr>\n</tbody>\n</table>\n",
+  "link": "/zh-cn/docs/user/refer/compatible_version.html",
+  "meta": {
+    "title": "依赖适配版本号",
+    "keywords": "依赖适配版本号",
+    "description": "依赖适配版本号"
+  }
+}

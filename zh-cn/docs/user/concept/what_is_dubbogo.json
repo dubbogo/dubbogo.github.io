@@ -1,0 +1,10 @@
+{
+  "filename": "what_is_dubbogo.md",
+  "__html": "<h1>Dubbo-go 是什么</h1>\n<p><img src=\"../../pic/3.0/dubbogo.png\" alt=\"\"></p>\n<p>Apache/Dubbo-go (<a href=\"https://github.com/apache/dubbo-go\">github.com/apache/dubbo-go</a>)</p>\n<p>是一款分布式 RPC 框架；是 Apache/Dubbo 的 Go 语言实现。旨在为开发者提供便利的微服务应用开发体验。</p>\n<p>Dubbo-go 架起 Java 和 Go 语言之间的桥梁，与 gRPC/Dubbo/SpringCloud 生态互联互通，依赖 Go 语言生态发掘云原生时代的技术红利。</p>\n<p>下一章：<a href=\"./rpc/protocol.html\">【网络协议】</a></p>\n",
+  "link": "/zh-cn/docs/user/concept/what_is_dubbogo.html",
+  "meta": {
+    "title": "Dubbo-go 是什么",
+    "keywords": "Dubbo-go 是什么",
+    "description": "Dubbo-go 是什么"
+  }
+}

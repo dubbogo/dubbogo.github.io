@@ -14,7 +14,7 @@ Triple 协议兼容 gRPC 生态，并默认开启 gRPC 反射服务，因此可�
 
 ## 2. 安装grpc_cli
 
-参考[官方文档](https://github.com/grpc/grpc/blob/master/doc/command_line_tool.md)
+参考[文档](https://github.com/grpc/grpc/blob/master/doc/command_line_tool.md)
 
 ## 3. 例子
 

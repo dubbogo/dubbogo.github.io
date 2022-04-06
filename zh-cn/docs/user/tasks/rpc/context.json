@@ -1,0 +1,10 @@
+{
+  "filename": "context.md",
+  "__html": "<h1>使用 ctx 传递上下文信息</h1>\n<h2>1. 准备工作</h2>\n<ul>\n<li>dubbo-go cli 工具和依赖工具已安装</li>\n<li>创建一个新的 demo 应用</li>\n</ul>\n<h2>2. 使用 context 传递附加信息</h2>\n<p>参考 <a href=\"https://github.com/apache/dubbo-go-samples/tree/master/context\">dubbo-go-samples/context</a></p>\n",
+  "link": "/zh-cn/docs/user/tasks/rpc/context.html",
+  "meta": {
+    "title": "使用 ctx 传递上下文信息",
+    "keywords": "使用 ctx 传递上下文信息",
+    "description": "使用 ctx 传递上下文信息"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "filename": "build.md",
+  "__html": "<h1>部署 Istio 环境</h1>\n<p>下一章：<a href=\"./quickstart_dubbo.html\">【Dubbo 协议快速开始】</a></p>\n",
+  "link": "/zh-cn/docs/user/tasks/mesh/build.html",
+  "meta": {
+    "title": "部署 Istio 环境",
+    "keywords": "部署 Istio 环境",
+    "description": "部署 Istio 环境"
+  }
+}
