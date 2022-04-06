@@ -1,6 +1,6 @@
 {
   "filename": "build.md",
-  "__html": "<h1>部署 Istio 环境</h1>\n<p>下一章：<a href=\"./quickstart_dubbo.html\">【Dubbo 协议快速开始】</a></p>\n",
+  "__html": "<h1>部署 Istio 环境</h1>\n<h2>1. 准备工作</h2>\n<ul>\n<li>docker、helm、kubectl 环境已安装。</li>\n<li>dubbo-go cli 工具和依赖工具已安装</li>\n</ul>\n<h2>2. 部署 Istio 环境</h2>\n<p>使用helm 安装 istio 基础 CRD 和 istiod 组件。也可以参考 <a href=\"istio.io\">官网教程</a> 使用 istioctl 安装。</p>\n<pre><code>$ helm repo add istio https://istio-release.storage.googleapis.com/charts\n$ kubectl create namespace istio-system\n$ helm install istio-base istio/base -n istio-system\n$ helm install istiod istio/istiod --namespace istio-system\n</code></pre>\n<p>安装完成后，可以在 istio-system 命名空间下看到 istiod pod 正常运行。</p>\n",
   "link": "/zh-cn/docs/user/tasks/mesh/build.html",
   "meta": {
     "title": "部署 Istio 环境",
