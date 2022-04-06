@@ -120,7 +120,7 @@ export default {
       {
         key: 'docs',
         text: '文档',
-        link: '/zh-cn/docs/user/quickstart/3.0/quickstart_triple.html',
+        link: '/zh-cn/docs/user/concept/what_is_dubbogo.html',
       },
       {
         key: 'blog',
@@ -177,7 +177,7 @@ export default {
       list: [
         {
           text: '快速开始',
-          link: '/zh-cn/docs/user/quickstart/3.0/quickstart_triple.html',
+          link: '/zh-cn/docs/user/concept/what_is_dubbogo.html',
         },
         {
           text: '开发者指南',

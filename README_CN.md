@@ -7,10 +7,9 @@
 Dubbo-go 站点由[docsite](https://github.com/txd-team/docsite)提供支持。
 
 请使用**版本为 1.3.9 的docsite**。
-同时请**确保你的node版本是8.x**，docsit还不支持高于8.x的版本。
+同时请**确保你的node版本是8.x**，docsite 还不支持高于8.x的版本。
 
 ## 构建说明
-
 1. 运行 `npm install -g docsite@1.3.9` 安装开发工具。
 2. 在根目录下运行 `npm i` 安装依赖。
 3. 运行 `docsite build` to build source code。

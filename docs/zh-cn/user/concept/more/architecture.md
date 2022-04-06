@@ -1,11 +1,11 @@
 ---
 title: 架构
 keywords: 架构
-description: 对dubbo-go整体架构的概要描述
+description: 架构
 ---
 
 # 架构
-![architecture](../../../../img/dubbo-go-architecture.png)
+![architecture](../../../../../img/dubbo-go-architecture.png)
 
 #### 节点说明
 
@@ -18,3 +18,5 @@ description: 对dubbo-go整体架构的概要描述
 * `1. subscribe` : 服务消费方会在启动的时候，向注册中心订阅自己所需要的服务
 * `2. notify` : 注册中心返回服务注册的信息给到服务消费方，当订阅的服务发生变更，会推送变更的数据给到消费方
 * `3. invoke` : 服务消费者根据从注册中心获得的服务地址，经过负载均衡算法选出一个合适的服务地址发起请求
+
+下一章：[【安装 Dubbo-go 开发环境】](../../quickstart/install.html)
