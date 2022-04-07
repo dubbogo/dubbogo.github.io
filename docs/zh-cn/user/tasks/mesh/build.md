@@ -13,7 +13,7 @@ description: 部署 Istio 环境
 
 ## 2. 部署 Istio 环境
 
-1. 使用helm 安装 istio 基础 CRD 和 istiod 组件。也可以参考 [官网教程](istio.io) 使用 istioctl 安装。
+1. 使用helm 安装 istio 基础 CRD 和 istiod 组件。也可以参考 [Istio 文档](https://istio.io/) 使用 istioctl 安装。
 
 ```bash
 $ helm repo add istio https://istio-release.storage.googleapis.com/charts
