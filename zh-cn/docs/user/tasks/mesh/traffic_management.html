@@ -4,16 +4,333 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta name="keywords" content="管理 Dubbo-go 流量" />
-	<meta name="description" content="管理 Dubbo-go 流量" />
+	<meta name="keywords" content="流量管理" />
+	<meta name="description" content="流量管理" />
 	<!-- 网页标签标题 -->
-	<title>管理 Dubbo-go 流量</title>
+	<title>流量管理</title>
 	<link rel="shortcut icon" href="/img/dubbo.ico"/>
 	<link rel="stylesheet" href="/build/documentation.css" />
 </head>
 <body>
-	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/user/concept/what_is_dubbogo.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><span>文档</span><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>概念</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/concept/what_is_dubbogo.html" target="_self">Dubbo-go 是什么</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>RPC 调用<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/protocol.html" target="_self">网络协议</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/multi_language.html" target="_self">多语言 RPC</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/generic.html" target="_self">泛化调用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务治理<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/registry.html" target="_self">服务注册发现</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/aop_and_extension.html" target="_self">组件加载与可扩展性</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/visualization.html" target="_self">可视化</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/graceful_shutdown.html" target="_self">优雅上下线</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/adaptive_lb.html" target="_self">柔性负载均衡</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/config/basic_concept.html" target="_self">配置基本概念</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务网格<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/mesh/proxyless_service_mesh.html" target="_self">无代理服务网格</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>更多<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/3.0_feature.html" target="_self">v3 版本新功能</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/app_and_interface.html" target="_self">应用与接口的层级关系</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/architecture.html" target="_self">架构</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>快速开始</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/install.html" target="_self">安装 Dubbo-go 开发环境</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/quickstart_triple.html" target="_self">完成一次 RPC 调用</a></li></ul></li><li class="menu-item menu-item-level-1"><span>任务</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务调用<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/timeout.html" target="_self">配置调用的超时</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/rpc_metrics.html" target="_self">查看服务调用指标</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/tps_limiter.html" target="_self">为服务端设置限流</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/call_java.html" target="_self">与 Dubbo 应用跨语言互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/call_grpc.html" target="_self">与 gRPC 应用互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/context.html" target="_self">使用 ctx 传递上下文信息</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/generic.html" target="_self">泛化调用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/error.html" target="_self">异常回传</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>注册中心<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/registry/nacos.html" target="_self">使用 Nacos 作为注册中心</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/registry/multi_registry.html" target="_self">多注册中心</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/config/remote_config.html" target="_self">从远程加载配置启动应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/config/config_api.html" target="_self">使用配置 API 启动应用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务治理<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/service_management/aop.html" target="_self">自定义服务调用中间件</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/service_management/graceful_shutdown.html" target="_self">优雅上下线</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>可视化<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/opentelementry.html" target="_self">使用 opentelementry 协议暴露 dubbo-go 应用数据 </a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/logger.html" target="_self">自定义日志</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/metrics.html" target="_self">基于 prometheus 的指标数据上报</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/tracing.html" target="_self">基于 jaeger 的链路追踪</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务网格<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/build.html" target="_self">部署 istio 环境</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/app.html" target="_self">Istio 环境部署 Dubbo-go 应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/traffic_management.html" target="_self">管理 Dubbo-go 流量</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/ingress.html" target="_self">使用 pixiu 网关接入 ingress 流量</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/gray_deploy.html" target="_self">金丝雀发布</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>调试<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/debug/grpc_cli.html" target="_self">使用 grpc_cli 调试 triple 应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/debug/dubbogo_cli.html" target="_self">使用dubbogo-cli 调试 dubbo 应用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Pixiu 网关<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/pixiu/http_triple.html" target="_self">接入 Ingress 流量</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/tasks/cli/app_template.html" target="_self">应用模板</a></li></ul></li><li class="menu-item menu-item-level-1"><span>示例</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Dubbo-go samples<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/go_java_interactive.html" target="_self">Go-Java 互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/config-center-dynamic.html" target="_self">配置中心和配置监听</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-filter.html" target="_self">Filter</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/registry.html" target="_self">注册中心配置</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/exception_response.html" target="_self">Triple 异常回传</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-logger.html" target="_self">日志</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/metrics.html" target="_self">Metrics 数据上报</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/generic.html" target="_self">泛化调用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/pixiu-nacos-triple.html" target="_self">使用 Pixiu 暴露 Dubbo-go 服务</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/grpc_cli.html" target="_self">使用 grpc_cli 调试 Dubbo-go 服务</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/service-discovery.html" target="_self">应用级服务发现</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/mesh_router.html" target="_self">路由规则</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>参考</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/config.html" target="_self">配置项参考</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/use_dubbogo_cli.html" target="_self">dubbogo-cli 工具</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/ecology/ecology.html" target="_self">Dubbo-go 生态项目介绍</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/compatible_version.html" target="_self">适配版本号</a></li></ul></li><li class="menu-item menu-item-level-1"><span>源码解读</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/sourcecode/protocol.html" target="_self">网络协议</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/sourcecode/registry.html" target="_self">注册中心</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>管理 Dubbo-go 流量</h1>
-<p>下一章：<a href="./quickstart_dubbo.html">【Dubbo 协议快速开始】</a></p>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/user/concept/what_is_dubbogo.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><span>文档</span><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>概念</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/concept/what_is_dubbogo.html" target="_self">Dubbo-go 是什么</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>RPC 调用<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/protocol.html" target="_self">网络协议</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/multi_language.html" target="_self">多语言 RPC</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/generic.html" target="_self">泛化调用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务治理<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/registry.html" target="_self">服务注册发现</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/aop_and_extension.html" target="_self">组件加载与可扩展性</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/visualization.html" target="_self">可视化</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/graceful_shutdown.html" target="_self">优雅上下线</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/adaptive_lb.html" target="_self">柔性负载均衡</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/config/basic_concept.html" target="_self">配置基本概念</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务网格<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/mesh/proxyless_service_mesh.html" target="_self">无代理服务网格</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>更多<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/3.0_feature.html" target="_self">v3 版本新功能</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/app_and_interface.html" target="_self">应用与接口的层级关系</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/architecture.html" target="_self">架构</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>快速开始</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/install.html" target="_self">安装 Dubbo-go 开发环境</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/quickstart_triple.html" target="_self">完成一次 RPC 调用</a></li></ul></li><li class="menu-item menu-item-level-1"><span>任务</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务调用<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/timeout.html" target="_self">配置调用的超时</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/rpc_metrics.html" target="_self">查看服务调用指标</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/tps_limiter.html" target="_self">为服务端设置限流</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/call_java.html" target="_self">与 Dubbo 应用跨语言互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/call_grpc.html" target="_self">与 gRPC 应用互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/context.html" target="_self">使用 ctx 传递上下文信息</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/generic.html" target="_self">泛化调用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/error.html" target="_self">异常回传</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>注册中心<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/registry/nacos.html" target="_self">使用 Nacos 作为注册中心</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/registry/multi_registry.html" target="_self">多注册中心</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/config/remote_config.html" target="_self">从远程加载配置启动应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/config/config_api.html" target="_self">使用配置 API 启动应用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务治理<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/service_management/aop.html" target="_self">自定义服务调用中间件</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/service_management/graceful_shutdown.html" target="_self">优雅上下线</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>可视化<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/opentelementry.html" target="_self">使用 opentelementry 协议暴露 dubbo-go 应用数据 </a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/logger.html" target="_self">自定义日志</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/metrics.html" target="_self">基于 prometheus 的指标数据上报</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/tracing.html" target="_self">基于 jaeger 的链路追踪</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务网格<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/build.html" target="_self">部署 istio 环境</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/app.html" target="_self">在 Istio 环境部署 Dubbo-go 应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/traffic_management.html" target="_self">流量管理</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/ingress.html" target="_self">使用 pixiu 网关接入 ingress 流量</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/gray_deploy.html" target="_self">金丝雀发布</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>调试<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/debug/grpc_cli.html" target="_self">使用 grpc_cli 调试 triple 应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/debug/dubbogo_cli.html" target="_self">使用dubbogo-cli 调试 dubbo 应用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Pixiu 网关<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/pixiu/http_triple.html" target="_self">接入 Ingress 流量</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/tasks/cli/app_template.html" target="_self">应用模板</a></li></ul></li><li class="menu-item menu-item-level-1"><span>示例</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Dubbo-go samples<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/go_java_interactive.html" target="_self">Go-Java 互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/config-center-dynamic.html" target="_self">配置中心和配置监听</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-filter.html" target="_self">Filter</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/registry.html" target="_self">注册中心配置</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/exception_response.html" target="_self">Triple 异常回传</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-logger.html" target="_self">日志</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/metrics.html" target="_self">Metrics 数据上报</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/generic.html" target="_self">泛化调用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/pixiu-nacos-triple.html" target="_self">使用 Pixiu 暴露 Dubbo-go 服务</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/grpc_cli.html" target="_self">使用 grpc_cli 调试 Dubbo-go 服务</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/service-discovery.html" target="_self">应用级服务发现</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/mesh_router.html" target="_self">路由规则</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>参考</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/config.html" target="_self">配置项参考</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/use_dubbogo_cli.html" target="_self">dubbogo-cli 工具</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/ecology/ecology.html" target="_self">Dubbo-go 生态项目介绍</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/compatible_version.html" target="_self">适配版本号</a></li></ul></li><li class="menu-item menu-item-level-1"><span>源码解读</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/sourcecode/protocol.html" target="_self">网络协议</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/sourcecode/registry.html" target="_self">注册中心</a></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>流量管理</h1>
+<p>在本节中，我们将延续上一个任务<a href="./app.html">【在 Istio 环境部署 Dubbo-go 应用】</a>。</p>
+<p>在之前的任务中，我们在集群中部署了一组 Dubbo-go Server和 Client 端应用，验证了服务发现和调用成功。在本节中，我们将创建新版本的 Server 端应用。通过配置 VirtualService 和 DestinationRule ，实现路由管理，和流量转移能力</p>
+<h2>1. 准备工作</h2>
+<ul>
+<li>dubbo-go cli 工具和依赖工具已安装、grpc_cli (如需本地调试)。</li>
+<li>docker、helm、kubectl 环境已安装。（arm 机器需支持 docker buildx）</li>
+<li>任务<a href="./app.html">【在 Istio 环境部署 Dubbo-go 应用】</a>已完成</li>
+</ul>
+<h2>2. 开发多版本Dubbo-go 应用。</h2>
+<h3>2.1 使用 dubbogo-cli 创建另一个项目模板</h3>
+<pre><code class="language-bash">$ dubbogo-cli newApp . 
+</code></pre>
+<h3>2.2 开发和部署客户端 Dubbo-go 应用 v2：</h3>
+<h4>编写业务逻辑</h4>
+<ul>
+<li>修改 package/service/service.go 的实现方法，返回版本号为 v2.0.0</li>
+</ul>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *GreeterServerImpl)</span> <span class="hljs-title">SayHello</span><span class="hljs-params">(ctx context.Context, in *api.HelloRequest)</span> <span class="hljs-params">(*api.User, error)</span></span> {
+	<span class="hljs-keyword">return</span> &amp;api.User{Name: <span class="hljs-string">"Hello "</span> + in.Name, Id: <span class="hljs-string">"v2.0.0"</span>}, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<ul>
+<li>
+<p>修改如下配置文件，使用xds协议作为注册中心，加载名为 GreeterServerImpl 的服务结构。</p>
+<p>conf/dubbogo.yaml</p>
+<pre><code class="language-yaml"><span class="hljs-attr">dubbo:</span>
+  <span class="hljs-attr">registries:</span>
+    <span class="hljs-attr">xds:</span>
+      <span class="hljs-attr">protocol:</span> <span class="hljs-string">xds</span>
+      <span class="hljs-attr">address:</span> <span class="hljs-string">istiod.istio-system.svc.cluster.local:15010</span>
+  <span class="hljs-attr">protocols:</span>
+    <span class="hljs-attr">triple:</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span>
+      <span class="hljs-attr">port:</span> <span class="hljs-number">20000</span>
+  <span class="hljs-attr">provider:</span>
+    <span class="hljs-attr">services:</span>
+      <span class="hljs-attr">GreeterServerImpl:</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">""</span> <span class="hljs-comment"># read from stub</span>
+
+</code></pre>
+<p>至此，应用开发完成。</p>
+</li>
+</ul>
+<h4>配置构建和部署参数</h4>
+<ul>
+<li>
+<p>指定需要构建的镜像：</p>
+<p>修改 Makefile 如下字段，指定好需要构建的镜像地址和版本，我们把镜像 tag 改为 2.0.0。</p>
+<p>指定好需要通过 helm 安装的名称。</p>
+<pre><code>IMAGE = xxx/dubbo-go-server
+TAG = 2.0.0
+HELM_INSTALL_NAME = dubbo-go-server
+</code></pre>
+</li>
+<li>
+<p>指定需要部署的应用和镜像：</p>
+<p>修改 chart/app/Chart.yaml 如下字段，指定当前应用名为 <code>dubbo-go-server</code>，我们在创建v1版本服务的时候，已经有了该应用的 service，这次部署时模板将不会创建 service。</p>
+<pre><code class="language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span>
+<span class="hljs-attr">name:</span> <span class="hljs-string">dubbo-go-server</span>
+<span class="hljs-attr">description:</span> <span class="hljs-string">dubbo-go-server</span>
+</code></pre>
+<p>修改 chart/app/values.yaml 如下字段，指定需要部署的镜像为2.0.0，以及当前开发的应用版本 dubbogoAppVersion 为 v2。</p>
+<p>部署的镜像需要和上述构建的镜像一致。当前应用版本用于 mesh 流量规则控制。</p>
+<pre><code class="language-yaml"><span class="hljs-attr">image:</span>
+  <span class="hljs-attr">repository:</span>  <span class="hljs-string">xxx/dubbo-go-server</span>
+  <span class="hljs-attr">pullPolicy:</span> <span class="hljs-string">Always</span>
+  <span class="hljs-attr">tag:</span> <span class="hljs-string">"2.0.0"</span>
+
+<span class="hljs-comment"># Dubbo-go-mesh version control labels</span>
+<span class="hljs-attr">version:</span>
+  <span class="hljs-attr">labels:</span>
+    <span class="hljs-attr">dubbogoAppVersion:</span> <span class="hljs-string">v2</span>
+</code></pre>
+<p>至此，构建参数和发布参数都已指定好，可以进行构建和部署了。</p>
+</li>
+</ul>
+<h4>使用模板构建和部署 Dubbo-go 应用</h4>
+<ul>
+<li>
+<p>构建、推送镜像</p>
+<p><code>$ make build</code>   (本地为 amd64机器)</p>
+<p>或者</p>
+<p><code>$ make buildx-publish</code>     (本地为 arm64机器，依赖 docker buildx 命令)</p>
+</li>
+<li>
+<p>发布 Dubbo-go Server  v2 至集群</p>
+<pre><code class="language-bash">$ make deploy
+NAME: dubbo-go-server-v2
+LAST DEPLOYED: Thu Apr  7 12:29:28 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+$ helm list
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   dubbo-go-client         default         1               2022-04-07 11:49:55.517898 +0800 CST    deployed        dubbo-go-client-0.0.1   1.16.0     
+dubbo-go-server-v1      default         1               2022-04-07 11:23:18.397658 +0800 CST    deployed        dubbo-go-server-0.0.1   1.16.0     
+dubbo-go-server-v2      default         1               2022-04-07 12:29:28.497476 +0800 CST    deployed        dubbo-go-client-0.0.1   1.16.0
+</code></pre>
+<p>可看到通过 helm 部署成功, 目前已经在集群中存在一个 Client 应用，和 Server 的两个版本。</p>
+</li>
+</ul>
+<h3>2.3 验证应用</h3>
+<h4>查看资源部署情况</h4>
+<p>查看部署好的 deployment ，server 包含了两个版本。</p>
+<pre><code class="language-bash">$  kubectl get deployment 
+NAME                 READY   UP-TO-DATE   AVAILABLE   AGE
+dubbo-go-client-v1   1/1     1            1           40m
+dubbo-go-server-v2   1/1     1            1           77s
+dubbo-go-server-v1   1/1     1            1           67m
+</code></pre>
+<p>查看部署好的 service。两个版本的deployment 共用同一个 service。</p>
+<pre><code class="language-bash">$ kubectl get svc        
+NAME              TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)     AGE
+dubbo-go-client   ClusterIP   192.168.8.176     &lt;none&gt;        20000/TCP   41m
+dubbo-go-server   ClusterIP   192.168.216.253   &lt;none&gt;        20000/TCP   67m
+</code></pre>
+<p>查看 Client 应用日志，验证请求调用到了两个版本的应用上。</p>
+<pre><code class="language-bash">$ kubectl get pods  | grep client | awk <span class="hljs-string">'{print $1}'</span> | xargs kubectl logs 
+...
+2022-04-07T05:06:40.384Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:06:41.386Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:06:42.388Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:06:43.389Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:06:44.390Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:06:45.392Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:06:46.393Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:06:47.394Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:06:48.396Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:06:49.397Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+</code></pre>
+<p>至此，我们开发并且部署成功了多版本应用。</p>
+<h2>3. 配置请求路由</h2>
+<h3>3.1 配置目标规则</h3>
+<p>执行以下命令以创建目标规则，该目标规则将 dubbo-go-server 细分为两个子集。v1和 v2</p>
+<pre><code class="language-bash">$ kubectl apply -f destinationrule.yaml
+</code></pre>
+<p>destinationrule.yaml 内容：</p>
+<pre><code class="language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">networking.istio.io/v1alpha3</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">DestinationRule</span>
+<span class="hljs-attr">metadata:</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo-go-server</span>
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">host:</span> <span class="hljs-string">dubbo-go-server</span>
+  <span class="hljs-attr">subsets:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">v1</span>
+      <span class="hljs-attr">labels:</span>
+        <span class="hljs-attr">dubbogoAppVersion:</span> <span class="hljs-string">v1</span> <span class="hljs-comment"># 对应应用模板中 chart/app/values.yaml 中指定的版本标签</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">v2</span>
+      <span class="hljs-attr">labels:</span>
+        <span class="hljs-attr">dubbogoAppVersion:</span> <span class="hljs-string">v2</span>
+</code></pre>
+<h3>3.2 应用 Virtual Service</h3>
+<p>执行以下命令以创建路由，该路由将所有流量都路由至v1 版本应用。</p>
+<pre><code class="language-bash">$ kubectl apply -f virtualservice.yaml
+</code></pre>
+<p>virtualservice.yaml 内容</p>
+<pre><code class="language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">networking.istio.io/v1alpha3</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">VirtualService</span>
+<span class="hljs-attr">metadata:</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo-go-server</span>
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">hosts:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">dubbo-go-server</span>
+  <span class="hljs-attr">http:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">route:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">destination:</span>
+        <span class="hljs-attr">host:</span> <span class="hljs-string">dubbo-go-server</span>
+        <span class="hljs-attr">subset:</span> <span class="hljs-string">v1</span>
+</code></pre>
+<h3>3.3 验证路由生效</h3>
+<p>所有流量将流向 v1 版本应用。</p>
+<pre><code class="language-bash">$ kubectl get pods  | grep client | awk <span class="hljs-string">'{print $1}'</span> | xargs kubectl logs 
+...
+2022-04-07T05:40:44.353Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:45.354Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:46.356Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:47.357Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:48.359Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:49.361Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+</code></pre>
+<h2>4. 基于用户身份的路由</h2>
+<p>有了上述多版本应用路由的基础，我们可以通过一些策略，来进行灵活的流量管理。</p>
+<h3>4.1 为客户端应用增加用户身份标识</h3>
+<p>我们希望拥有 user: admin 标识的流量都可以体验 v2 新版本应用。</p>
+<p>回到之前创建的 dubbo-go-client 项目，修改 cmd/app.go 的 main 函数，增加调用标识：<code>user: admin</code>。</p>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	client := &amp;api.GreeterClientImpl{}
+	config.SetConsumerService(client)
+	<span class="hljs-keyword">if</span> err := config.Load(); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	request := &amp;api.HelloRequest{
+		Name: <span class="hljs-string">"laurence"</span>,
+	}
+
+	<span class="hljs-keyword">for</span>{
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, constant.AttachmentKey, <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>{ 
+			<span class="hljs-string">"user"</span>:<span class="hljs-string">"admin"</span>, <span class="hljs-comment">// 使用上下文 context 为调用增加标识</span>
+		})
+
+		<span class="hljs-keyword">if</span> rsp, err := client.SayHello(ctx, request); err != <span class="hljs-literal">nil</span>{
+			logger.Errorf(<span class="hljs-string">"call server error = %s"</span>, err)
+		}<span class="hljs-keyword">else</span>{
+			logger.Infof(<span class="hljs-string">"call server response = %+v"</span>, rsp)
+		}
+		time.Sleep(time.Second)
+	}
+}
+</code></pre>
+<ul>
+<li>
+<p>构建、推送镜像，覆盖之前的提交。您也可以升级一下发布的镜像版本。</p>
+<p><code>$ make build</code>   (本地为 amd64机器)</p>
+<p>或者</p>
+<p><code>$ make buildx-publish</code>     (本地为 arm64机器，依赖 docker buildx 命令)</p>
+</li>
+<li>
+<p>删除 dubbo-go-client  应用</p>
+<pre><code>$ make remove
+helm uninstall dubbo-go-client
+release &quot;dubbo-go-client&quot; uninstalled
+</code></pre>
+</li>
+<li>
+<p>重新发布应用。</p>
+<p><code>$ make deploy</code></p>
+<p>发布后，验证调用成功，由于前面进行了路由配置。所有流量都流向 v1 版本。</p>
+<pre><code class="language-bash">$ kubectl get pods  | grep client | awk <span class="hljs-string">'{print $1}'</span> | xargs kubectl logs 
+...
+2022-04-07T05:40:44.353Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:45.354Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:46.356Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:47.357Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:48.359Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:40:49.361Z        INFO    cmd/app.go:29   call server response = name:<span class="hljs-string">"Hello laurence"</span> id:<span class="hljs-string">"v1.0.0"</span>
+</code></pre>
+</li>
+</ul>
+<h3>4.2 创建基于用户身份的路由</h3>
+<p>执行以下命令以修改/创建路由，该路由将所有请求头存在 user: admin 标识的流量都路由至 v2 版本。</p>
+<pre><code class="language-bash">$ kubectl apply -f virtualservice.yaml
+</code></pre>
+<p>virtualservice.yaml 内容</p>
+<pre><code class="language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">networking.istio.io/v1alpha3</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">VirtualService</span>
+<span class="hljs-attr">metadata:</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo-go-server</span>
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">hosts:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">dubbo-go-server</span>
+  <span class="hljs-attr">http:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">match:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">headers:</span>
+        <span class="hljs-attr">user:</span>
+          <span class="hljs-attr">exact:</span> <span class="hljs-string">admin</span>
+    <span class="hljs-attr">route:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">destination:</span>
+          <span class="hljs-attr">host:</span> <span class="hljs-string">dubbo-go-server</span>
+          <span class="hljs-attr">subset:</span> <span class="hljs-string">v2</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">route:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">destination:</span>
+        <span class="hljs-attr">host:</span> <span class="hljs-string">dubbo-go-server</span>
+        <span class="hljs-attr">subset:</span> <span class="hljs-string">v1</span>
+</code></pre>
+<h3>4.3 验证路由生效</h3>
+<p>所有流量将流向 v2 版本应用。</p>
+<pre><code class="language-bash">$ kubectl get pods  | grep client | awk <span class="hljs-string">'{print $1}'</span> | xargs kubectl logs 
+...
+2022-04-07T05:52:18.714Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:52:19.716Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:52:20.717Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:52:21.718Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:52:22.720Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:52:23.722Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:52:24.723Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v2.0.0"</span>
+</code></pre>
+<h2>5. 基于权重的路由</h2>
+<h3>5.1 创建基于权重的路由</h3>
+<p>延续上述任务，我们执行以下命令以修改/创建路由，该路由将流量的 10% 导入新版本应用，进行灰度测试。</p>
+<pre><code class="language-bash">$ kubectl apply -f virtualservice.yaml
+</code></pre>
+<p>virtualservice.yaml 内容</p>
+<pre><code class="language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">networking.istio.io/v1alpha3</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">VirtualService</span>
+<span class="hljs-attr">metadata:</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo-go-server</span>
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">hosts:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">dubbo-go-server</span>
+  <span class="hljs-attr">http:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">route:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">destination:</span>
+          <span class="hljs-attr">host:</span> <span class="hljs-string">dubbo-go-server</span>
+          <span class="hljs-attr">subset:</span> <span class="hljs-string">v1</span>
+        <span class="hljs-attr">weight:</span> <span class="hljs-number">90</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">destination:</span>
+          <span class="hljs-attr">host:</span> <span class="hljs-string">dubbo-go-server</span>
+          <span class="hljs-attr">subset:</span> <span class="hljs-string">v2</span>
+        <span class="hljs-attr">weight:</span> <span class="hljs-number">10</span>
+</code></pre>
+<h3>5.2 验证路由生效</h3>
+<p>少数流量将流向 v2 版本。</p>
+<pre><code class="language-bash">$ kubectl get pods  | grep client | awk <span class="hljs-string">'{print $1}'</span> | xargs kubectl logs 
+...
+2022-04-07T05:55:52.035Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:55:53.036Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:55:54.037Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:55:55.039Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:55:56.041Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:55:57.043Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:55:58.045Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:55:59.047Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:56:00.049Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:56:01.050Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v2.0.0"</span>
+2022-04-07T05:56:02.053Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+2022-04-07T05:56:03.055Z        INFO    cmd/app.go:35   call server response = name:<span class="hljs-string">"Hello laurence"</span>  id:<span class="hljs-string">"v1.0.0"</span>
+</code></pre>
 </div></section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><img class="apache" src="/img/apache_logo.png"/><div class="cols-container"><div class="col col-12"><h3></h3><p></p></div><div class="col col-4"><dl><dt>ASF</dt><dd><a href="http://www.apache.org" target="_self">基金会</a></dd><dd><a href="http://www.apache.org/licenses/" target="_self">证书</a></dd><dd><a href="http://www.apache.org/events/current-event" target="_self">事件</a></dd><dd><a href="http://www.apache.org/foundation/sponsorship.html" target="_self">赞助</a></dd><dd><a href="http://www.apache.org/foundation/thanks.html" target="_self">致谢</a></dd></dl></div><div class="col col-4"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/user/concept/what_is_dubbogo.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/dev/build.html" target="_self">开发者指南</a></dd><dd><a href="/zh-cn/docs/admin/ops/dubbo-ops.html" target="_self">运维管理</a></dd><dd><a href="https://github.com/dubbogo/dubbogo.github.io/issues/new" target="_self">报告文档问题</a></dd><dd><a href="https://github.com/dubbogo/dubbogo.github.io" target="_self">编辑此文档</a></dd></dl></div><div class="col col-4"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.apache.org/security" target="_self">安全</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018-2020 The Apache Software Foundation. Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
 	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
