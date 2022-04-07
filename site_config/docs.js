@@ -166,7 +166,7 @@ export default {
                 title: '快速开始',
                 children: [
                     {
-                        title: '安装 Dubbo-go 开发环境',
+                        title: '安装开发环境',
                         link: '/zh-cn/docs/user/quickstart/install.html'
                     },
                     {
@@ -182,11 +182,11 @@ export default {
                         title: '服务调用',
                         children: [
                             {
-                                title: '配置调用的超时',
+                                title: '配置调用超时',
                                 link: '/zh-cn/docs/user/tasks/rpc/timeout.html'
                             },
                             {
-                                title: '查看服务调用指标',
+                                title: '查看服务调用监控信息',
                                 link: '/zh-cn/docs/user/tasks/rpc/rpc_metrics.html'
                             },
                             {
@@ -255,31 +255,10 @@ export default {
                         ],
                     },
                     {
-                        title: '可视化',
-                        children: [
-                            {
-                                title: '使用 opentelementry 协议暴露 dubbo-go 应用数据 ',
-                                link: '/zh-cn/docs/user/tasks/visualization/opentelementry.html'
-                            },
-                            {
-                                title: '自定义日志',
-                                link: '/zh-cn/docs/user/tasks/visualization/logger.html'
-                            },
-                            {
-                                title: '基于 prometheus 的指标数据上报',
-                                link:'/zh-cn/docs/user/tasks/visualization/metrics.html'
-                            },
-                            {
-                                title: '基于 jaeger 的链路追踪',
-                                link:'/zh-cn/docs/user/tasks/visualization/tracing.html'
-                            },
-                        ],
-                    },
-                    {
                         title: '服务网格',
                         children: [
                             {
-                                title: '部署 istio 环境',
+                                title: '部署 Istio 环境',
                                 link: '/zh-cn/docs/user/tasks/mesh/build.html'
                             },
                             {
@@ -291,12 +270,33 @@ export default {
                                 link: '/zh-cn/docs/user/tasks/mesh/traffic_management.html'
                             },
                             {
-                                title: '使用 pixiu 网关接入 ingress 流量',
+                                title: '使用 Pixiu 网关接入 Ingress 流量',
                                 link:'/zh-cn/docs/user/tasks/mesh/ingress.html'
                             },
                             {
                                 title: '金丝雀发布',
                                 link:'/zh-cn/docs/user/tasks/mesh/gray_deploy.html'
+                            },
+                        ],
+                    },
+                    {
+                        title: '可视化',
+                        children: [
+                            {
+                                title: '使用 Opentelementry 协议',
+                                link: '/zh-cn/docs/user/tasks/visualization/opentelementry.html'
+                            },
+                            {
+                                title: '日志',
+                                link: '/zh-cn/docs/user/tasks/visualization/logger.html'
+                            },
+                            {
+                                title: '基于 Prometheus 的数据上报',
+                                link:'/zh-cn/docs/user/tasks/visualization/metrics.html'
+                            },
+                            {
+                                title: '基于 Jaeger 的链路追踪',
+                                link:'/zh-cn/docs/user/tasks/visualization/tracing.html'
                             },
                         ],
                     },

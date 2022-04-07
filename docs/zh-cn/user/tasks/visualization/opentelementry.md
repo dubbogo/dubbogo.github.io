@@ -1,11 +1,8 @@
 ---
-title: 自定义服务调用中间件
-keywords: 自定义服务调用中间件
-description: 自定义服务调用中间件
+title: 使用 Opentelmentry 协议
+keywords: 使用 Opentelmentry 协议
+description: 使用 Opentelmentry 协议
 ---
 
-# 自定义服务调用中间件
+# 使用 Opentelmentry 协议
 
-
-
-下一章：[【Dubbo 协议快速开始】](./quickstart_dubbo.html)
