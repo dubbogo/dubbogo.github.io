@@ -1,11 +1,8 @@
 ---
-title: 自定义服务调用中间件
-keywords: 自定义服务调用中间件
-description: 自定义服务调用中间件
+title: 基于 Prometheus 的数据上报
+keywords: 基于 Prometheus 的数据上报
+description: 基于 Prometheus 的数据上报
 ---
 
-# 自定义服务调用中间件
+# 基于 Prometheus 的数据上报
 
-
-
-下一章：[【Dubbo 协议快速开始】](./quickstart_dubbo.html)

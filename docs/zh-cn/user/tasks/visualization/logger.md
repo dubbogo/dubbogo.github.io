@@ -1,11 +1,8 @@
 ---
-title: 自定义服务调用中间件
-keywords: 自定义服务调用中间件
-description: 自定义服务调用中间件
+title: 日志
+keywords: 日志
+description: 日志
 ---
 
-# 自定义服务调用中间件
+# 日志
 
-
-
-下一章：[【Dubbo 协议快速开始】](./quickstart_dubbo.html)
