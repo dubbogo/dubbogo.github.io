@@ -283,11 +283,11 @@ export default {
                                 link: '/zh-cn/docs/user/tasks/mesh/build.html'
                             },
                             {
-                                title: 'Istio 环境部署 Dubbo-go 应用',
+                                title: '在 Istio 环境部署 Dubbo-go 应用',
                                 link: '/zh-cn/docs/user/tasks/mesh/app.html'
                             },
                             {
-                                title: '管理 Dubbo-go 流量',
+                                title: '流量管理',
                                 link: '/zh-cn/docs/user/tasks/mesh/traffic_management.html'
                             },
                             {
