@@ -6,6 +6,8 @@ description: >
 随着微服务架构的流行，许多高性能 rpc 框架应运而生，由阿里开源的 dubbo 框架 go 语言版本的 dubbo-go 也成为了众多开发者不错的选择。本文将介绍 dubbo-go 框架的基本使用方法，以及从 export 调用链的角度进行 server 端源码导读，希望能引导读者进一步认识这款框架。
 ---
 
+## Dubbo-go 源码笔记（一）Server 端开启服务过程
+
 当拿到一款框架之后，一种不错的源码阅读方式大致如下：从运行最基础的 helloworld demo 源码开始 —> 再查看配置文件 —> 开启各种依赖服务（比如zk、consul） —> 开启服务端 —> 再到通过 client 调用服务端 —> 打印完整请求日志和回包。调用成功之后，再根据框架的设计模型，从配置文件解析开始，自顶向下递阅读整个框架的调用栈。
 
 对于 C/S 模式的 rpc 请求来说，整个调用栈被拆成了 client 和 server 两部分，所以可以分别从 server 端的配置文件解析阅读到 server 端的监听启动，从 client 端的配置文件解析阅读到一次 invoker Call 调用。这样一次完整请求就明晰了起来。
@@ -14,7 +16,7 @@ dubbo-go 3.0默认支持Triple协议，本文讲解的是Dubbo协议的调用过
 
 ## 运行官网提供的 Dubbo协议 Demo
 
-**官方 demo 相关链接**：https://github.com/apache/dubbo-go-samples/tree/9e087bc3a0260a61f93c27c323d0aeebe4970bec，启动过程可以参考[HOWTO_ZH.md](https://github.com/apache/dubbo-go-samples/blob/9e087bc3a0260a61f93c27c323d0aeebe4970bec/HOWTO_zh.md)。
+**官方 demo [相关链接](https://github.com/apache/dubbo-go-samples/tree/9e087bc3a0260a61f93c27c323d0aeebe4970bec)**，启动过程可以参考[HOWTO_ZH.md](https://github.com/apache/dubbo-go-samples/blob/9e087bc3a0260a61f93c27c323d0aeebe4970bec/HOWTO_zh.md)。
 
 ### 1. dubbo-go 3.0 版本 Dubbo协议 QuickStart
 
@@ -97,7 +99,7 @@ $ export GOPROXY="http://goproxy.io"
 $ cd rpc/dubbo/go-client/cmd
 ```
 
-- 同理，在 /app 下配置环境变量
+- 同理，在 /cmd 下配置环境变量
 
 ```bash
 $ export DUBBO_GO_CONFIG_PATH="../conf/dubbogo.yml"
@@ -193,7 +195,7 @@ type (
 
 + **user_provieder.go**
 
-user_provieder.go提供了rpc调用服务，UserProvider内嵌的CommonUserProvider实现了GetUser等一些列服务。
+user_provieder.go提供了rpc调用服务，UserProvider内嵌的CommonUserProvider实现了GetUser等一系列服务。
 
 ``` go
 type UserProvider struct {
@@ -295,7 +297,7 @@ main 函数和服务端也类似，首先将传输结构注册到 hessian 上，
 
 ## Server 端
 
-服务暴露过程涉及到多次原始 rpcService 的封装、暴露，网上其他文章的图感觉太过笼统，在此，简要地绘制了一个用户定义服务的数据流图，本文涉及的源码仓库为https://github.com/apache/dubbo-go/tree/f481b16d363c52051aa53d04b9566eedfa676b7b：
+服务暴露过程涉及到多次原始 rpcService 的封装、暴露，网上其他文章的图感觉太过笼统，在此，简要地绘制了一个用户定义服务的数据流图，本文涉及的[源码仓库](https://github.com/apache/dubbo-go/tree/f481b16d363c52051aa53d04b9566eedfa676b7b)：
 
 ![](../../img/blog/dubbo-go-code-notes-1.resources/p3.png)
 
@@ -472,25 +474,25 @@ func (rc *RootConfig) Start() {
 对于 provider 端，可以看到 rc.Provider.Init(rc) 函数代码如下，其主要负责的是配置的读入和检查：
 
 ``` go
-	for key, serviceConfig := range c.Services {
-		if serviceConfig.Interface == "" {
-			service := GetProviderService(key)
-			// try to use interface name defined by pb
-			supportPBPackagerNameSerivce, ok := service.(common.TriplePBService)
-			if !ok {
-				continue
-			} else {
-				// use interface name defined by pb
-				serviceConfig.Interface = supportPBPackagerNameSerivce.XXX_InterfaceName()
-			}
-		}
-        // 调用serviceConfig利用rootconfig配置相关信息
-		if err := serviceConfig.Init(rc); err != nil {
-			return err
-		}
+for key, serviceConfig := range c.Services {
+    if serviceConfig.Interface == "" {
+        service := GetProviderService(key)
+        // try to use interface name defined by pb
+        supportPBPackagerNameSerivce, ok := service.(common.TriplePBService)
+        if !ok {
+            continue
+        } else {
+            // use interface name defined by pb
+            serviceConfig.Interface = supportPBPackagerNameSerivce.XXX_InterfaceName()
+        }
+    }
+    // 调用serviceConfig利用rootconfig配置相关信息
+    if err := serviceConfig.Init(rc); err != nil {
+        return err
+    }
 
-		serviceConfig.adaptiveService = c.AdaptiveService
-	}
+    serviceConfig.adaptiveService = c.AdaptiveService
+}
 ```
 
 之后利用 rc.Start() 调用 rc.Provider.Load()，逐步开始服务的暴露：
@@ -520,11 +522,11 @@ func (c *ProviderConfig) Load() {
 for 循环的第一行，根据 key 调用 GetProviderService 函数，拿到注册的 rpcService 实例，这里对应上述提到的 server.go 主函数中，用户手动注册的自己实现的 rpc-service 实例：
 
 ``` go
-	config.SetProviderService(&pkg.UserProvider{})
-	config.SetProviderService(&pkg.UserProvider1{})
-	config.SetProviderService(&pkg.UserProvider2{})
-	config.SetProviderService(&pkg.ComplexProvider{})
-	config.SetProviderService(&pkg.WrapperArrayClassProvider{})
+config.SetProviderService(&pkg.UserProvider{})
+config.SetProviderService(&pkg.UserProvider1{})
+config.SetProviderService(&pkg.UserProvider2{})
+config.SetProviderService(&pkg.ComplexProvider{})
+config.SetProviderService(&pkg.WrapperArrayClassProvider{})
 ```
 
 进入到 [SetProviderService](https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/service.go#L35) 函数中，可以发现其只是设置了 proServices 这个全局变量，只是一个通过哈希表将服务名（string）指向服务具体调用的对象（interface{}），[GetProviderService](https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/service.go#L66) 也是从 proServices 该全局变量读取相应的对象。将这个对象通过Implement 函数写到 sys（[ServiceConfig](https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/service_config.go#L51) 类型）上，设置好 sys 的 key 和协议组，最终调用了 sys 的 Export 方法。
@@ -595,10 +597,10 @@ exporter := s.cacheProtocol.Export(invoker)
 可以进入 [common/proxy/proxy_factory/default.go::ProxyInvoker.Invoke()](https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/common/proxy/proxy_factory/default.go#L86 ) 函数里，看到对于 common.Map 取用为 svc 的部分，以及关于 svc 对应 Method 的实际调用 Call 的函数如下：
 
 ``` go
-		  // get method
+// get method
 line 107: method := svc.Method()[methodName]
 		  ...
-		  // call method
+// call method
 line 145: returnValues := method.Method().Func.Call(in)
 ```
 
@@ -627,8 +629,8 @@ line 145: returnValues := method.Method().Func.Call(in)
 #### 1）获取注册 url 和服务 url
 
 ``` go
-	registryUrl := getRegistryUrl(originInvoker)
-	providerUrl := getProviderUrl(originInvoker)
+registryUrl := getRegistryUrl(originInvoker)
+providerUrl := getProviderUrl(originInvoker)
 ```
 
 #### 2）proxy_invoker 封装入 wrapped_invoker，得到 filter 调用链，本地暴露服务。
@@ -692,7 +694,7 @@ for i := len(filterNames) - 1; i >= 0; i-- {
 
 ```go
 // 通过dubbo协议Export  dubbo_protocol调用的 export_2
-    return pfw.protocol.Export(invoker)
+return pfw.protocol.Export(invoker)
 ```
 
 回到上述 Export 函数的最后一行，调用了 dubboProtocol 的 Export 方法，将上述 chain 真正暴露。
@@ -919,32 +921,31 @@ func (p *RpcServerPackageHandler) Read(ss getty.Session, data []byte) (interface
 - 拿到解码后传入的参数，使用[requestHandler](https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/remoting/getty/listener.go#L307)进行调用。
 
 ``` go
-	invoc, ok := req.Data.(*invocation.RPCInvocation)
-	if !ok {
-		panic("create invocation occur some exception for the type is not suitable one.")
-	}
-	attachments := invoc.Attachments()
-	attachments[constant.LocalAddr] = session.LocalAddr()
-	attachments[constant.RemoteAddr] = session.RemoteAddr()
+invoc, ok := req.Data.(*invocation.RPCInvocation)
+if !ok {
+    panic("create invocation occur some exception for the type is not suitable one.")
+}
+attachments := invoc.Attachments()
+attachments[constant.LocalAddr] = session.LocalAddr()
+attachments[constant.RemoteAddr] = session.RemoteAddr()
 
-	result := h.server.requestHandler(invoc)
+result := h.server.requestHandler(invoc)
 ```
 
 - [handler]((https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/dubbo/dubbo_protocol.go#L126)是封装了[doHandleRequest])是包装了doHandleRequest的匿名函数，在[doHandleRequest](https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/dubbo/dubbo_protocol.go#L145)中先拿到exporter，之后拿到对应的 Invoker，执行调用，返回调用结果。
 
 ``` go
 func doHandleRequest(rpcInvocation *invocation.RPCInvocation) protocol.RPCResult {
-    // 拿到exporter
+	// 拿到exporter
 	exporter, _ := dubboProtocol.ExporterMap().Load(rpcInvocation.ServiceKey())
 	result := protocol.RPCResult{}
 	...
-    // 拿到对应的 Invoker
+	// 拿到对应的 Invoker
 	invoker := exporter.(protocol.Exporter).GetInvoker()
-    
-    // 执行调用
-    invokeResult := invoker.Invoke(ctx, rpcInvocation)
+	// 执行调用
+	invokeResult := invoker.Invoke(ctx, rpcInvocation)
 	...
-    // 返回调用结果
+	// 返回调用结果
 	return result
 }
 ```
