@@ -115,12 +115,12 @@ export default {
       {
         key: 'home',
         text: '首页',
-        link: '/zh-cn/index.html',
+        link: 'https://dubbo.apache.org',
       },
       {
         key: 'docs',
         text: '文档',
-        link: '/zh-cn/docs/user/concept/what_is_dubbogo.html',
+        link: 'https://dubbo.apache.org/zh/docs3-building/golang-sdk/',
       },
       {
         key: 'blog',

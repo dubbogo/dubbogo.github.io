@@ -6,8 +6,8 @@ export default {
       brandName: 'Apache Dubbo-go',
       briefIntroduction: '一款兼容 Apache Dubbo™、gRPC 的高性能 Go RPC 框架。',
       getStartedButton: {
-        text: '开始使用',
-        link: '/zh-cn/docs/user/concept/what_is_dubbogo.html',
+        text: '文档迁移至：dubbo.apache.org',
+        link: 'https://dubbo.apache.org/zh/docs3-building/golang-sdk/',
       },
       viewOnGithubButton: {
         text: 'GITHUB',
@@ -81,8 +81,8 @@ export default {
       brandName: 'Apache Dubbo-go',
       briefIntroduction: 'A high-performance, Compatible Apache Dubbo™, Go based open source RPC framework.',
       getStartedButton: {
-        text: 'GET STARTED',
-        link: '/en-us/docs/user/quick-start.html',
+        text: 'Docs are in dubbo.apach.org now',
+        link: 'https://dubbo.apache.org/cn/docs3-building/golang-sdk/',
       },
       viewOnGithubButton: {
         text: 'GITHUB',
