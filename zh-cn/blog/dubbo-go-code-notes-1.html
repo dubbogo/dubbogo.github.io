@@ -12,37 +12,54 @@
 	<link rel="stylesheet" href="/build/blogDetail.css" />
 </head>
 <body>
-	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org">首页</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org/zh/docs3-building/golang-sdk/">文档</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><section class="blog-content markdown-body"><p>当拿到一款框架之后，一种不错的源码阅读方式大致如下：从运行最基础的 helloworld demo 源码开始 —&gt; 再查看配置文件 —&gt; 开启各种依赖服务（比如zk、consul） —&gt; 开启服务端 —&gt; 再到通过 client 调用服务端 —&gt; 打印完整请求日志和回包。调用成功之后，再根据框架的设计模型，从配置文件解析开始，自顶向下递阅读整个框架的调用栈。</p>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org">首页</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org/zh/docs3-building/golang-sdk/">文档</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/download.html">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.io">Java</a></li></ul></div></div></header><section class="blog-content markdown-body"><h2>Dubbo-go 源码笔记（一）Server 端开启服务过程</h2>
+<p>当拿到一款框架之后，一种不错的源码阅读方式大致如下：从运行最基础的 helloworld demo 源码开始 —&gt; 再查看配置文件 —&gt; 开启各种依赖服务（比如zk、consul） —&gt; 开启服务端 —&gt; 再到通过 client 调用服务端 —&gt; 打印完整请求日志和回包。调用成功之后，再根据框架的设计模型，从配置文件解析开始，自顶向下递阅读整个框架的调用栈。</p>
 <p>对于 C/S 模式的 rpc 请求来说，整个调用栈被拆成了 client 和 server 两部分，所以可以分别从 server 端的配置文件解析阅读到 server 端的监听启动，从 client 端的配置文件解析阅读到一次 invoker Call 调用。这样一次完整请求就明晰了起来。</p>
-<h2>运行官网提供的 helloworld-demo</h2>
-<p><strong>官方 demo 相关链接</strong>：<a href="https://github.com/dubbogo/dubbo-samples/tree/master/golang/helloworld/dubbo">https://github.com/dubbogo/dubbo-samples/tree/master/golang/helloworld/dubbo</a></p>
-<h3>1. dubbo-go 2.7 版本 QuickStart</h3>
-<h4>1）开启一个 go-server 服务</h4>
+<p>dubbo-go 3.0默认支持Triple协议，本文讲解的是Dubbo协议的调用过程。</p>
+<h2>运行官网提供的 Dubbo协议 Demo</h2>
+<p><strong>官方 demo <a href="https://github.com/apache/dubbo-go-samples/tree/9e087bc3a0260a61f93c27c323d0aeebe4970bec">相关链接</a></strong>，启动过程可以参考<a href="https://github.com/apache/dubbo-go-samples/blob/9e087bc3a0260a61f93c27c323d0aeebe4970bec/HOWTO_zh.md">HOWTO_ZH.md</a>。</p>
+<h3>1. dubbo-go 3.0 版本 Dubbo协议 QuickStart</h3>
+<h4>1）下载demo</h4>
 <ul>
-<li>将仓库 clone 到本地</li>
+<li>将仓库 clone 到本地，切换到指定版本。</li>
 </ul>
 <pre><code class="language-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/dubbogo/dubbo-samples.git
+$ git branch hello 9e087bc3a0260a61f93c27c323d0aeebe4970bec &amp;&amp; git checkout hello
 </code></pre>
+<h4>1）运行 zookeeper</h4>
 <ul>
-<li>进入 dubbo 目录</li>
+<li>使用<code>docker</code>运行zookeeper注册中心，需要首先安装<code>docker</code>和<code>docker-compose</code>。</li>
 </ul>
-<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> dubbo-samples/golang/helloworld/dubbo
+<pre><code class="language-bash">make -f build/Makefile docker-up  
 </code></pre>
-<p>进入目录后可看到四个文件夹，分别支持 go 和 java 的 client 以及 server，我们尝试运行一个 go 的 server。进入 app 子文件夹内，可以看到里面保存了 go 文件。</p>
-<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> go-server/app
+<p>当看到类似下面的输出信息时，就表明 zookeeper server 启动就绪了。</p>
+<pre><code class="language-bash"> &gt;  Starting dependency services with ./integrate_test/dockercompose/docker-compose.yml
+ Docker Compose is now <span class="hljs-keyword">in</span> the Docker CLI, try `docker compose up`
+ 
+ Creating network <span class="hljs-string">"dockercompose_default"</span> with the default driver
+ Creating dockercompose_zookeeper_1 ... <span class="hljs-keyword">done</span>
+ Creating etcd                      ... <span class="hljs-keyword">done</span>
+ Creating nacos-standalone          ... <span class="hljs-keyword">done</span>
+</code></pre>
+<h4>2）开启一个 go-server 服务</h4>
+<ul>
+<li>进入 dubbo协议rpc调用的目录</li>
+</ul>
+<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> rpc/dubbo
+</code></pre>
+<p>进入目录后可看到四个文件夹，分别支持 go 和 java 的 client 以及 server，我们尝试运行一个 go 的 server。进入 cmd 子文件夹内，可以看到里面保存了 go 文件。</p>
+<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> go-server/cmd
 </code></pre>
 <ul>
 <li>sample 文件结构</li>
 </ul>
-<p>可以在 go-server 里面看到三个文件夹：app、assembly、profiles。</p>
-<p>其中 app 文件夹下保存 go 源码，assembly 文件夹下保存可选的针对特定环境的 build 脚本，profiles 下保存配置文件。对于 dubbo-go 框架，配置文件非常重要，没有文件将导致服务无法启动。</p>
+<p>可以在 go-server 里面看到三个文件夹：cmd、conf、pkg。</p>
+<p>其中 cmd 文件夹下保存 go 源码，使用框架开启服务以及注册传输协议，conf 文件夹下保存配置文件，pkg 文件夹下保存了rpc调用服务的具体实现。对于 dubbo-go 框架，配置文件非常重要，没有文件将导致服务无法启动。</p>
 <ul>
 <li>设置指向配置文件的环境变量</li>
 </ul>
-<p>由于 dubbo-go 框架依赖配置文件启动，让框架定位到配置文件的方式就是通过环境变量来找。对于 server 端需要两个必须配置的环境变量：CONF_PROVIDER_FILE_PATH、APP_LOG_CONF_FILE，分别应该指向服务端配置文件、日志配置文件。</p>
-<p>在 sample 里面，我们可以使用 dev 环境，即 profiles/dev/log.yml 和 profiles/dev/server.yml 两个文件。在 app/ 下，通过命令行中指定好这两个文件：</p>
-<pre><code class="language-bash">$ <span class="hljs-built_in">export</span> CONF_PROVIDER_FILE_PATH=<span class="hljs-string">"../profiles/dev/server.yml"</span>
-$ <span class="hljs-built_in">export</span> APP_LOG_CONF_FILE=<span class="hljs-string">"../profiles/dev/log.yml"</span>
+<p>由于 dubbo-go 框架依赖配置文件启动，让框架定位到配置文件的方式就是通过环境变量来找。对于 server 端必须配置的环境变量：DUBBO_GO_CONFIG_PATH指向服务端配置文件。</p>
+<pre><code class="language-bash">$ <span class="hljs-built_in">export</span> DUBBO_GO_CONFIG_PATH=<span class="hljs-string">"../conf/dubbogo.yml"</span>
 </code></pre>
 <ul>
 <li>设置 go 代理并运行服务</li>
@@ -53,19 +70,16 @@ $ <span class="hljs-built_in">export</span> APP_LOG_CONF_FILE=<span class="hljs-
 <pre><code class="language-bash">$ <span class="hljs-built_in">export</span> GOPROXY=<span class="hljs-string">"http://goproxy.io"</span>
 </code></pre>
 <p>再运行 go run 即可开启服务。</p>
-<h4>2）运行 zookeeper</h4>
-<p>安装 zookeeper，并运行 zkServer, 默认为 2181 端口。</p>
 <h4>3）运行 go-client 调用 server 服务</h4>
 <ul>
 <li>进入 go-client 的源码目录</li>
 </ul>
-<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> go-client/app
+<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> rpc/dubbo/go-client/cmd
 </code></pre>
 <ul>
-<li>同理，在 /app 下配置环境变量</li>
+<li>同理，在 /cmd 下配置环境变量</li>
 </ul>
-<pre><code class="language-bash">$ <span class="hljs-built_in">export</span> CONF_CONSUMER_FILE_PATH=<span class="hljs-string">"../profiles/dev/client.yml"</span>
-$ <span class="hljs-built_in">export</span> APP_LOG_CONF_FILE=<span class="hljs-string">"../profiles/dev/log.yml"</span>
+<pre><code class="language-bash">$ <span class="hljs-built_in">export</span> DUBBO_GO_CONFIG_PATH=<span class="hljs-string">"../conf/dubbogo.yml"</span>
 </code></pre>
 <p>配置 go 代理：</p>
 <pre><code class="language-bash">$ <span class="hljs-built_in">export</span> GOPROXY=<span class="hljs-string">"http://goproxy.io"</span>
@@ -76,161 +90,161 @@ $ <span class="hljs-built_in">export</span> APP_LOG_CONF_FILE=<span class="hljs-
 <pre><code class="language-bash">$ go run .
 </code></pre>
 <p>即可在日志中找到打印出的请求结果：</p>
-<pre><code class="language-bash">response result: &amp;{A001 Alex Stocks 18 2020-10-28 14:52:49.131 +0800 CST}
+<pre><code class="language-bash">start to <span class="hljs-built_in">test</span> dubbo
+2022-05-09T09:58:42.040-0400    INFO    cmd/client.go:65        response result: User{ID:113, Name:Moorse, Age:30, Time:2022-05-09 09:57:44.216 -0400 EDT, Sex:WOMAN}
+2022-05-09T09:58:42.041-0400    INFO    cmd/client.go:67
+
+start to <span class="hljs-built_in">test</span> dubbo - enum
+2022-05-09T09:58:42.041-0400    INFO    cmd/client.go:72        response result: WOMAN
+2022-05-09T09:58:42.041-0400    INFO    cmd/client.go:74
+
+start to <span class="hljs-built_in">test</span> dubbo - GetUser0
+2022-05-09T09:58:42.041-0400    INFO    cmd/client.go:79        response result: User{ID:113, Name:Moorse, Age:30, Time:2022-05-09 09:57:44.216 -0400 EDT, Sex:WOMAN}
+2022-05-09T09:58:42.041-0400    INFO    cmd/client.go:81
+
+start to <span class="hljs-built_in">test</span> dubbo - GetUsers
+2022-05-09T09:58:42.042-0400    INFO    cmd/client.go:86        response result: [User{ID:002, Name:Lily, Age:20, Time:2022-05-09 09:57:44.216 -0400 EDT, Sex:WOMAN} User{ID:113, Name:Moorse, Age:30, Time:2022-05-09 09:57:44.216 -0400 EDT, Sex:WOMAN}]
+2022-05-09T09:58:42.042-0400    INFO    cmd/client.go:88
+
+start to <span class="hljs-built_in">test</span> dubbo - getUser
+2022-05-09T09:58:42.042-0400    INFO    cmd/client.go:95        response result: User{ID:1, Name:, Age:0, Time:0001-01-01 00:00:00 +0000 UTC, Sex:MAN}
+2022-05-09T09:58:42.042-0400    INFO    cmd/client.go:97
 </code></pre>
 <p>同样，在运行的 server 中，也可以在日志中找到打印出的请求：</p>
-<pre><code class="language-bash">req:[]interface {}{<span class="hljs-string">"A001"</span>}
-rsp:main.User{Id:<span class="hljs-string">"A001"</span>, Name:<span class="hljs-string">"Alex Stocks"</span>, Age:18, Time:time.Time{...}
+<pre><code class="language-bash">[2022-05-09/09:58:42 github.com/apache/dubbo-go-samples/rpc/dubbo/go-server/pkg.(*CommonUserProvider).GetUser: common_user_provider.go: 51] req:&amp;pkg.User{ID:<span class="hljs-string">"003"</span>, Name:<span class="hljs-string">""</span>, Age:0, Time:time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC), Sex:0}
+[2022-05-09/09:58:42 github.com/apache/dubbo-go-samples/rpc/dubbo/go-server/pkg.(*CommonUserProvider).GetUser: common_user_provider.go: 54] rsp:&amp;pkg.User{ID:<span class="hljs-string">"113"</span>, Name:<span class="hljs-string">"Moorse"</span>, Age:30, Time:time.Date(2022, time.May, 9, 9, 57, 44, 216299612, time.Local), Sex:1}
+[2022-05-09/09:58:42 github.com/apache/dubbo-go-samples/rpc/dubbo/go-server/pkg.(*CommonUserProvider).GetUser0: common_user_provider.go: 62] id:003, name:Moorse
+[2022-05-09/09:58:42 github.com/apache/dubbo-go-samples/rpc/dubbo/go-server/pkg.(*CommonUserProvider).GetUsers: common_user_provider.go: 93] req:[002 003]
+[2022-05-09/09:58:42 github.com/apache/dubbo-go-samples/rpc/dubbo/go-server/pkg.(*CommonUserProvider).GetUsers: common_user_provider.go: 98] user:User{ID:002, Name:Lily, Age:20, Time:2022-05-09 09:57:44.216299537 -0400 EDT m=+0.041815627, Sex:WOMAN}
+[2022-05-09/09:58:42 github.com/apache/dubbo-go-samples/rpc/dubbo/go-server/pkg.(*CommonUserProvider).GetUsers: common_user_provider.go: 103] user1:User{ID:113, Name:Moorse, Age:30, Time:2022-05-09 09:57:44.216299612 -0400 EDT m=+0.041815702, Sex:WOMAN}
+[2022-05-09/09:58:42 github.com/apache/dubbo-go-samples/rpc/dubbo/go-server/pkg.(*CommonUserProvider).GetUser2: common_user_provider.go: 76] req:1
 </code></pre>
 <p>恭喜！一次基于 dubbo-go 的 rpc 调用成功。</p>
 <h4>4）常见问题</h4>
 <ul>
-<li>当日志开始部分出现 profiderInit 和 ConsumerInit 均失败的日志，检查环境变量中配置路径是否正确，配置文件是否正确。</li>
 <li>当日志中出现 register 失败的情况，一般为向注册中心注册失败，检查注册中心是否开启，检查配置文件中关于 register 的端口是否正确。</li>
 <li>sample 的默认开启端口为 20000，确保启动前无占用。</li>
 </ul>
-<h3>2. 配置环境变量</h3>
-<pre><code class="language-bash"><span class="hljs-built_in">export</span> APP_LOG_CONF_FILE=<span class="hljs-string">"../profiles/dev/log.yml"</span>
-<span class="hljs-built_in">export</span> CONF_CONSUMER_FILE_PATH=<span class="hljs-string">"../profiles/dev/client.yml"</span>
-</code></pre>
-<h3>3. 服务端源码</h3>
+<h3>2. 服务端源码</h3>
 <h4>1）目录结构</h4>
 <p>dubbo-go 框架的 example 提供的目录如下：</p>
 <p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p1.png" alt=""></p>
 <ul>
-<li>app/ 文件夹下存放源码，可以自己编写环境变量配置脚本 <a href="http://buliddev.sh">buliddev.sh</a></li>
-<li>assembly/ 文件夹下存放不同平台的构建脚本</li>
-<li>profiles/ 文件夹下存放不同环境的配置文件</li>
-<li>target/ 文件夹下存放可执行文件</li>
+<li>cmd/ 保存 go 源码，使用框架开启服务以及注册传输协议</li>
+<li>pkg/ 文件夹下存放rpc调用服务的具体实现</li>
+<li>conf/ 文件夹下存放不同环境的配置文件</li>
 </ul>
 <h3>2）关键源码</h3>
-<p>源码放置在 app/ 文件夹下，主要包含 server.go 和 user.go 两个文件，顾名思义，server.go 用于使用框架开启服务以及注册传输协议；user.go 则定义了 rpc-service 结构体，以及传输协议的结构。</p>
+<p>源码放置在 cmd/和pkg/ 文件夹下，主要包含 server.go 和 user.go, user_provider.go等文件，顾名思义，server.go 用于使用框架开启服务以及注册传输协议；user.go和user_provider.go 则定义了 rpc-service 结构体，以及传输协议的结构。</p>
 <ul>
 <li><strong>user.go</strong></li>
 </ul>
-<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
-    config.SetProviderService(<span class="hljs-built_in">new</span>(UserProvider))
-    <span class="hljs-comment">// ------for hessian2------</span>
-    hessian.RegisterPOJO(&amp;User{})
-}
-<span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
-    Id   <span class="hljs-keyword">string</span>
-    Name <span class="hljs-keyword">string</span>
-    Age  <span class="hljs-keyword">int32</span>
-    Time time.Time
-}
-<span class="hljs-keyword">type</span> UserProvider <span class="hljs-keyword">struct</span> {
-}
-<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(u *UserProvider)</span> <span class="hljs-title">GetUser</span><span class="hljs-params">(ctx context.Context, req []<span class="hljs-keyword">interface</span>{})</span> <span class="hljs-params">(*User, error)</span></span> {
+<p>user.go定义了rpc调用过程中用户自定义的传输结构体。</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> (
+	User <span class="hljs-keyword">struct</span> {
+		<span class="hljs-comment">// !!! Cannot define lowercase names of variable</span>
+		ID   <span class="hljs-keyword">string</span> <span class="hljs-string">`hessian:"id"`</span>
+		Name <span class="hljs-keyword">string</span>
+		Age  <span class="hljs-keyword">int32</span>
+		Time time.Time
+		Sex  Gender <span class="hljs-comment">// notice: java enum Object &lt;--&gt; go string</span>
+	}
+)
 </code></pre>
-<p>可以看到，user.go 中存在 init 函数，是服务端代码中最先被执行的部分。User 为用户自定义的传输结构体，UserProvider 为用户自定义的 rpc_service；包含一个 rpc 函数，GetUser。当然，用户可以自定义其他的 rpc 功能函数。</p>
-<p>在 init 函数中，调用 config 的 SetProviderService 函数，将当前 rpc_service 注册在框架 config 上。</p>
-<p><strong>可以查看 dubbo 官方文档提供的设计图：</strong></p>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p2.png" alt=""></p>
-<p>service 层下面就是 config 层，用户服务会逐层向下注册，最终实现服务端的暴露。</p>
-<p>rpc-service 注册完毕之后，调用 hessian 接口注册传输结构体 User。</p>
-<p>至此，init 函数执行完毕。</p>
+<ul>
+<li><strong>user_provieder.go</strong></li>
+</ul>
+<p>user_provieder.go提供了rpc调用服务，UserProvider内嵌的CommonUserProvider实现了GetUser等一系列服务。</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> UserProvider <span class="hljs-keyword">struct</span> {
+	CommonUserProvider
+}
+</code></pre>
 <ul>
 <li><strong>server.go</strong></li>
 </ul>
-<pre><code class="language-go"><span class="hljs-comment">// they are necessary:</span>
-<span class="hljs-comment">//      export CONF_PROVIDER_FILE_PATH="xxx"</span>
-<span class="hljs-comment">//      export APP_LOG_CONF_FILE="xxx"</span>
-<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
-    hessian.RegisterPOJO(&amp;User{})
-    config.Load()
-    initSignal()
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+
+	<span class="hljs-comment">// ------for hessian2------</span>
+	hessian.RegisterJavaEnum(pkg.Gender(pkg.MAN))
+	hessian.RegisterJavaEnum(pkg.Gender(pkg.WOMAN))
+	hessian.RegisterPOJO(&amp;pkg.User{})
+	config.SetProviderService(&amp;pkg.UserProvider{})
+	config.SetProviderService(&amp;pkg.UserProvider1{})
+	config.SetProviderService(&amp;pkg.UserProvider2{})
+	config.SetProviderService(&amp;pkg.ComplexProvider{})
+	config.SetProviderService(&amp;pkg.WrapperArrayClassProvider{})
+	<span class="hljs-comment">// ------------</span>
+
+	<span class="hljs-keyword">if</span> err := config.Load(); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+
+	initSignal()
 }
-<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">initSignal</span><span class="hljs-params">()</span></span> {
-    signals := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> os.Signal, <span class="hljs-number">1</span>)
-    ...
 </code></pre>
-<p>之后执行 main 函数。</p>
-<p>main 函数中只进行了两个操作，首先使用 hessian 注册组件将 User 结构体注册（与之前略有重复），从而可以在接下来使用 getty 打解包。</p>
+<p>在 server.go 的主函数中，首先调用 hessian 接口注册传输结构体 User，从而可以在接下来使用 getty 打解包。之后调用 config 的 SetProviderService 函数，将当前 <strong>rpc_service 注册在框架 config 上</strong>。</p>
+<p><strong>可以查看 dubbo 官方文档提供的设计图：</strong></p>
+<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p2.png" alt=""></p>
+<p>service 层下面就是 config 层，用户服务会逐层向下注册，最终实现服务端的暴露。</p>
 <p>之后调用 config.Load 函数，该函数位于框架 config/config_loader.go 内，这个函数是整个框架服务的启动点，<strong>下面会详细讲这个函数内重要的配置处理过程</strong>。执行完 Load() 函数之后，配置文件会读入框架，之后根据配置文件的内容，将注册的 service 实现到配置结构里，再调用 Export 暴露给特定的 registry，进而开启特定的 service 进行对应端口的 tcp 监听，成功启动并且暴露服务。</p>
 <p>最终开启信号监听 initSignal() 优雅地结束一个服务的启动过程。</p>
 <h3>4. 客户端源码</h3>
-<p>客户端包含 client.go 和 user.go 两个文件，其中 user.go 与服务端完全一致，不再赘述。</p>
+<p>客户端包含 client.go 和 user.go 两个文件，其中 user.go 与服务端基本一致。</p>
+<ul>
+<li><strong>user.go</strong></li>
+</ul>
+<p>user.go提供了rpc服务调用的对象，将该对象注册到dubbo框架上后，可以直接通过该对象调用rpc服务。</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> UserProvider <span class="hljs-keyword">struct</span> {
+	GetUsers <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(req []<span class="hljs-keyword">string</span>)</span> <span class="hljs-params">([]*User, error)</span></span>
+	GetErr   <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, req *User)</span> <span class="hljs-params">(*User, error)</span></span>
+
+	GetUser <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, req *User)</span> <span class="hljs-params">(*User, error)</span></span>
+
+	GetUserNew <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, req1, req2 *User)</span> <span class="hljs-params">(*User, error)</span></span>
+
+	GetUser0  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(id <span class="hljs-keyword">string</span>, name <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(User, error)</span></span>
+	GetUser2  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, req <span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(*User, error)</span> `<span class="hljs-title">dubbo</span>:"<span class="hljs-title">getUser</span>"`</span>
+	GetUser3  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span>
+	GetGender <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, i <span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(Gender, error)</span></span>
+	Echo      <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, req <span class="hljs-keyword">interface</span>{})</span> <span class="hljs-params">(<span class="hljs-keyword">interface</span>{}, error)</span> // <span class="hljs-title">Echo</span> <span class="hljs-title">represent</span> <span class="hljs-title">EchoFilter</span> <span class="hljs-title">will</span> <span class="hljs-title">be</span> <span class="hljs-title">used</span></span>
+}
+</code></pre>
 <ul>
 <li><strong>client.go</strong></li>
 </ul>
-<pre><code class="language-go"><span class="hljs-comment">// they are necessary:</span>
-<span class="hljs-comment">//      export CONF_CONSUMER_FILE_PATH="xxx"</span>
-<span class="hljs-comment">//      export APP_LOG_CONF_FILE="xxx"</span>
+<pre><code class="language-go"><span class="hljs-keyword">var</span> (
+	userProvider = &amp;pkg.UserProvider{}
+)
+
+<span class="hljs-comment">// need to setup environment variable "DUBBO_GO_CONFIG_PATH" to "conf/dubbogo.yml" before run</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
-    hessian.RegisterPOJO(&amp;User{})
-    config.Load()
-    time.Sleep(<span class="hljs-number">3e9</span>)
-    <span class="hljs-built_in">println</span>(<span class="hljs-string">"\n\n\nstart to test dubbo"</span>)
-    user := &amp;User{}
-    err := userProvider.GetUser(context.TODO(), []<span class="hljs-keyword">interface</span>{}{<span class="hljs-string">"A001"</span>}, user)
-    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
-  <span class="hljs-built_in">panic</span>(err)
-    }
-    <span class="hljs-built_in">println</span>(<span class="hljs-string">"response result: %v\n"</span>, user)
-    initSignal()
+	hessian.RegisterJavaEnum(pkg.Gender(pkg.MAN))
+	hessian.RegisterJavaEnum(pkg.Gender(pkg.WOMAN))
+	hessian.RegisterPOJO(&amp;pkg.User{})
+
+	config.SetConsumerService(userProvider)
+
+	err := config.Load()
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+
+	logger.Infof(<span class="hljs-string">"\n\ntest"</span>)
+	test()
 }
 </code></pre>
-<p>main 函数和服务端也类似，首先将传输结构注册到 hessian 上，再调用 config.Load() 函数。在下文会介绍，客户端和服务端会根据配置类型执行 config.Load() 中特定的函数 loadConsumerConfig() 和 loadProviderConfig()，从而达到“开启服务”、“调用服务”的目的。</p>
+<p>main 函数和服务端也类似，首先将传输结构注册到 hessian 上，之后调用 config 的 SetConsumerService将该对象注册到dubbo框架上，再调用 config.Load() 函数。在下文会介绍，客户端和服务端会根据配置类型执行 config.Load() 中特定的函数 loadConsumerConfig() 和 loadProviderConfig()，从而达到“开启服务”、“调用服务”的目的。</p>
 <p>加载完配置之后，还是通过实现服务、增加函数 proxy、申请 registry 和 reloadInvoker 指向服务端 ip 等操作，重写了客户端实例 userProvider 的对应函数，这时再通过调用 GetUser 函数，可以直接通过 invoker，调用到已经开启的服务端，实现 rpc 过程。</p>
 <p>下面会从 server 端和 client 端两个角度，详细讲解服务启动、registry 注册和调用过程。</p>
-<h3>5. 自定义配置文件（非环境变量）方法</h3>
-<h4>1）服务端自定义配置文件</h4>
-<ul>
-<li>var providerConfigStr = <code>xxxxx</code>// 配置文件内容，可以参考 log 和 client。在这里你可以定义配置文件的获取方式，比如配置中心，本地文件读取。</li>
-</ul>
-<blockquote>
-<p><strong>log 地址</strong>：<a href="https://github.com/dubbogo/dubbo-samples/blob/master/golang/helloworld/dubbo/go-client/profiles/release/log.yml">https://github.com/dubbogo/dubbo-samples/blob/master/golang/helloworld/dubbo/go-client/profiles/release/log.yml</a></p>
-<p><strong>client 地址</strong>：<a href="https://github.com/dubbogo/dubbo-samples/blob/master/golang/helloworld/dubbo/go-client/profiles/release/client.yml">https://github.com/dubbogo/dubbo-samples/blob/master/golang/helloworld/dubbo/go-client/profiles/release/client.yml</a></p>
-</blockquote>
-<ul>
-<li>在 <code>config.Load()</code> 之前设置配置，例如：</li>
-</ul>
-<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
-    hessian.RegisterPOJO(&amp;User{})
-    providerConfig := config.ProviderConfig{}
-    yaml.Unmarshal([]<span class="hljs-keyword">byte</span>(providerConfigStr), &amp;providerConfig)
-    config.SetProviderConfig(providerConfig)
-    defaultServerConfig := dubbo.GetDefaultServerConfig()
-    dubbo.SetServerConfig(defaultServerConfig)
-    logger.SetLoggerLevel(<span class="hljs-string">"warn"</span>) <span class="hljs-comment">// info,warn</span>
-    config.Load()
-    <span class="hljs-keyword">select</span> {
-    }
-}
-</code></pre>
-<h4>2）客户端自定义配置文件</h4>
-<ul>
-<li>var consumerConfigStr = <code>xxxxx</code>// 配置文件内容，可以参考 log 和 clien。在这里你可以定义配置文件的获取方式，比如配置中心，本地文件读取。</li>
-<li>在 <code>config.Load()</code> 之前设置配置，例如：</li>
-</ul>
-<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
-     p := config.ConsumerConfig{}
-     yaml.Unmarshal([]<span class="hljs-keyword">byte</span>(consumerConfigStr), &amp;p)
-     config.SetConsumerConfig(p)
-     defaultClientConfig := dubbo.GetDefaultClientConfig()
-     dubbo.SetClientConf(defaultClientConfig)
-     logger.SetLoggerLevel(<span class="hljs-string">"warn"</span>) <span class="hljs-comment">// info,warn</span>
-     config.Load()
-
-     user := &amp;User{}
-     err := userProvider.GetUser(context.TODO(), []<span class="hljs-keyword">interface</span>{}{<span class="hljs-string">"A001"</span>}, user)
-     <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
-         log.Print(err)
-         <span class="hljs-keyword">return</span>
-     }
-  log.Print(user)
-}
-</code></pre>
 <h2>Server 端</h2>
-<p>服务暴露过程涉及到多次原始 rpcService 的封装、暴露，网上其他文章的图感觉太过笼统，在此，简要地绘制了一个用户定义服务的数据流图：</p>
+<p>服务暴露过程涉及到多次原始 rpcService 的封装、暴露，网上其他文章的图感觉太过笼统，在此，简要地绘制了一个用户定义服务的数据流图，本文涉及的<a href="https://github.com/apache/dubbo-go/tree/f481b16d363c52051aa53d04b9566eedfa676b7b">源码仓库</a>：</p>
 <p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p3.png" alt=""></p>
 <h3>1. 加载配置</h3>
 <h4>1）框架初始化</h4>
 <p>在加载配置之前，框架提供了很多已定义好的协议、工厂等组件，都会在对应模块 init 函数内注册到 extension 模块上，以供接下来配置文件中进行选用。</p>
 <p>其中重要的有：</p>
 <ul>
-<li><strong>默认函数代理工厂</strong>：common/proxy/proxy_factory/default.go</li>
+<li><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/common/proxy/proxy_factory/default.go#L40"><strong>默认函数代理工厂</strong></a>：common/proxy/proxy_factory/default.go</li>
 </ul>
 <pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
     extension.SetProxyFactory(<span class="hljs-string">"default"</span>, NewDefaultProxyFactory)
@@ -238,8 +252,7 @@ rsp:main.User{Id:<span class="hljs-string">"A001"</span>, Name:<span class="hljs
 </code></pre>
 <p>它的作用是将原始 rpc-service 进行封装，形成 proxy_invoker，更易于实现远程 call 调用，详情可见其 invoke 函数。</p>
 <ul>
-<li><strong>注册中心注册协议</strong>：
-registry/protocol/protocol.go</li>
+<li><strong><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/registry/protocol/protocol.go#L71">注册中心注册协议</a></strong>：registry/protocol/protocol.go</li>
 </ul>
 <pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
     extension.SetProtocol(<span class="hljs-string">"registry"</span>, GetProtocol)
@@ -247,7 +260,7 @@ registry/protocol/protocol.go</li>
 </code></pre>
 <p>它负责将 invoker 暴露给对应注册中心，比如 zk 注册中心。</p>
 <ul>
-<li><strong>zookeeper 注册协议</strong>：registry/zookeeper/zookeeper.go</li>
+<li><strong><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/registry/zookeeper/registry.go#L45">zookeeper注册协议</a></strong>：registry/zookeeper/zookeeper.go</li>
 </ul>
 <pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
     extension.SetRegistry(<span class="hljs-string">"zookeeper"</span>, newZkRegistry)
@@ -255,7 +268,7 @@ registry/protocol/protocol.go</li>
 </code></pre>
 <p>它合并了 base_resiger，负责在服务暴露过程中，将服务注册在 zookeeper 注册器上，从而为调用者提供调用方法。</p>
 <ul>
-<li><strong>dubbo 传输协议</strong>：protocol/dubbo/dubbo.go</li>
+<li><strong><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/dubbo/dubbo_protocol.go#L54">dubbo传输协议</a></strong>：protocol/dubbo/dubbo_protocol.go</li>
 </ul>
 <pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
     extension.SetProtocol(DUBBO, GetProtocol)
@@ -263,7 +276,7 @@ registry/protocol/protocol.go</li>
 </code></pre>
 <p>它负责监听对应端口，将具体的服务暴露，并启动对应的事件 handler，将远程调用的 event 事件传递到 invoker 内部，调用本地 invoker 并获得执行结果返回。</p>
 <ul>
-<li><strong>filter 包装调用链协议</strong>：protocol/protocolwrapper/protocol_filter_wrapper.go</li>
+<li><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/protocolwrapper/protocol_filter_wrapper.go#L39"><strong>filter 包装调用链协议</strong></a>：protocol/protocolwrapper/protocol_filter_wrapper.go</li>
 </ul>
 <pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
     extension.SetProtocol(FILTER, GetProtocol)
@@ -273,30 +286,36 @@ registry/protocol/protocol.go</li>
 <p>上述提前注册好的框架已实现的组件，在整个服务暴露调用链中都会用到，会根据配置取其所需。</p>
 <h4>2）配置文件</h4>
 <p>服务端需要的重要配置有三个字段：services、protocols、registries。</p>
-<p>profiles/dev/server.yml:</p>
-<pre><code class="language-yaml"><span class="hljs-attr">registries :</span>
-  <span class="hljs-attr">"demoZk":</span>
-    <span class="hljs-attr">protocol:</span> <span class="hljs-string">"zookeeper"</span>
-    <span class="hljs-attr">timeout    :</span> <span class="hljs-string">"3s"</span>
-    <span class="hljs-attr">address:</span> <span class="hljs-string">"127.0.0.1:2181"</span>
-<span class="hljs-attr">services:</span>
-  <span class="hljs-attr">"UserProvider":</span>
-    <span class="hljs-comment"># 可以指定多个registry，使用逗号隔开;不指定默认向所有注册中心注册</span>
-    <span class="hljs-attr">registry:</span> <span class="hljs-string">"demoZk"</span>
-    <span class="hljs-attr">protocol :</span> <span class="hljs-string">"dubbo"</span>
-    <span class="hljs-comment"># 相当于dubbo.xml中的interface</span>
-    <span class="hljs-attr">interface :</span> <span class="hljs-string">"com.ikurento.user.UserProvider"</span>
-    <span class="hljs-attr">loadbalance:</span> <span class="hljs-string">"random"</span>
-    <span class="hljs-attr">warmup:</span> <span class="hljs-string">"100"</span>
-    <span class="hljs-attr">cluster:</span> <span class="hljs-string">"failover"</span>
-    <span class="hljs-attr">methods:</span>
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">"GetUser"</span>
-      <span class="hljs-attr">retries:</span> <span class="hljs-number">1</span>
-      <span class="hljs-attr">loadbalance:</span> <span class="hljs-string">"random"</span>
-<span class="hljs-attr">protocols:</span>
-  <span class="hljs-attr">"dubbo":</span>
-    <span class="hljs-attr">name:</span> <span class="hljs-string">"dubbo"</span>
-    <span class="hljs-attr">port:</span> <span class="hljs-number">20000</span>
+<p><a href="https://github.com/apache/dubbo-go-samples/blob/9e087bc3a0260a61f93c27c323d0aeebe4970bec/rpc/dubbo/go-server/conf/dubbogo.yml">conf/dubbogo.yml</a>:</p>
+<pre><code class="language-yaml"><span class="hljs-comment"># dubbo server yaml configure file</span>
+<span class="hljs-attr">dubbo:</span>
+  <span class="hljs-attr">registries:</span>
+    <span class="hljs-attr">demoZK:</span>
+      <span class="hljs-attr">protocol:</span> <span class="hljs-string">zookeeper</span>
+      <span class="hljs-attr">timeout:</span> <span class="hljs-string">3s</span>
+      <span class="hljs-attr">address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:2181</span>
+  <span class="hljs-attr">protocols:</span>
+    <span class="hljs-attr">dubbo:</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo</span>
+      <span class="hljs-attr">port:</span> <span class="hljs-number">20000</span>
+  <span class="hljs-attr">provider:</span>
+    <span class="hljs-attr">services:</span>
+      <span class="hljs-attr">UserProvider:</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">org.apache.dubbo.sample.UserProvider</span>
+      <span class="hljs-attr">UserProvider1:</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">org.apache.dubbo.sample.UserProvider</span>
+        <span class="hljs-attr">version:</span> <span class="hljs-string">"2.0"</span>
+      <span class="hljs-attr">UserProvider2:</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">org.apache.dubbo.sample.UserProvider</span>
+        <span class="hljs-attr">version:</span> <span class="hljs-string">"2.0"</span>
+        <span class="hljs-attr">group:</span> <span class="hljs-string">as</span>
+      <span class="hljs-attr">ComplexProvider:</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">org.apache.dubbo.sample.ComplexProvider</span>
+      <span class="hljs-attr">WrapperArrayClassProvider:</span>
+        <span class="hljs-attr">interface:</span> <span class="hljs-string">org.apache.dubbo.sample.WrapperArrayClassProvider</span>
+  <span class="hljs-attr">logger:</span>
+    <span class="hljs-attr">zap-config:</span>
+      <span class="hljs-attr">level:</span> <span class="hljs-string">info</span>
 </code></pre>
 <p>其中 service 指定了要暴露的 rpc-service 名（&quot;UserProvider）、暴露的协议名（&quot;dubbo&quot;）、注册的协议名(&quot;demoZk&quot;)、暴露的服务所处的 interface、负载均衡策略、集群失败策略及调用的方法等等。</p>
 <p>其中，中间服务的协议名需要和 registries 下的 mapkey 对应，暴露的协议名需要和 protocols 下的 mapkey 对应。</p>
@@ -305,34 +324,110 @@ registry/protocol/protocol.go</li>
 <blockquote>
 <p>config/config_loader.go:: Load()</p>
 </blockquote>
-<p>在上述 example 的 main 函数中，有 config.Load() 函数的直接调用，该函数执行细节如下：</p>
-<pre><code class="language-go"><span class="hljs-comment">// Load Dubbo Init</span>
-<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Load</span><span class="hljs-params">()</span></span> {
-    <span class="hljs-comment">// init router</span>
-    initRouter()
-    <span class="hljs-comment">// init the global event dispatcher</span>
-    extension.SetAndInitGlobalDispatcher(GetBaseConfig().EventDispatcherType)
-    <span class="hljs-comment">// start the metadata report if config set</span>
-    <span class="hljs-keyword">if</span> err := startMetadataReport(GetApplicationConfig().MetadataType, GetBaseConfig().MetadataReportConfig); err != <span class="hljs-literal">nil</span> {
-  logger.Errorf(<span class="hljs-string">"Provider starts metadata report error, and the error is {%#v}"</span>, err)
-  <span class="hljs-keyword">return</span>
-    }
-    <span class="hljs-comment">// reference config</span>
-    loadConsumerConfig()
-    <span class="hljs-comment">// service config</span>
-    loadProviderConfig()
-    <span class="hljs-comment">// init the shutdown callback</span>
-    GracefulShutdownInit()
+<p>在上述 example 的 main 函数中，有 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/config_loader.go#L43">config.Load()</a> 函数的直接调用，该函数执行细节如下：</p>
+<pre><code class="language-go"><span class="hljs-keyword">var</span> (
+	rootConfig = NewRootConfigBuilder().Build()
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Load</span><span class="hljs-params">(opts ...LoaderConfOption)</span> <span class="hljs-title">error</span></span> {
+	<span class="hljs-comment">// conf</span>
+	conf := NewLoaderConf(opts...)
+	<span class="hljs-keyword">if</span> conf.rc == <span class="hljs-literal">nil</span> {
+		koan := GetConfigResolver(conf)
+		koan = conf.MergeConfig(koan)
+		<span class="hljs-keyword">if</span> err := koan.UnmarshalWithConf(rootConfig.Prefix(),
+			rootConfig, koanf.UnmarshalConf{Tag: <span class="hljs-string">"yaml"</span>}); err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> err
+		}
+	} <span class="hljs-keyword">else</span> {
+		rootConfig = conf.rc
+	}
+
+	<span class="hljs-keyword">if</span> err := rootConfig.Init(); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> err
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
 }
 </code></pre>
-<p>在本文中，我们重点关心 loadConsumerConfig() 和 loadProviderConfig() 两个函数。</p>
-<p>对于 provider 端，可以看到 loadProviderConfig() 函数代码如下：</p>
-<p><img src="/imgs/blog/dubbo-go/code1/p4.png" alt=""></p>
-<p>前半部分是配置的读入和检查，进入 for 循环后，是单个 service 的暴露起始点。</p>
+<p>之后在 rootConfig 中初始化所有的配置，rootConfig 相当于整个配置层级中的根节点。注释中也有提到 rootConfig 的是整个dubbo-go框架的开始，从此处导入本地的配置文件，其每个成员即为配置项中的一个选项。</p>
+<pre><code class="language-go"><span class="hljs-comment">// Init is to start dubbo-go framework, load local configuration, or read configuration from config-center if necessary.</span>
+<span class="hljs-comment">// It's deprecated for user to call rootConfig.Init() manually, try config.Load(config.WithRootConfig(rootConfig)) instead.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rc *RootConfig)</span> <span class="hljs-title">Init</span><span class="hljs-params">()</span> <span class="hljs-title">error</span></span> {
+	<span class="hljs-comment">// ...</span>
+    <span class="hljs-comment">// 上面是一系列的初始化，初始化读取到的配置</span>
+    <span class="hljs-keyword">if</span> err := rc.Provider.Init(rc); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> err
+	}
+	<span class="hljs-keyword">if</span> err := rc.Consumer.Init(rc); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> err
+	}
+	<span class="hljs-keyword">if</span> err := rc.Shutdown.Init(); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> err
+	}
+	rc.Start()
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rc *RootConfig)</span> <span class="hljs-title">Start</span><span class="hljs-params">()</span></span> {
+	startOnce.Do(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		gracefulShutdownInit()
+		rc.Consumer.Load()
+		rc.Provider.Load()
+		exportMetadataService()
+		registerServiceInstance()
+	})
+}
+</code></pre>
+<p>在本文中，我们重点关心服务端的初始化 rc.Provider.Init(rc) 和服务端的暴露 rc.Consumer.Load() 。</p>
+<p>对于 provider 端，可以看到 rc.Provider.Init(rc) 函数代码如下，其主要负责的是配置的读入和检查：</p>
+<pre><code class="language-go"><span class="hljs-keyword">for</span> key, serviceConfig := <span class="hljs-keyword">range</span> c.Services {
+    <span class="hljs-keyword">if</span> serviceConfig.Interface == <span class="hljs-string">""</span> {
+        service := GetProviderService(key)
+        <span class="hljs-comment">// try to use interface name defined by pb</span>
+        supportPBPackagerNameSerivce, ok := service.(common.TriplePBService)
+        <span class="hljs-keyword">if</span> !ok {
+            <span class="hljs-keyword">continue</span>
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// use interface name defined by pb</span>
+            serviceConfig.Interface = supportPBPackagerNameSerivce.XXX_InterfaceName()
+        }
+    }
+    <span class="hljs-comment">// 调用serviceConfig利用rootconfig配置相关信息</span>
+    <span class="hljs-keyword">if</span> err := serviceConfig.Init(rc); err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> err
+    }
+
+    serviceConfig.adaptiveService = c.AdaptiveService
+}
+</code></pre>
+<p>之后利用 rc.Start() 调用 rc.Provider.Load()，逐步开始服务的暴露：</p>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *ProviderConfig)</span> <span class="hljs-title">Load</span><span class="hljs-params">()</span></span> {
+	<span class="hljs-keyword">for</span> key, svs := <span class="hljs-keyword">range</span> c.Services {
+		rpcService := GetProviderService(key)
+		<span class="hljs-keyword">if</span> rpcService == <span class="hljs-literal">nil</span> {
+			logger.Warnf(<span class="hljs-string">"Service reference key %s does not exist, please check if this key "</span>+
+				<span class="hljs-string">"matches your provider struct type name, or matches the returned valued of your provider struct's Reference() function."</span>+
+				<span class="hljs-string">"View https://www.yuque.com/u772707/eqpff0/pqfgz3#zxdw0 for details"</span>, key)
+			<span class="hljs-keyword">continue</span>
+		}
+		svs.id = key
+		svs.Implement(rpcService)
+		<span class="hljs-keyword">if</span> err := svs.Export(); err != <span class="hljs-literal">nil</span> {
+			logger.Errorf(fmt.Sprintf(<span class="hljs-string">"service %s export failed! err: %#v"</span>, key, err))
+		}
+	}
+
+}
+</code></pre>
 <p>前面提到，在配置文件中已经写好了要暴露的 service 的种种信息，比如服务名、interface 名、method 名等等。在图中 for 循环内，会将所有 service 的服务依次实现。</p>
-<p>for 循环的第一行，根据 key 调用 GetProviderService 函数，拿到注册的 rpcService 实例，这里对应上述提到的 init 函数中，用户手动注册的自己实现的 rpc-service 实例：</p>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p5.png" alt=""></p>
-<p>这个对象也就成为了 for 循环中的 rpcService 变量，将这个对象注册通过 Implement 函数写到 sys（ServiceConfig 类型）上，设置好 sys 的 key 和协议组，最终调用了 sys 的 Export 方法。</p>
+<p>for 循环的第一行，根据 key 调用 GetProviderService 函数，拿到注册的 rpcService 实例，这里对应上述提到的 server.go 主函数中，用户手动注册的自己实现的 rpc-service 实例：</p>
+<pre><code class="language-go">config.SetProviderService(&amp;pkg.UserProvider{})
+config.SetProviderService(&amp;pkg.UserProvider1{})
+config.SetProviderService(&amp;pkg.UserProvider2{})
+config.SetProviderService(&amp;pkg.ComplexProvider{})
+config.SetProviderService(&amp;pkg.WrapperArrayClassProvider{})
+</code></pre>
+<p>进入到 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/service.go#L35">SetProviderService</a> 函数中，可以发现其只是设置了 proServices 这个全局变量，只是一个通过哈希表将服务名（string）指向服务具体调用的对象（interface{}），<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/service.go#L66">GetProviderService</a> 也是从 proServices 该全局变量读取相应的对象。将这个对象通过Implement 函数写到 sys（<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/service_config.go#L51">ServiceConfig</a> 类型）上，设置好 sys 的 key 和协议组，最终调用了 sys 的 Export 方法。</p>
 <p>此处对应流程图的部分：</p>
 <p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p6.png" alt=""></p>
 <p>至此，框架配置结构体已经拿到了所有 service 有关的配置，以及用户定义好的 rpc-service 实例，它触发了 Export 方法，旨在将自己的实例暴露出去。这是 Export 调用链的起始点。</p>
@@ -340,28 +435,50 @@ registry/protocol/protocol.go</li>
 <blockquote>
 <p>config/service_config.go :: Export()</p>
 </blockquote>
-<p>接下来进入 ServiceConfig.Export() 函数.</p>
+<p>接下来进入 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/service_config.go#L213">ServiceConfig.Export()</a> 函数.</p>
 <p>这个函数进行了一些细碎的操作，比如为不同的协议分配随机端口，如果指定了多个中心注册协议，则会将服务通过多个中心注册协议的 registryProtocol 暴露出去，我们只关心对于一个注册协议是如何操作的。还有一些操作比如生成调用 url 和注册 url，用于为暴露做准备。</p>
 <h4>1）首先通过配置生成对应 registryUrl 和 serviceUrl</h4>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p7.png" alt=""></p>
+<pre><code class="language-go">regUrls := loadRegistries(s.RegistryIDs, s.RCRegistriesMap, common.PROVIDER)
+</code></pre>
 <p>registryUrl 是用来向中心注册组件发起注册请求的，对于 zookeeper 的话，会传入其 ip 和端口号，以及附加的用户名密码等信息。</p>
 <p>这个 regUrl 目前只存有注册（zk）相关信息，后续会补写入 ServiceIvk，即服务调用相关信息，里面包含了方法名，参数等...</p>
 <h4>2）对于一个注册协议，将传入的 rpc-service 实例注册在 common.ServiceMap</h4>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p8.png" alt=""></p>
+<pre><code class="language-cpp">methods, err := common.ServiceMap.Register(s.Interface, proto.Name, s.Group, s.Version, s.rpcService)
+</code></pre>
 <p>这个 Register 函数将服务实例注册了两次，一次是以 Interface 为 key 写入接口服务组内，一次是以 interface 和 proto 为 key 写入特定的一个唯一的服务。</p>
-<p>后续会从 common.Map 里面取出来这个实例。</p>
+<p>后续服务调用过程将会从 <strong><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/common/rpc_service.go#L223">common.Map</a></strong> 里面取出来这个实例。</p>
 <h4>3）获取默认代理工厂，将实例封装入代理 invoker</h4>
-<pre><code class="language-go"><span class="hljs-comment">// 拿到一个proxyInvoker，这个invoker的url是传入的regUrl，这个地方将上面注册的service实例封装成了invoker</span>
+<pre><code class="language-go"><span class="hljs-comment">// ivkURL封装了上面注册到common.Map中服务的方法名methods</span>
+ivkURL := common.NewURLWithOptions(
+			common.WithPath(s.Interface),
+			common.WithProtocol(proto.Name),
+			common.WithIp(proto.Ip),
+			common.WithPort(port),
+			common.WithParams(urlMap),
+			common.WithParamsValue(constant.BeanNameKey, s.id),
+			<span class="hljs-comment">//common.WithParamsValue(constant.SslEnabledKey, strconv.FormatBool(config.GetSslEnabled())),</span>
+			common.WithMethods(strings.Split(methods, <span class="hljs-string">","</span>)),
+			common.WithToken(s.Token),
+			common.WithParamsValue(constant.MetadataTypeKey, s.metadataType),
+		)
+<span class="hljs-comment">// 拿到一个proxyInvoker，这个invoker的url是传入的regUrl，这个地方将上面注册的service实例封装成了invoker</span>
 <span class="hljs-comment">// 这个GetProxyFactory返回的默认是common/proxy/proxy_factory/default.go</span>
-<span class="hljs-comment">// 这个默认工厂调用GetInvoker获得默认的proxyInvoker，保存了当前注册url</span>
-invoker := extension.GetProxyFactory(providerConfig.ProxyFactory).GetInvoker(*regUrl)
+<span class="hljs-comment">// 这个默认工厂调用GetInvoker获得默认的proxyInvoker，保存了当前注册regUrl</span>
+setRegistrySubURL(ivkURL, regUrl)
+invoker := proxyFactory.GetInvoker(regUrl)
+
 <span class="hljs-comment">// 暴露出来 生成exporter,开启tcp监听</span>
 <span class="hljs-comment">// 这里就该跳到registry/protocol/protocol.go registryProtocol 调用的Export，将当前proxyInvoker导出</span>
-exporter = c.cacheProtocol.Export(invoker)
+exporter := s.cacheProtocol.Export(invoker)
 </code></pre>
-<p>这一步的 GetProxyFactory(&quot;default&quot;) 方法获取默认代理工厂，通过传入上述构造的 regUrl，将 url 封装入代理 invoker。</p>
-<p>可以进入 common/proxy/proxy_factory/default.go::ProxyInvoker.Invoke() 函数里，看到对于 common.Map 取用为 svc 的部分，以及关于 svc 对应 Method 的实际调用 Call 的函数如下：</p>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p9.png" alt=""></p>
+<p>这一步的 <code>proxyFactory := extension.GetProxyFactory(s.ProxyFactoryKey)</code> 方法获取默认代理工厂，通过传入上述构造的 regUrl，将 url 封装入代理 invoker。</p>
+<p>可以进入 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/common/proxy/proxy_factory/default.go#L86">common/proxy/proxy_factory/default.go::ProxyInvoker.Invoke()</a> 函数里，看到对于 common.Map 取用为 svc 的部分，以及关于 svc 对应 Method 的实际调用 Call 的函数如下：</p>
+<pre><code class="language-go"><span class="hljs-comment">// get method</span>
+line <span class="hljs-number">107</span>: method := svc.Method()[methodName]
+		  ...
+<span class="hljs-comment">// call method</span>
+line <span class="hljs-number">145</span>: returnValues := method.Method().Func.Call(in)
+</code></pre>
 <p>到这里，上面 GetInvoker(*regUrl) 返回的 invoker 即为 proxy_invoker，它封装好了用户定义的 rpc_service，并将具体的调用逻辑封装入了 Invoke 函数内。</p>
 <blockquote>
 <p>为什么使用 Proxy_invoker 来调用？</p>
@@ -370,114 +487,278 @@ exporter = c.cacheProtocol.Export(invoker)
 </blockquote>
 <p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p10.png" alt=""></p>
 <h3>3. registry 协议在 zkRegistry 上暴露上面的 proxy_invoker</h3>
-<p>上面，我们执行到了 exporter = c.cacheProtocol.Export(invoker)。</p>
+<p>上面，我们执行到了 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/config/service_config.go#L285">exporter = c.cacheProtocol.Export(invoker)</a>。</p>
 <p>这里的 cacheProtocol 为一层缓存设计，对应到原始的 demo 上，这里是默认实现好的 registryProtocol。</p>
 <blockquote>
-<p>registry/protocol/protocol.go:: Export()</p>
+<p><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/registry/protocol/protocol.go#L175">registry/protocol/protocol.go:: Export()</a></p>
 </blockquote>
 <p>这个函数内构造了多个 EventListener，非常有 java 的设计感。</p>
 <p>我们只关心服务暴露的过程，先忽略这些监听器。</p>
 <h4>1）获取注册 url 和服务 url</h4>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p11.png" alt=""></p>
-<h4>2）获取注册中心实例 zkRegistry</h4>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p12.png" alt=""></p>
-<p>一层缓存操作，如果 cache 没有需要从 common 里面重新拿 zkRegistry。</p>
-<h4>3）zkRegistry 调用 Registry 方法，在 zookeeper 上注册 dubboPath</h4>
-<p>上述拿到了具体的 zkRegistry 实例，该实例的定义在：registry/zookeeper/registry.go。</p>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p13.png" alt=""></p>
-<p>该结构体组合了 registry.BaseRegistry 结构，base 结构定义了注册器基础的功能函数，比如 Registry、Subscribe 等，但在这些默认定义的函数内部，还是会调用 facade 层（zkRegistry 层）的具体实现函数，这一设计模型能在保证已有功能函数不需要重复定义的同时，引入外层函数的实现，类似于结构体继承却又复用了代码。这一设计模式值得学习。</p>
-<p>我们查看上述 registry/protocol/protocol.go:: Export() 函数，直接调用了:</p>
-<pre><code class="language-go"><span class="hljs-comment">// 1. 通过zk注册器，调用Register()函数，将已有@root@rawurl注册到zk上</span>
-    err := reg.Register(*registeredProviderUrl)
+<pre><code class="language-go">registryUrl := getRegistryUrl(originInvoker)
+providerUrl := getProviderUrl(originInvoker)
 </code></pre>
-<p>将已有 RegistryUrl 注册到了 zkRegistry 上。</p>
-<p>这一步调用了 baseRegistry 的 Register 函数，进而调用 zkRegister 的 DoRegister 函数，进而调用：</p>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p14.png" alt=""></p>
-<p>在这个函数里，将对应 root 创造一个新的节点。</p>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p15.png" alt=""></p>
-<p>并且写入具体 node 信息，node 为 url 经过 encode 的结果，<strong>包含了服务端的调用方式。</strong></p>
-<p>这部分的代码较为复杂，具体可以看 baseRegistry 的 processURL() 函数：<a href="http://t.tb.cn/6Xje4bijnsIDNaSmyPc4Ot%E3%80%82">http://t.tb.cn/6Xje4bijnsIDNaSmyPc4Ot。</a></p>
-<p>至此，将服务端调用 url 注册到了 zookeeper 上，而客户端如果想获取到这个 url，只需要传入特定的 dubboPath，向 zk 请求即可。目前 client 是可以获取到访问方式了，但服务端的特定服务还没有启动，还没有开启特定协议端口的监听，这也是 registry/protocol/protocol.go:: Export() 函数接下来要做的事情。</p>
-<h4>4）proxy_invoker 封装入 wrapped_invoker，得到 filter 调用链</h4>
-<pre><code class="language-go">    <span class="hljs-comment">// invoker封装入warppedInvoker</span>
-    wrappedInvoker := newWrappedInvoker(invoker, providerUrl)
-    <span class="hljs-comment">// 经过为invoker增加filter调用链，再使用dubbo协议Export，开启service并且返回了Exporter 。</span>
-    <span class="hljs-comment">// export_1</span>
-    cachedExporter = extension.GetProtocol(protocolwrapper.FILTER).Export(wrappedInvoker)
+<h4>2）proxy_invoker 封装入 wrapped_invoker，得到 filter 调用链，本地暴露服务。</h4>
+<p><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/registry/protocol/protocol.go#L192"><code>exporter := proto.doLocalExport(originInvoker, providerUrl)</code></a>，首先得到filter 调用链，并且在本地暴露，防止出现注册中心已经准备好服务，但是本地服务无法调用的情况。</p>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(proto *registryProtocol)</span> <span class="hljs-title">doLocalExport</span><span class="hljs-params">(originInvoker protocol.Invoker, providerUrl *common.URL)</span> *<span class="hljs-title">exporterChangeableWrapper</span></span> {
+	key := getCacheKey(originInvoker)
+	cachedExporter, loaded := proto.bounds.Load(key)
+	<span class="hljs-keyword">if</span> !loaded {
+		<span class="hljs-comment">// new Exporter</span>
+		invokerDelegate := newInvokerDelegate(originInvoker, providerUrl)
+        <span class="hljs-comment">// 调用protocolwrapper.FILTER协议的export方法</span>
+		cachedExporter = newExporterChangeableWrapper(originInvoker,
+			extension.GetProtocol(protocolwrapper.FILTER).Export(invokerDelegate))
+		proto.bounds.Store(key, cachedExporter)
+	}
+	<span class="hljs-keyword">return</span> cachedExporter.(*exporterChangeableWrapper)
+}
 </code></pre>
 <p>新建一个 WrappedInvoker，用于之后链式调用。</p>
 <p>拿到提前实现并注册好的 ProtocolFilterWrapper，调用 Export 方法，进一步暴露。</p>
 <blockquote>
-<p>protocol/protocolwrapped/protocol_filter_wrapper.go:Export()</p>
+<p><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/protocolwrapper/protocol_filter_wrapper.go#L50">protocol/protocolwrapped/protocol_filter_wrapper.go:Export()</a></p>
 </blockquote>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p16.png" alt=""></p>
+<pre><code class="language-go"><span class="hljs-comment">// Export service for remote invocation</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pfw *ProtocolFilterWrapper)</span> <span class="hljs-title">Export</span><span class="hljs-params">(invoker protocol.Invoker)</span> <span class="hljs-title">protocol</span>.<span class="hljs-title">Exporter</span></span> {
+	<span class="hljs-keyword">if</span> pfw.protocol == <span class="hljs-literal">nil</span> {
+		pfw.protocol = extension.GetProtocol(invoker.GetURL().Protocol)
+	}
+	invoker = BuildInvokerChain(invoker, constant.ServiceFilterKey)
+	<span class="hljs-keyword">return</span> pfw.protocol.Export(invoker)
+}
+</code></pre>
 <blockquote>
-<p>protocol/protocolwrapped/protocol_filter_wrapper.go:buildInvokerChain</p>
+<p><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/protocolwrapper/protocol_filter_wrapper.go#L75">protocol/protocolwrapped/protocol_filter_wrapper.go:buildInvokerChain</a></p>
 </blockquote>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p17.png" alt=""></p>
+<pre><code class="language-go"><span class="hljs-keyword">for</span> i := <span class="hljs-built_in">len</span>(filterNames) - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i-- {
+    flt, _ := extension.GetFilter(strings.TrimSpace(filterNames[i]))
+    fi := &amp;FilterInvoker{next: next, invoker: invoker, filter: flt}
+    next = fi
+}
+</code></pre>
 <p>可见，根据配置的内容，通过链式调用的构造，将 proxy_invoker 层层包裹在调用链的最底部，最终返回一个调用链 invoker。</p>
 <p>对应图中部分：</p>
 <p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p18.png" alt=""></p>
 <p>至此，我们已经拿到 filter 调用链，期待将这个 chain 暴露到特定端口，用于相应请求事件。</p>
-<h4>5）通过 dubbo 协议暴露 wrapped_invoker</h4>
+<h4>3）通过 dubbo 协议暴露 wrapped_invoker</h4>
 <blockquote>
-<p>protocol/protocolwrapped/protocol_filter_wrapper.go:Export()</p>
+<p><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/protocolwrapper/protocol_filter_wrapper.go#L55">protocol/protocolwrapped/protocol_filter_wrapper.go:Export()</a></p>
 </blockquote>
 <pre><code class="language-go"><span class="hljs-comment">// 通过dubbo协议Export  dubbo_protocol调用的 export_2</span>
-    <span class="hljs-keyword">return</span> pfw.protocol.Export(invoker)
+<span class="hljs-keyword">return</span> pfw.protocol.Export(invoker)
 </code></pre>
 <p>回到上述 Export 函数的最后一行，调用了 dubboProtocol 的 Export 方法，将上述 chain 真正暴露。</p>
-<p>该 Export 方法的具体实现在：protocol/dubbo/dubbo_protocol.go: Export()。</p>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p19.png" alt=""></p>
+<p>该 Export 方法的具体实现在：<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/dubbo/dubbo_protocol.go#L78">protocol/dubbo/dubbo_protocol.go: Export()</a>。</p>
+<pre><code class="language-go"><span class="hljs-comment">// Export export dubbo service.</span>
+<span class="hljs-comment">// 返回一个Exporter，包含了invoker，并且在serverMap中开启了监听的tcpserver</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(dp *DubboProtocol)</span> <span class="hljs-title">Export</span><span class="hljs-params">(invoker protocol.Invoker)</span> <span class="hljs-title">protocol</span>.<span class="hljs-title">Exporter</span></span> {
+	url := invoker.GetURL()
+	serviceKey := url.ServiceKey()
+	exporter := NewDubboExporter(serviceKey, invoker, dp.ExporterMap())
+    <span class="hljs-comment">// 将封装了invoker的exporter注册到exporterMap中</span>
+	dp.SetExporterMap(serviceKey, exporter)
+	logger.Infof(<span class="hljs-string">"[DUBBO Protocol] Export service: %s"</span>, url.String())
+	<span class="hljs-comment">// start server</span>
+    <span class="hljs-comment">// 开启一个基于getty的tcp server, 放到了当前DubboProtocol.serverMap</span>
+    <span class="hljs-comment">// 在事件监听器的handler中取出exporter使用。</span>
+	dp.openServer(url)
+	<span class="hljs-keyword">return</span> exporter
+}
+</code></pre>
 <p>这一函数做了两个事情：构造触发器、启动服务。</p>
 <ul>
-<li>将传入的 Invoker 调用 chain 进一步封装，封装成一个 exporter，再将这个 export 放入 map 保存。<strong>注意！这里把 exporter 放入了 SetExporterMap中，在下面服务启动的时候，会以注册事件监听器的形式将这个 exporter 取出！</strong></li>
-<li>调用 dubboProtocol 的 openServer 方法，开启一个针对特定端口的监听。</li>
+<li>将传入的 Invoker 调用 chain 进一步封装，封装成一个 exporter，再将这个 export 放入 map 保存。<strong>注意！这里把 exporter 放入了 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/dubbo/dubbo_protocol.go#L62">exporterMap</a> 中，在下面服务启动的时候，会以注册事件监听器的形式将这个 exporter 取出！</strong></li>
+<li>调用 dubboProtocol 的 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/dubbo/dubbo_protocol.go#L115">openServer</a> 方法，开启一个针对特定端口的监听。</li>
 </ul>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p20.png" alt=""></p>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(dp *DubboProtocol)</span> <span class="hljs-title">openServer</span><span class="hljs-params">(url *common.URL)</span></span> {
+	_, ok := dp.serverMap[url.Location]
+	<span class="hljs-keyword">if</span> !ok {
+		_, ok := dp.ExporterMap().Load(url.ServiceKey())
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-built_in">panic</span>(<span class="hljs-string">"[DubboProtocol]"</span> + url.Key() + <span class="hljs-string">"is not existing"</span>)
+		}
+
+		dp.serverLock.Lock()
+		_, ok = dp.serverMap[url.Location]
+		<span class="hljs-keyword">if</span> !ok {
+			handler := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(invocation *invocation.RPCInvocation)</span> <span class="hljs-title">protocol</span>.<span class="hljs-title">RPCResult</span></span> {
+				<span class="hljs-keyword">return</span> doHandleRequest(invocation)
+			}
+            <span class="hljs-comment">// handler对请求进行处理</span>
+			srv := remoting.NewExchangeServer(url, getty.NewServer(url, handler))
+			dp.serverMap[url.Location] = srv
+			srv.Start()
+		}
+		dp.serverLock.Unlock()
+	}
+}
+
+</code></pre>
 <p>如上图所示，一个 Session 被传入，开启对应端口的事件监听。</p>
 <p>至此构造出了 exporter，完成图中部分：</p>
 <p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p21.png" alt=""></p>
+<h4>4）获取注册中心实例 zkRegistry</h4>
+<pre><code class="language-go"><span class="hljs-comment">// url to registry</span>
+reg := proto.getRegistry(registryUrl)
+
+<span class="hljs-comment">// 一层缓存操作，如果 cache 没有需要从 common 里面重新拿 zkRegistry。</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(proto *registryProtocol)</span> <span class="hljs-title">getRegistry</span><span class="hljs-params">(registryUrl *common.URL)</span> <span class="hljs-title">registry</span>.<span class="hljs-title">Registry</span></span> {
+	<span class="hljs-keyword">var</span> err error
+	reg, loaded := proto.registries.Load(registryUrl.Location)
+	<span class="hljs-keyword">if</span> !loaded {
+		reg, err = extension.GetRegistry(registryUrl.Protocol, registryUrl)
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			logger.Errorf(<span class="hljs-string">"Registry can not connect success, program is going to panic.Error message is %s"</span>, err.Error())
+			<span class="hljs-built_in">panic</span>(err)
+		}
+		proto.registries.Store(registryUrl.Location, reg)
+	}
+	<span class="hljs-keyword">return</span> reg.(registry.Registry)
+}
+</code></pre>
+<h4>5）zkRegistry 调用 Registry 方法，在 zookeeper 上注册 dubboPath</h4>
+<p>上述拿到了具体的 zkRegistry 实例，该实例的定义在：<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/registry/zookeeper/registry.go">registry/zookeeper/registry.go</a>。</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> zkRegistry <span class="hljs-keyword">struct</span> {
+	registry.BaseRegistry
+	client       *gxzookeeper.ZookeeperClient
+	listenerLock sync.Mutex
+	listener     *zookeeper.ZkEventListener
+	dataListener *RegistryDataListener
+	cltLock      sync.Mutex
+	<span class="hljs-comment">// for provider</span>
+	zkPath <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">int</span> <span class="hljs-comment">// key = protocol://ip:port/interface</span>
+}
+</code></pre>
+<p>该结构体组合了 registry.BaseRegistry 结构，base 结构定义了注册器基础的功能函数，比如 Registry、Subscribe 等，但在这些默认定义的函数内部，还是会调用 facade 层（zkRegistry 层）的具体实现函数，这一设计模型能在保证已有功能函数不需要重复定义的同时，引入外层函数的实现，类似于结构体继承却又复用了代码。这一设计模式值得学习。</p>
+<p>我们查看上述 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/registry/protocol/protocol.go#L175">registry/protocol/protocol.go:: Export()</a> 函数，直接调用了:</p>
+<pre><code class="language-go"><span class="hljs-comment">// 1. 通过zk注册器，调用Register()函数，将已有@root@rawurl注册到zk上</span>
+    err := reg.Register(registeredProviderUrl)
+</code></pre>
+<p>将已有 RegistryUrl 注册到了 zkRegistry 上。</p>
+<p>这一步调用了 baseRegistry 的 Register 函数，进而调用 zkRegister 的 DoRegister 函数，进而调用<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/registry/zookeeper/registry.go#L161">registerTempZookeeperNode</a>。</p>
+<pre><code class="language-go"><span class="hljs-comment">// DoRegister actually do the register job in the registry center of zookeeper</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *zkRegistry)</span> <span class="hljs-title">DoRegister</span><span class="hljs-params">(root <span class="hljs-keyword">string</span>, node <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">error</span></span> {
+	<span class="hljs-keyword">return</span> r.registerTempZookeeperNode(root, node)
+}
+</code></pre>
+<p>在这个函数里，将对应 root 创造一个新的节点。</p>
+<pre><code class="language-go">zkPath, err = r.client.RegisterTemp(root, node)
+</code></pre>
+<p>并且写入具体 node 信息，node 为 url 经过 encode 的结果，<strong>包含了服务端的调用方式。</strong></p>
+<p>这部分的代码较为复杂，具体可以看 baseRegistry 的 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/registry/base_registry.go#L215">processURL() 函数</a>。</p>
+<p>至此，将服务端调用 url 注册到了 zookeeper 上，而客户端如果想获取到这个 url，只需要传入特定的 dubboPath，向 zk 请求即可。目前 client 是可以获取到访问方式了，但服务端的特定服务还没有启动，还没有开启特定协议端口的监听，这也是 registry/protocol/protocol.go:: Export() 函数接下来要做的事情。</p>
 <h3>4. 注册触发动作</h3>
-<p>上述只是启动了服务，但还没有看到触发事件的细节，点进上面的 s.newSession 可以看到，dubbo 协议为一个 getty 的 session 默认使用了如下配置：</p>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p22.png" alt=""></p>
+<p>上述只是启动了服务，但还没有看到触发事件的细节，dubbo 协议使用getty框架进行rpc通信，关于getty的快速入门可以通过https://zhuanlan.zhihu.com/p/413507181 快速了解。点进上面的 s.newSession 可以看到，dubbo 协议为一个 <a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/remoting/getty/getty_server.go#L134">getty 的 session</a> 默认使用了如下配置，注意这里设置了<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/remoting/getty/getty_server.go#L148">getty对包的编解码方式</a>。</p>
+<pre><code class="language-go"><span class="hljs-comment">// NewServer create a new Server</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *Server)</span> <span class="hljs-title">newSession</span><span class="hljs-params">(session getty.Session)</span> <span class="hljs-title">error</span></span> {
+	<span class="hljs-keyword">var</span> (
+		ok      <span class="hljs-keyword">bool</span>
+		tcpConn *net.TCPConn
+		err     error
+	)
+	conf := s.conf
+
+	<span class="hljs-keyword">if</span> conf.GettySessionParam.CompressEncoding {
+		session.SetCompressType(getty.CompressZip)
+	}
+	<span class="hljs-keyword">if</span> _, ok = session.Conn().(*tls.Conn); ok {
+		session.SetName(conf.GettySessionParam.SessionName)
+		session.SetMaxMsgLen(conf.GettySessionParam.MaxMsgLen)
+        <span class="hljs-comment">// 设置编解码的方式</span>
+		session.SetPkgHandler(NewRpcServerPackageHandler(s))
+		session.SetEventListener(s.rpcHandler)
+		session.SetReadTimeout(conf.GettySessionParam.tcpReadTimeout)
+		session.SetWriteTimeout(conf.GettySessionParam.tcpWriteTimeout)
+		session.SetCronPeriod((<span class="hljs-keyword">int</span>)(conf.heartbeatPeriod.Nanoseconds() / <span class="hljs-number">1e6</span>))
+		session.SetWaitTime(conf.GettySessionParam.waitTimeout)
+		logger.Debugf(<span class="hljs-string">"server accepts new session:%s\n"</span>, session.Stat())
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	}
+	...
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<p>开启服务也就是启动了新的<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/remoting/getty/getty_server.go#L197">EventLoop</a>。</p>
+<pre><code class="language-go"><span class="hljs-comment">// Start dubbo server.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *Server)</span> <span class="hljs-title">Start</span><span class="hljs-params">()</span></span> {
+	<span class="hljs-keyword">var</span> (
+		addr      <span class="hljs-keyword">string</span>
+		tcpServer getty.Server
+	)
+
+	addr = s.addr
+	serverOpts := []getty.ServerOption{getty.WithLocalAddress(addr)}
+	<span class="hljs-keyword">if</span> s.conf.SSLEnabled {
+		serverOpts = <span class="hljs-built_in">append</span>(serverOpts, getty.WithServerSslEnabled(s.conf.SSLEnabled),
+			getty.WithServerTlsConfigBuilder(config.GetServerTlsConfigBuilder()))
+	}
+
+	serverOpts = <span class="hljs-built_in">append</span>(serverOpts, getty.WithServerTaskPool(gxsync.NewTaskPoolSimple(s.conf.GrPoolSize)))
+
+	tcpServer = getty.NewTCPServer(serverOpts...)
+	tcpServer.RunEventLoop(s.newSession)
+	logger.Debugf(<span class="hljs-string">"s bind addr{%s} ok!"</span>, s.addr)
+	s.tcpServer = tcpServer
+}
+</code></pre>
 <p>其中很重要的一个配置是 EventListener，传入的是 dubboServer 的默认 rpcHandler。</p>
 <blockquote>
-<p>protocol/dubbo/listener.go:OnMessage()</p>
+<p><a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/remoting/getty/listener.go#L238">protocol/dubbo/listener.go:OnMessage()</a>，<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/remoting/getty/readwriter.go#L103">protocol/dubbo/readwriter.go</a></p>
 </blockquote>
-<p>rpcHandler 有一个实现好的 OnMessage 函数，根据 getty 的 API，当 client 调用该端口时，会触发 OnMessage。</p>
-<pre><code class="language-go"><span class="hljs-comment">// OnMessage notified when RPC server session got any message in connection</span>
-<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h *RpcServerHandler)</span> <span class="hljs-title">OnMessage</span><span class="hljs-params">(session getty.Session, pkg <span class="hljs-keyword">interface</span>{})</span></span> {
-</code></pre>
+<p>rpcHandler 有一个实现好的 OnMessage 函数实现消息收发的逻辑，Write\Read实现了对原始信息的编解码。根据 getty 的 API，当 client 调用该端口时，会首先通过Write\Read对二进制流进行编解码，之后触发 OnMessage进行逻辑处理。</p>
 <p>这一函数实现了在 getty session 接收到 rpc 调用后的一系列处理：</p>
 <ul>
 <li>传入包的解析</li>
 </ul>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p23.png" alt=""></p>
+<pre><code class="language-go"><span class="hljs-comment">// Read data from client. if the package size from client is larger than 4096 byte, client will read 4096 byte</span>
+<span class="hljs-comment">// and send to client each time. the Read can assemble it.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *RpcServerPackageHandler)</span> <span class="hljs-title">Read</span><span class="hljs-params">(ss getty.Session, data []<span class="hljs-keyword">byte</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">interface</span>{}, <span class="hljs-keyword">int</span>, error)</span></span> {
+	req, length, err := (p.server.codec).Decode(data)
+	<span class="hljs-comment">// resp,len, err := (*p.).DecodeResponse(buf)</span>
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">if</span> errors.Is(err, hessian.ErrHeaderNotEnough) || errors.Is(err, hessian.ErrBodyNotEnough) {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">nil</span>
+		}
+
+		logger.Errorf(<span class="hljs-string">"pkg.Unmarshal(ss:%+v, len(@data):%d) = error:%+v"</span>, ss, <span class="hljs-built_in">len</span>(data), err)
+
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-number">0</span>, err
+	}
+
+	<span class="hljs-keyword">return</span> req, length, err
+}
+</code></pre>
 <ul>
-<li>根据请求包构造请求 url</li>
+<li>拿到解码后传入的参数，使用<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/remoting/getty/listener.go#L307">requestHandler</a>进行调用。</li>
 </ul>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p24.png" alt=""></p>
+<pre><code class="language-go">invoc, ok := req.Data.(*invocation.RPCInvocation)
+<span class="hljs-keyword">if</span> !ok {
+    <span class="hljs-built_in">panic</span>(<span class="hljs-string">"create invocation occur some exception for the type is not suitable one."</span>)
+}
+attachments := invoc.Attachments()
+attachments[constant.LocalAddr] = session.LocalAddr()
+attachments[constant.RemoteAddr] = session.RemoteAddr()
+
+result := h.server.requestHandler(invoc)
+</code></pre>
 <ul>
-<li>拿到对应请求 key，找到要被调用的 exporter</li>
+<li><a href="(https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/dubbo/dubbo_protocol.go#L126)%E6%98%AF%E5%B0%81%E8%A3%85%E4%BA%86%5BdoHandleRequest%5D">handler</a>是包装了doHandleRequest的匿名函数，在<a href="https://github.com/apache/dubbo-go/blob/f481b16d363c52051aa53d04b9566eedfa676b7b/protocol/dubbo/dubbo_protocol.go#L145">doHandleRequest</a>中先拿到exporter，之后拿到对应的 Invoker，执行调用，返回调用结果。</li>
 </ul>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p25.png" alt=""></p>
-<ul>
-<li>拿到对应的 Invoker</li>
-</ul>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p26.png" alt=""></p>
-<ul>
-<li>构造 invocation</li>
-</ul>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p27.png" alt=""></p>
-<ul>
-<li>调用</li>
-</ul>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p28.png" alt=""></p>
-<ul>
-<li>返回</li>
-</ul>
-<p><img src="../../img/blog/dubbo-go-code-notes-1.resources/p29.png" alt=""></p>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">doHandleRequest</span><span class="hljs-params">(rpcInvocation *invocation.RPCInvocation)</span> <span class="hljs-title">protocol</span>.<span class="hljs-title">RPCResult</span></span> {
+	<span class="hljs-comment">// 拿到exporter</span>
+	exporter, _ := dubboProtocol.ExporterMap().Load(rpcInvocation.ServiceKey())
+	result := protocol.RPCResult{}
+	...
+	<span class="hljs-comment">// 拿到对应的 Invoker</span>
+	invoker := exporter.(protocol.Exporter).GetInvoker()
+	<span class="hljs-comment">// 执行调用</span>
+	invokeResult := invoker.Invoke(ctx, rpcInvocation)
+	...
+	<span class="hljs-comment">// 返回调用结果</span>
+	<span class="hljs-keyword">return</span> result
+}
+</code></pre>
 <p>整个被调过程一气呵成。实现了从 getty.Session 的调用事件，到经过层层封装的 invoker 的调用。</p>
 <p>至此，一次 rpc 调用得以正确返回。</p>
 <h2>小结</h2>
