@@ -54,8 +54,11 @@ import (
 	"context"
 	"fmt"
 	"log"
+)
 
+import (
 	"google.golang.org/grpc"
+
 	"google.golang.org/grpc/credentials/insecure"
 
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
