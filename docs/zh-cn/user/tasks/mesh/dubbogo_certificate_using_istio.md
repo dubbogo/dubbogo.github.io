@@ -188,81 +188,81 @@ kubernetes版本>1.21.x时, serviceaccount会有aud字段，在third-party-jwt�
 ### 获取证书管理器：
 在此之前确保上面的步骤都正确，才能获取到证书。
 ```yaml
-	//获取证书管理器
+  //获取证书管理器
   manager, _ := NewCertManager()
   //获取证书
-	cert, _ := manager.GetCertificate()
-  //获取根证书
-	root, _ := manager.GetRootCertificate()
+    cert, _ := manager.GetCertificate()
+   //获取根证书
+    root, _ := manager.GetRootCertificate()
 ```
 注意:isito-ca签署的证书不能添加SAN(Subject Alternative Name)，而是通过uri进行标识，例如：URI:spiffe://cluster.local/ns/default/sa/default，但grpc的credentials.NewTLS在tls握手阶段会校验ServerName与证书上的SAN是否一直，所以会导致证书校验不通过，可以通过配置InsecureSkipVerify: true跳过证书校验。若是想校验证书，可以通过自己实现credentials.TransportCredentials校验uri。
 ### server端：
 ```yaml
 func server(manager CertManager) {
 
-	cert, _ := manager.GetCertificate()
-	root, _ := manager.GetRootCertificate()
+    cert, _ := manager.GetCertificate()
+    root, _ := manager.GetRootCertificate()
 
-	tlsConf := &tls.Config{
-		ServerName:   "spiffe://cluster.local/ns/default/sa/default",
-		ClientAuth:   tls.RequireAndVerifyClientCert,
-		Certificates: cert,
-		ClientCAs:    root,  
+    tlsConf := &tls.Config{
+        ServerName:   "spiffe://cluster.local/ns/default/sa/default",
+        ClientAuth:   tls.RequireAndVerifyClientCert,
+        Certificates: cert,
+        ClientCAs:    root,  
         InsecureSkipVerify: true,
-		VerifyPeerCertificate: func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
-			//添加自己的证书校验逻辑
+        VerifyPeerCertificate: func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
+            //添加自己的证书校验逻辑
       return nil
-		},
-	}
+        },
+    }
 
-	// 开启服务端监听
-	listener, err := net.Listen("tcp", "127.0.0.1:8000")
-	if err != nil {
-		panic(err)
-	}
-	defer listener.Close()
+    // 开启服务端监听
+    listener, err := net.Listen("tcp", "127.0.0.1:8000")
+    if err != nil {
+        panic(err)
+    }
+    defer listener.Close()
 
-	server := grpc.NewServer(grpc.Creds(credentials.NewTLS(tlsConf)))
+    server := grpc.NewServer(grpc.Creds(credentials.NewTLS(tlsConf)))
 
-	RegisterHelloWorldServer(server, NewHelloService())
+    RegisterHelloWorldServer(server, NewHelloService())
 
-	server.Serve(listener)
+    server.Serve(listener)
 }
 ```
 ### client端：
 ```yaml
 func client(manager CertManager) {
-	time.Sleep(time.Second * 2)
-	cert, _ := manager.GetCertificate()
-	root, _ := manager.GetRootCertificate()
+    time.Sleep(time.Second * 2)
+    cert, _ := manager.GetCertificate()
+    root, _ := manager.GetRootCertificate()
 
-	creds := credentials.NewTLS(&tls.Config{
-		ServerName:   "spiffe://cluster.local/ns/default/sa/default",
-		Certificates: cert,
-		RootCAs:      root,
-		VerifyPeerCertificate: func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
-		  //添加自己的证书校验逻辑
+    creds := credentials.NewTLS(&tls.Config{
+        ServerName:   "spiffe://cluster.local/ns/default/sa/default",
+        Certificates: cert,
+        RootCAs:      root,
+        VerifyPeerCertificate: func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
+          //添加自己的证书校验逻辑
       return nil
-		},
-		InsecureSkipVerify: true,
-	})
-	fmt.Println(creds)
-	clientCredentials, err := xds.NewClientCredentials(xds.ClientOptions{
-		FallbackCreds: insecure.NewCredentials(),
-	})
-	fmt.Println(clientCredentials, err)
-	conn, err := grpc.Dial("127.0.0.1:8000", grpc.WithTransportCredentials(creds))
-	if err != nil {
-		panic(err)
-	}
-	defer conn.Close()
+        },
+        InsecureSkipVerify: true,
+    })
+    fmt.Println(creds)
+    clientCredentials, err := xds.NewClientCredentials(xds.ClientOptions{
+        FallbackCreds: insecure.NewCredentials(),
+    })
+    fmt.Println(clientCredentials, err)
+    conn, err := grpc.Dial("127.0.0.1:8000", grpc.WithTransportCredentials(creds))
+    if err != nil {
+        panic(err)
+    }
+    defer conn.Close()
 
-	grpcClient := NewHelloWorldClient(conn)
+    grpcClient := NewHelloWorldClient(conn)
 
-	say, err := grpcClient.SayHelloWorld(context.Background(), &HelloWorldRequest{
-		Referer: "hello",
-	})
-	fmt.Println(say)
+    say, err := grpcClient.SayHelloWorld(context.Background(), &HelloWorldRequest{
+        Referer: "hello",
+    })
+    fmt.Println(say)
 }
 ```
 
