@@ -9,32 +9,32 @@ export default {
       {
         key: 'home', // 用作顶部菜单的选中
         text: 'HOME',
-        link: '/en-us/index.html',
+        link: 'https://dubbo.apache.org/en/',
       },
       {
         key: 'docs',
         text: 'DOCS',
-        link: '/en-us/docs/user/quick-start.html',
+        link: 'https://dubbo.apache.org/en/',
       },
       {
         key: 'blog',
         text: 'BLOG',
-        link: '/en-us/blog/index.html',
+        link: 'https://dubbo.apache.org/en/',
       },
       {
         key: 'community',
         text: 'COMMUNITY',
-        link: '/en-us/community/index.html',
+        link: 'https://dubbo.apache.org/en/',
       },
       {
         key: 'downloads',
         text: 'DOWNLOADS',
-        link: '/en-us/blog/download.html',
+        link: 'https://dubbo.apache.org/en/',
       },
       {
         key: 'java',
         text: 'JAVA',
-        link: 'https://dubbo.apache.org/en-us/index.html',
+        link: 'https://dubbo.apache.org/en/',
       },
     ],
     disclaimer: {
@@ -120,27 +120,27 @@ export default {
       {
         key: 'docs',
         text: '文档',
-        link: 'https://dubbo.apache.org/zh/docs3-building/golang-sdk/',
+        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/',
       },
       {
         key: 'blog',
         text: '博客',
-        link: '/zh-cn/blog/index.html',
+        link: 'https://dubbo.apache.org/zh/blog/golang/',
       },
       {
         key: 'community',
         text: '社区',
-        link: '/zh-cn/community/index.html',
+        link: 'https://dubbo.apache.org/zh/blog/contact/',
       },
       {
         key: 'downloads',
         text: '下载',
-        link: '/zh-cn/blog/download.html',
+        link: 'https://dubbo.apache.org/zh/release/',
       },
       {
         key: 'java',
         text: 'Java',
-        link: 'https://dubbo.io',
+        link: 'https://dubbo.apache.org/zh/docs3-v2/java-sdk/',
       },
     ],
     disclaimer: {

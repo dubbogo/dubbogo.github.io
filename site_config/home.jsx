@@ -3,11 +3,11 @@ import React from 'react';
 export default {
   'zh-cn': {
     brand: {
-      brandName: 'Apache Dubbo-go',
-      briefIntroduction: '一款兼容 Apache Dubbo™、gRPC 的高性能 Go RPC 框架。',
+      brandName: '本站已整体迁移至 dubbo.apache.org',
+      briefIntroduction: '',
       getStartedButton: {
         text: '文档迁移至：dubbo.apache.org',
-        link: 'https://dubbo.apache.org/zh/docs3-building/golang-sdk/',
+        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/',
       },
       viewOnGithubButton: {
         text: 'GITHUB',
@@ -42,10 +42,10 @@ export default {
     start: {
       title: '快速开始',
       desc: '只需通过几行代码即可快速构建一个 Dubbo-go 应用。',
-      img: '/zh-cn/docs/user/quickstart/quickstart_triple.html',
+      img: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/quickstart/',
       button: {
         text: '阅读更多',
-        link: '/zh-cn/docs/user/concept/what_is_dubbogo.html',
+        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/quickstart/',
       },
     },
     // blogs: {
@@ -78,11 +78,11 @@ export default {
   },
   'en-us': {
     brand: {
-      brandName: 'Apache Dubbo-go',
-      briefIntroduction: 'A high-performance, Compatible Apache Dubbo™, Go based open source RPC framework.',
+      brandName: 'This site has migrated to dubbo.apache.org',
+      briefIntroduction: '',
       getStartedButton: {
         text: 'Docs are in dubbo.apach.org now',
-        link: 'https://dubbo.apache.org/cn/docs3-building/golang-sdk/',
+        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/',
       },
       viewOnGithubButton: {
         text: 'GITHUB',
@@ -115,7 +115,7 @@ export default {
       img: '/img/quick_start.png',
       button: {
         text: 'READ MORE',
-        link: '/en-us/docs/user/quick-start.html',
+        link: 'https://dubbo.apache.org/en/',
       },
     },
     // blogs: {
