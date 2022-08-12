@@ -7,7 +7,7 @@ export default {
       briefIntroduction: '一款兼容 Apache Dubbo™、gRPC 的高性能 Go RPC 框架。',
       getStartedButton: {
         text: '文档迁移至：dubbo.apache.org',
-        link: 'https://dubbo.apache.org/zh/docs3-building/golang-sdk/',
+        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/',
       },
       viewOnGithubButton: {
         text: 'GITHUB',
@@ -42,7 +42,8 @@ export default {
     start: {
       title: '快速开始',
       desc: '只需通过几行代码即可快速构建一个 Dubbo-go 应用。',
-      img: '/zh-cn/docs/user/quickstart/quickstart_triple.html',
+      img: '/zh-cn/
+      /user/quickstart/quickstart_triple.html',
       button: {
         text: '阅读更多',
         link: '/zh-cn/docs/user/concept/what_is_dubbogo.html',
@@ -82,7 +83,7 @@ export default {
       briefIntroduction: 'A high-performance, Compatible Apache Dubbo™, Go based open source RPC framework.',
       getStartedButton: {
         text: 'Docs are in dubbo.apach.org now',
-        link: 'https://dubbo.apache.org/cn/docs3-building/golang-sdk/',
+        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/',
       },
       viewOnGithubButton: {
         text: 'GITHUB',
