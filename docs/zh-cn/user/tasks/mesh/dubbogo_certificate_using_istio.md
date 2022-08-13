@@ -30,6 +30,7 @@ spec:
 ```
 
 istio-agent 会注入环境变量`GRPC_XDS_BOOTSTRAP=/etc/istio/proxy/grpc-bootstrap.json`，告诉了我们 grpc-bootstrap.json 的位置，解析此 json 文件我们可以知道 certificate_file (公钥)、private_key_file (私钥)、ca_certificate_file ( isito-ca 的公钥)文件的位置，即可得到证书。  
+
 grpc-bootstrap.json 文件示例如下：
 
 ```yaml
@@ -135,7 +136,8 @@ grpc-bootstrap.json 文件示例如下：
 ### 不存在istio-agent
 
 没有 istio-agent 的情况下，我们需要通过在应用侧生成公钥、私钥并通过 Grpc 协议与 istio-ca 通信签署证书。在通信之前，
-istio-ca 需要请求方放验证自己的身份，其通过 kubernetes 的 serviceaccount ( JWT 形式)来进行验证。众所周知，pod 在启动的时候都会默认被 kubernetes 挂载一个 serviceaccount 。
+istio-ca 需要请求方放验证自己的身份，其通过 kubernetes 的 serviceaccount ( JWT 形式)来进行验证。众所周知，pod 在启动的时候都会默认被 kubernetes 挂载一个 serviceaccount 。  
+
 istio 对JWT的验证( JWT_POLICY )分为 first-party-jwt 和third-party-jwt ，说明如下： 
 
 > To authenticate with the Istio control plane, the Istio proxy will use a Service Account token. Kubernetes supports two forms of these tokens:
