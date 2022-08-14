@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="dubbo-go 获取isito 证书并使用" />
+	<meta name="description" content="dubbo-go 获取 isito 证书并使用" />
+	<!-- 网页标签标题 -->
+	<title>dubbo-go 获取isito 证书并使用</title>
+	<link rel="shortcut icon" href="/img/dubbo.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/dubbo_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="https://dubbo.apache.org/zh/docs3-v2/golang-sdk/">文档</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org/zh/blog/golang/">博客</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org/zh/blog/contact/">社区</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org/zh/release/">下载</a></li><li class="menu-item menu-item-normal"><a href="https://dubbo.apache.org/zh/docs3-v2/java-sdk/">Java</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><span>文档</span><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>概念</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/concept/what_is_dubbogo.html" target="_self">Dubbo-go 是什么</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>RPC 调用<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/protocol.html" target="_self">网络协议</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/multi_language.html" target="_self">多语言 RPC</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/rpc/generic.html" target="_self">泛化调用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务治理<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/registry.html" target="_self">服务注册发现</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/aop_and_extension.html" target="_self">组件加载与可扩展性</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/visualization.html" target="_self">可视化</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/graceful_shutdown.html" target="_self">优雅上下线</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/service_management/adaptive_lb.html" target="_self">柔性负载均衡</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/config/basic_concept.html" target="_self">配置基本概念</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务网格<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/mesh/proxyless_service_mesh.html" target="_self">无代理服务网格</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>更多<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/3.0_feature.html" target="_self">v3 版本新功能</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/app_and_interface.html" target="_self">应用与接口的层级关系</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/concept/more/architecture.html" target="_self">架构</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>快速开始</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/install.html" target="_self">安装开发环境</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/quickstart/quickstart_triple.html" target="_self">完成一次 RPC 调用</a></li></ul></li><li class="menu-item menu-item-level-1"><span>任务</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务调用<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/timeout.html" target="_self">配置调用超时</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/rpc_metrics.html" target="_self">查看服务调用监控信息</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/tps_limiter.html" target="_self">为服务端设置限流</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/call_java.html" target="_self">与 Dubbo 应用跨语言互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/call_grpc.html" target="_self">与 gRPC 应用互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/context.html" target="_self">使用 ctx 传递上下文信息</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/generic.html" target="_self">泛化调用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/rpc/error.html" target="_self">异常回传</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>注册中心<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/registry/nacos.html" target="_self">使用 Nacos 作为注册中心</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/registry/multi_registry.html" target="_self">多注册中心</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>配置<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/config/remote_config.html" target="_self">从远程加载配置启动应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/config/config_api.html" target="_self">使用配置 API 启动应用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务治理<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/service_management/aop.html" target="_self">自定义服务调用中间件</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/service_management/graceful_shutdown.html" target="_self">优雅上下线</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>服务网格<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/build.html" target="_self">部署 Istio 环境</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/app.html" target="_self">在 Istio 环境部署 Dubbo-go 应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/traffic_management.html" target="_self">流量管理</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/ingress.html" target="_self">使用 Pixiu 网关接入 Ingress 流量</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/mesh/gray_deploy.html" target="_self">金丝雀发布</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>可视化<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/opentelementry.html" target="_self">使用 Opentelementry 协议</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/logger.html" target="_self">日志</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/metrics.html" target="_self">基于 Prometheus 的数据上报</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/visualization/tracing.html" target="_self">基于 Jaeger 的链路追踪</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>调试<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/debug/grpc_cli.html" target="_self">使用 grpc_cli 调试 triple 应用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/debug/dubbogo_cli.html" target="_self">使用dubbogo-cli 调试 dubbo 应用</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Pixiu 网关<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/tasks/pixiu/http_triple.html" target="_self">接入 Ingress 流量</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/tasks/cli/app_template.html" target="_self">应用模板</a></li></ul></li><li class="menu-item menu-item-level-1"><span>示例</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Dubbo-go samples<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/go_java_interactive.html" target="_self">Go-Java 互通</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/config-center-dynamic.html" target="_self">配置中心和配置监听</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-filter.html" target="_self">Filter</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/registry.html" target="_self">注册中心配置</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/exception_response.html" target="_self">Triple 异常回传</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/custom-logger.html" target="_self">日志</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/metrics.html" target="_self">Metrics 数据上报</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/generic.html" target="_self">泛化调用</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/pixiu-nacos-triple.html" target="_self">使用 Pixiu 暴露 Dubbo-go 服务</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/grpc_cli.html" target="_self">使用 grpc_cli 调试 Dubbo-go 服务</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/service-discovery.html" target="_self">应用级服务发现</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/user/samples/mesh_router.html" target="_self">路由规则</a></li></ul></li></ul></li><li class="menu-item menu-item-level-1"><span>参考</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/config.html" target="_self">配置项参考</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/use_dubbogo_cli.html" target="_self">dubbogo-cli 工具</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/ecology/ecology.html" target="_self">Dubbo-go 生态项目介绍</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/refer/compatible_version.html" target="_self">适配版本号</a></li></ul></li><li class="menu-item menu-item-level-1"><span>源码解读</span><ul><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/sourcecode/protocol.html" target="_self">网络协议</a></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><a href="/zh-cn/docs/user/sourcecode/registry.html" target="_self">注册中心</a></li></ul></li></ul></div><div class="doc-content markdown-body"><p>本文介绍 dubbo go 如何获取到 istio 颁发的证书以及如何在 dubbo-go 的 rpc 通信中使用这些证书。</p>
+<h2>获取istio证书</h2>
+<p>分为有 istio-agent 和无 istio-agent 的情形。</p>
+<h3>存在istio-agent</h3>
+<p>istio-agent 是 istio 提供的辅助xds协议的 sidecar ，包括证书的获取、证书的过期检查等。</p>
+<p>此情形下，我们可以将证书的获取和更新工作交给 istio-agent ，应用侧只需要监听证书文件即可。</p>
+<p>可以用 annotation 拉起一个 istio-agent , 确保命名空间被打标签：<code>kubectl label namespace default istio-injection=enabled</code></p>
+<p>此处我们可以用 grpc-agent 来代替, spec 文件如下：</p>
+<pre><code class="language-yaml"><span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">template:</span>
+    <span class="hljs-attr">metadata:</span>
+      <span class="hljs-attr">annotations:</span>
+        <span class="hljs-attr">inject.istio.io/templates:</span> <span class="hljs-string">grpc-agent</span>
+        <span class="hljs-attr">proxy.istio.io/config:</span> <span class="hljs-string">'{"holdApplicationUntilProxyStarts": true}'</span>
+</code></pre>
+<p>istio-agent 会注入环境变量<code>GRPC_XDS_BOOTSTRAP=/etc/istio/proxy/grpc-bootstrap.json</code>，告诉了我们 grpc-bootstrap.json 的位置，解析此 json 文件我们可以知道 certificate_file (公钥)、private_key_file (私钥)、ca_certificate_file ( isito-ca 的公钥)文件的位置，即可得到证书。</p>
+<p>grpc-bootstrap.json 文件示例如下：</p>
+<pre><code class="language-yaml"><span class="hljs-string">{</span>
+  <span class="hljs-attr">"xds_servers":</span> <span class="hljs-string">[</span>
+    <span class="hljs-string">{</span>
+      <span class="hljs-attr">"server_uri":</span> <span class="hljs-string">"unix:///etc/istio/proxy/XDS"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"channel_creds":</span> <span class="hljs-string">[</span>
+        <span class="hljs-string">{</span>
+          <span class="hljs-attr">"type":</span> <span class="hljs-string">"insecure"</span>
+        <span class="hljs-string">}</span>
+      <span class="hljs-string">],</span>
+      <span class="hljs-attr">"server_features":</span> <span class="hljs-string">[</span>
+        <span class="hljs-string">"xds_v3"</span>
+      <span class="hljs-string">]</span>
+    <span class="hljs-string">}</span>
+  <span class="hljs-string">],</span>
+  <span class="hljs-attr">"node":</span> <span class="hljs-string">{</span>
+    <span class="hljs-attr">"id":</span> <span class="hljs-string">"sidecar~172.17.144.159~echo-v1-i3c-a-ed37cfb2-756bfffcbb-f4lws.echo-grpc~echo-grpc.svc.cluster.local"</span><span class="hljs-string">,</span>
+    <span class="hljs-attr">"metadata":</span> <span class="hljs-string">{</span>
+      <span class="hljs-attr">"ANNOTATIONS":</span> <span class="hljs-string">{</span>
+        <span class="hljs-attr">"dev.nocalhost/nocalhost-dev":</span> <span class="hljs-string">"nocalhost-dev"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"inject.istio.io/templates":</span> <span class="hljs-string">"grpc-agent"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"kubernetes.io/config.seen":</span> <span class="hljs-string">"2022-07-03T22:39:22.131136080+08:00"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"kubernetes.io/config.source":</span> <span class="hljs-string">"api"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"kubernetes.io/psp":</span> <span class="hljs-string">"ack.privileged"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"prometheus.io/path":</span> <span class="hljs-string">"/stats/prometheus"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"prometheus.io/port":</span> <span class="hljs-string">"15020"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"prometheus.io/scrape":</span> <span class="hljs-string">"true"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"proxy.istio.io/config":</span> <span class="hljs-string">"{\"holdApplicationUntilProxyStarts\": true}"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"proxy.istio.io/overrides":</span> <span class="hljs-string">"{\"containers\":[{\"name\":\"nocalhost-dev\",\"image\":\"nocalhost-docker.pkg.coding.net/nocalhost/dev-images/golang:1.16\",\"command\":[\"/bin/sh\",\"-c\",\"tail -f /dev/null\"],\"args\":[\"--metrics=15014\",\"--port\",\"18080\",\"--tcp\",\"19090\",\"--xds-grpc-server=17070\",\"--grpc\",\"17070\",\"--grpc\",\"17171\",\"--port\",\"3333\",\"--port\",\"8080\",\"--version\",\"v1\",\"--crt=/cert.crt\",\"--key=/cert.key\"],\"workingDir\":\"/home/nocalhost-dev\",\"ports\":[{\"containerPort\":17070,\"protocol\":\"TCP\"},{\"containerPort\":17171,\"protocol\":\"TCP\"},{\"containerPort\":8080,\"protocol\":\"TCP\"},{\"name\":\"tcp-health-port\",\"containerPort\":3333,\"protocol\":\"TCP\"}],\"env\":[{\"name\":\"INSTANCE_IP\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"status.podIP\"}}}],\"resources\":{},\"volumeMounts\":[{\"name\":\"nocalhost-syncthing\",\"mountPath\":\"/var/syncthing\",\"subPath\":\"syncthing\"},{\"name\":\"nocalhost-syncthing-secret\",\"mountPath\":\"/var/syncthing/secret\"},{\"name\":\"nocalhost-shared-volume\",\"mountPath\":\"/home/nocalhost-dev\"},{\"name\":\"kube-api-access-g8v66\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\",\"securityContext\":{\"privileged\":true}},{\"name\":\"nocalhost-sidecar\",\"image\":\"nocalhost-docker.pkg.coding.net/nocalhost/public/nocalhost-sidecar:sshversion\",\"command\":[\"/bin/sh\",\"-c\"],\"args\":[\"rc-service sshd restart \\u0026\\u0026 unset STGUIADDRESS \\u0026\\u0026 cp /var/syncthing/secret/* /var/syncthing/ \\u0026\\u0026 /bin/entrypoint.sh \\u0026\\u0026 /bin/syncthing -home /var/syncthing\"],\"workingDir\":\"/home/nocalhost-dev\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"1Gi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"50Mi\"}},\"volumeMounts\":[{\"name\":\"nocalhost-syncthing\",\"mountPath\":\"/var/syncthing\",\"subPath\":\"syncthing\"},{\"name\":\"nocalhost-syncthing-secret\",\"mountPath\":\"/var/syncthing/secret\"},{\"name\":\"nocalhost-shared-volume\",\"mountPath\":\"/home/nocalhost-dev\"},{\"name\":\"kube-api-access-g8v66\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"imagePullPolicy\":\"Always\"}]}"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"sidecar.istio.io/rewriteAppHTTPProbers":</span> <span class="hljs-string">"false"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"sidecar.istio.io/status":</span> <span class="hljs-string">"{\"initContainers\":null,\"containers\":[\"nocalhost-dev\",\"nocalhost-sidecar\",\"istio-proxy\"],\"volumes\":[\"workload-socket\",\"workload-certs\",\"istio-xds\",\"istio-data\",\"istio-podinfo\",\"istio-token\",\"istiod-ca-cert\"],\"imagePullSecrets\":null,\"revision\":\"default\"}"</span>
+      <span class="hljs-string">},</span>
+      <span class="hljs-attr">"APP_CONTAINERS":</span> <span class="hljs-string">"nocalhost-dev,nocalhost-sidecar"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"CLUSTER_ID":</span> <span class="hljs-string">"Kubernetes"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"ENVOY_PROMETHEUS_PORT":</span> <span class="hljs-number">15090</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"ENVOY_STATUS_PORT":</span> <span class="hljs-number">15021</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"GENERATOR":</span> <span class="hljs-string">"grpc"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"INSTANCE_IPS":</span> <span class="hljs-string">"172.17.144.159"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"INTERCEPTION_MODE":</span> <span class="hljs-string">"REDIRECT"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"ISTIO_PROXY_SHA":</span> <span class="hljs-string">"6e1c8fd2905565dab1fec21ee9dc0dfbd2e056d8"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"ISTIO_VERSION":</span> <span class="hljs-string">"1.14.0"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"LABELS":</span> <span class="hljs-string">{</span>
+        <span class="hljs-attr">"identifier":</span> <span class="hljs-string">"i3c-a6-f6-55-c9-ab"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"nocalhost.dev.workload.ignored":</span> <span class="hljs-string">"true"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"origin-workload-name":</span> <span class="hljs-string">"echo-v1"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"origin-workload-type":</span> <span class="hljs-string">"deployment"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"pod-template-hash":</span> <span class="hljs-string">"756bfffcbb"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"service.istio.io/canonical-name":</span> <span class="hljs-string">"echo-v1-i3c-a-ed37cfb2"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"service.istio.io/canonical-revision":</span> <span class="hljs-string">"latest"</span>
+      <span class="hljs-string">},</span>
+      <span class="hljs-attr">"MESH_ID":</span> <span class="hljs-string">"cluster.local"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"NAME":</span> <span class="hljs-string">"echo-v1-i3c-a-ed37cfb2-756bfffcbb-f4lws"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"NAMESPACE":</span> <span class="hljs-string">"echo-grpc"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"OWNER":</span> <span class="hljs-string">"kubernetes://apis/apps/v1/namespaces/echo-grpc/deployments/echo-v1-i3c-a-ed37cfb2"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"PILOT_SAN":</span> <span class="hljs-string">[</span>
+        <span class="hljs-string">"istiod.istio-system.svc"</span>
+      <span class="hljs-string">],</span>
+      <span class="hljs-attr">"POD_PORTS":</span> <span class="hljs-string">"[{\"containerPort\":17070,\"protocol\":\"TCP\"},{\"containerPort\":17171,\"protocol\":\"TCP\"},{\"containerPort\":8080,\"protocol\":\"TCP\"},{\"name\":\"tcp-health-port\",\"containerPort\":3333,\"protocol\":\"TCP\"}]"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"PROV_CERT":</span> <span class="hljs-string">"var/run/secrets/istio/root-cert.pem"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"PROXY_CONFIG":</span> <span class="hljs-string">{</span>
+        <span class="hljs-attr">"binaryPath":</span> <span class="hljs-string">"/usr/local/bin/envoy"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"concurrency":</span> <span class="hljs-number">2</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"configPath":</span> <span class="hljs-string">"./etc/istio/proxy"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"controlPlaneAuthPolicy":</span> <span class="hljs-string">"MUTUAL_TLS"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"discoveryAddress":</span> <span class="hljs-string">"istiod.istio-system.svc:15012"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"drainDuration":</span> <span class="hljs-string">"45s"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"holdApplicationUntilProxyStarts":</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"parentShutdownDuration":</span> <span class="hljs-string">"60s"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"proxyAdminPort":</span> <span class="hljs-number">15000</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"serviceCluster":</span> <span class="hljs-string">"istio-proxy"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"statNameLength":</span> <span class="hljs-number">189</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"statusPort":</span> <span class="hljs-number">15020</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"terminationDrainDuration":</span> <span class="hljs-string">"5s"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"tracing":</span> <span class="hljs-string">{</span>
+          <span class="hljs-attr">"zipkin":</span> <span class="hljs-string">{</span>
+            <span class="hljs-attr">"address":</span> <span class="hljs-string">"zipkin.istio-system:9411"</span>
+          <span class="hljs-string">}</span>
+        <span class="hljs-string">}</span>
+      <span class="hljs-string">},</span>
+      <span class="hljs-attr">"SERVICE_ACCOUNT":</span> <span class="hljs-string">"default"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"WORKLOAD_NAME":</span> <span class="hljs-string">"echo-v1-i3c-a-ed37cfb2"</span>
+    <span class="hljs-string">},</span>
+    <span class="hljs-attr">"locality":</span> <span class="hljs-string">{},</span>
+    <span class="hljs-attr">"UserAgentVersionType":</span> <span class="hljs-literal">null</span>
+  <span class="hljs-string">},</span>
+  <span class="hljs-attr">"certificate_providers":</span> <span class="hljs-string">{</span>
+    <span class="hljs-attr">"default":</span> <span class="hljs-string">{</span>
+      <span class="hljs-attr">"plugin_name":</span> <span class="hljs-string">"file_watcher"</span><span class="hljs-string">,</span>
+      <span class="hljs-attr">"config":</span> <span class="hljs-string">{</span>
+        <span class="hljs-attr">"certificate_file":</span> <span class="hljs-string">"/var/lib/istio/data/cert-chain.pem"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"private_key_file":</span> <span class="hljs-string">"/var/lib/istio/data/key.pem"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"ca_certificate_file":</span> <span class="hljs-string">"/var/lib/istio/data/root-cert.pem"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">"refresh_interval":</span> <span class="hljs-string">"900s"</span>
+      <span class="hljs-string">}</span>
+    <span class="hljs-string">}</span>
+  <span class="hljs-string">},</span>
+  <span class="hljs-attr">"server_listener_resource_name_template":</span> <span class="hljs-string">"xds.istio.io/grpc/lds/inbound/%s"</span>
+<span class="hljs-string">}#</span>
+</code></pre>
+<h3>不存在istio-agent</h3>
+<p>没有 istio-agent 的情况下，我们需要通过在应用侧生成公钥、私钥并通过 Grpc 协议与 istio-ca 通信签署证书。在通信之前，
+istio-ca 需要请求方放验证自己的身份，其通过 kubernetes 的 serviceaccount ( JWT 形式)来进行验证。众所周知，pod 在启动的时候都会默认被 kubernetes 挂载一个 serviceaccount 。</p>
+<p>istio 对JWT的验证( JWT_POLICY )分为 first-party-jwt 和third-party-jwt ，说明如下：</p>
+<blockquote>
+<p>To authenticate with the Istio control plane, the Istio proxy will use a Service Account token. Kubernetes supports two forms of these tokens:</p>
+<ul>
+<li>Third party tokens, which have a scoped audience and expiration.</li>
+<li>First party tokens, which have no expiration and are mounted into all pods.<br>
+Because the properties of the first party token are less secure, Istio will default to using third party tokens. However, this feature is not enabled on all Kubernetes platforms.</li>
+</ul>
+</blockquote>
+<p>简单来说，first-party-jwt 不会验证aud字段，third-party-jwt 会验证 aud 字段，但为了兼容低版本 kubernetes 当 aud 字段不存在时不会验证 aud 。</p>
+<p>kubernetes 版本&lt;=1.21.x时，kubernetes 挂载到 pod 上的 serviceaccount 里没有 aud 字段，所以 istio 也会放行这种 serviceaccount 。</p>
+<p>kubernetes 版本&gt;1.21.x时, serviceaccount 会有 aud 字段，在 third-party-jwt 模式下，istio 只允许 aud=istio-ca 的s erviceaccount 通过。所以这种情况下，我们只能给 dubbo-go 应用容器挂载 aud=isito-ca 的 serviceaccount ，spec 配置如下：</p>
+<pre><code class="language-yaml">    <span class="hljs-attr">spec:</span>
+      <span class="hljs-attr">containers:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">zlber/dubbo-go-client:1.0.0</span>    <span class="hljs-comment">#我的镜像是从本地的Harbor上拉取</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">istio-ca</span>                                 <span class="hljs-comment">#镜像名称</span>
+          <span class="hljs-attr">env:</span>
+           <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">POD_NAME</span>
+             <span class="hljs-attr">valueFrom:</span>
+               <span class="hljs-attr">fieldRef:</span>
+                 <span class="hljs-attr">fieldPath:</span> <span class="hljs-string">metadata.name</span>
+           <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">POD_NAMESPACE</span>
+             <span class="hljs-attr">valueFrom:</span>
+               <span class="hljs-attr">fieldRef:</span>
+                 <span class="hljs-attr">fieldPath:</span> <span class="hljs-string">metadata.namespace</span>
+          <span class="hljs-attr">securityContext:</span>
+            <span class="hljs-attr">privileged:</span> <span class="hljs-literal">true</span>
+          <span class="hljs-attr">volumeMounts:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/var/run/secrets/tokens</span>
+              <span class="hljs-attr">name:</span> <span class="hljs-string">istio-token</span>
+      <span class="hljs-attr">volumes:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">istio-token</span>
+          <span class="hljs-attr">projected:</span>
+            <span class="hljs-attr">defaultMode:</span> <span class="hljs-number">420</span>
+            <span class="hljs-attr">sources:</span>
+              <span class="hljs-bullet">-</span> <span class="hljs-attr">serviceAccountToken:</span>
+                  <span class="hljs-attr">audience:</span> <span class="hljs-string">istio-ca</span>
+                  <span class="hljs-attr">expirationSeconds:</span> <span class="hljs-number">43200</span>
+                  <span class="hljs-attr">path:</span> <span class="hljs-string">istio-token</span>
+</code></pre>
+<p>或者我们可以修改 isito 的 JWT 策略，改成 first-party-jwt ，在 istio 启动的时候加入如下设置：</p>
+<pre><code class="language-yaml"><span class="hljs-string">--set</span> <span class="hljs-string">values.global.jwtPolicy=first-party-jwt</span>
+</code></pre>
+<p>通信之前，客户端也需要验证 istio-ca 的身份，此处是通过 root-cert 进行验证，所以需要将 istio 的 root-cert 挂载到容器中。相关挂载配置如下：</p>
+<pre><code class="language-yaml">  <span class="hljs-attr">volumes:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">configMap:</span>
+      <span class="hljs-attr">defaultMode:</span> <span class="hljs-number">420</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">istio-ca-root-cert</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">istiod-ca-cert</span>
+   
+   <span class="hljs-attr">volumeMounts:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/var/run/secrets/istio</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">istiod-ca-cert</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/var/lib/istio/data</span>    
+</code></pre>
+<p>至此，无论通过哪种方式我们都获取到了istio-ca颁发的证书。</p>
+<h2>使用isitio证书</h2>
+<h3>获取证书管理器：</h3>
+<p>在此之前确保上面的步骤都正确，才能获取到证书。</p>
+<pre><code class="language-yaml">  <span class="hljs-string">//获取证书管理器</span>
+  <span class="hljs-string">manager,</span> <span class="hljs-string">_</span> <span class="hljs-string">:=</span> <span class="hljs-string">NewCertManager()</span>
+  <span class="hljs-string">//获取证书</span>
+    <span class="hljs-string">cert,</span> <span class="hljs-string">_</span> <span class="hljs-string">:=</span> <span class="hljs-string">manager.GetCertificate()</span>
+   <span class="hljs-string">//获取根证书</span>
+    <span class="hljs-string">root,</span> <span class="hljs-string">_</span> <span class="hljs-string">:=</span> <span class="hljs-string">manager.GetRootCertificate()</span>
+</code></pre>
+<p>注意:isito-ca 签署的证书不能添加 SAN(Subject Alternative Name) ，而是通过uri进行标识，例如：URI:spiffe://cluster.local/ns/default/sa/default，但 Grpc 的 credentials.NewTLS 在 tls 握手阶段会校验 ServerName 与证书上的 SAN 是否一直，所以会导致证书校验不通过，可以通过配置 InsecureSkipVerify: true 跳过证书校验。若是想校验证书，可以通过自己实现 <code>credentials.TransportCredentials</code> 校验 uri 。</p>
+<h3>server端：</h3>
+<pre><code class="language-yaml"><span class="hljs-string">func</span> <span class="hljs-string">server(manager</span> <span class="hljs-string">CertManager)</span> <span class="hljs-string">{</span>
+
+    <span class="hljs-string">cert,</span> <span class="hljs-string">_</span> <span class="hljs-string">:=</span> <span class="hljs-string">manager.GetCertificate()</span>
+    <span class="hljs-string">root,</span> <span class="hljs-string">_</span> <span class="hljs-string">:=</span> <span class="hljs-string">manager.GetRootCertificate()</span>
+
+    <span class="hljs-string">tlsConf</span> <span class="hljs-string">:=</span> <span class="hljs-string">&amp;tls.Config{</span>
+        <span class="hljs-attr">ServerName:</span>   <span class="hljs-string">"spiffe://cluster.local/ns/default/sa/default"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">ClientAuth:</span>   <span class="hljs-string">tls.RequireAndVerifyClientCert,</span>
+        <span class="hljs-attr">Certificates:</span> <span class="hljs-string">cert,</span>
+        <span class="hljs-attr">ClientCAs:</span>    <span class="hljs-string">root,</span>  
+        <span class="hljs-attr">InsecureSkipVerify:</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">VerifyPeerCertificate:</span> <span class="hljs-string">func(rawCerts</span> <span class="hljs-string">[][]byte,</span> <span class="hljs-string">verifiedChains</span> <span class="hljs-string">[][]*x509.Certificate)</span> <span class="hljs-string">error</span> <span class="hljs-string">{</span>
+            <span class="hljs-string">//添加自己的证书校验逻辑</span>
+      <span class="hljs-string">return</span> <span class="hljs-string">nil</span>
+        <span class="hljs-string">},</span>
+    <span class="hljs-string">}</span>
+
+    <span class="hljs-string">//</span> <span class="hljs-string">开启服务端监听</span>
+    <span class="hljs-string">listener,</span> <span class="hljs-string">err</span> <span class="hljs-string">:=</span> <span class="hljs-string">net.Listen("tcp",</span> <span class="hljs-string">"127.0.0.1:8000"</span><span class="hljs-string">)</span>
+    <span class="hljs-string">if</span> <span class="hljs-string">err</span> <span class="hljs-string">!=</span> <span class="hljs-string">nil</span> <span class="hljs-string">{</span>
+        <span class="hljs-string">panic(err)</span>
+    <span class="hljs-string">}</span>
+    <span class="hljs-string">defer</span> <span class="hljs-string">listener.Close()</span>
+
+    <span class="hljs-string">server</span> <span class="hljs-string">:=</span> <span class="hljs-string">grpc.NewServer(grpc.Creds(credentials.NewTLS(tlsConf)))</span>
+
+    <span class="hljs-string">RegisterHelloWorldServer(server,</span> <span class="hljs-string">NewHelloService())</span>
+
+    <span class="hljs-string">server.Serve(listener)</span>
+<span class="hljs-string">}</span>
+</code></pre>
+<h3>client端：</h3>
+<pre><code class="language-yaml"><span class="hljs-string">func</span> <span class="hljs-string">client(manager</span> <span class="hljs-string">CertManager)</span> <span class="hljs-string">{</span>
+    <span class="hljs-string">time.Sleep(time.Second</span> <span class="hljs-string">*</span> <span class="hljs-number">2</span><span class="hljs-string">)</span>
+    <span class="hljs-string">cert,</span> <span class="hljs-string">_</span> <span class="hljs-string">:=</span> <span class="hljs-string">manager.GetCertificate()</span>
+    <span class="hljs-string">root,</span> <span class="hljs-string">_</span> <span class="hljs-string">:=</span> <span class="hljs-string">manager.GetRootCertificate()</span>
+
+    <span class="hljs-string">creds</span> <span class="hljs-string">:=</span> <span class="hljs-string">credentials.NewTLS(&amp;tls.Config{</span>
+        <span class="hljs-attr">ServerName:</span>   <span class="hljs-string">"spiffe://cluster.local/ns/default/sa/default"</span><span class="hljs-string">,</span>
+        <span class="hljs-attr">Certificates:</span> <span class="hljs-string">cert,</span>
+        <span class="hljs-attr">RootCAs:</span>      <span class="hljs-string">root,</span>
+        <span class="hljs-attr">VerifyPeerCertificate:</span> <span class="hljs-string">func(rawCerts</span> <span class="hljs-string">[][]byte,</span> <span class="hljs-string">verifiedChains</span> <span class="hljs-string">[][]*x509.Certificate)</span> <span class="hljs-string">error</span> <span class="hljs-string">{</span>
+          <span class="hljs-string">//添加自己的证书校验逻辑</span>
+      <span class="hljs-string">return</span> <span class="hljs-string">nil</span>
+        <span class="hljs-string">},</span>
+        <span class="hljs-attr">InsecureSkipVerify:</span> <span class="hljs-literal">true</span><span class="hljs-string">,</span>
+    <span class="hljs-string">})</span>
+    <span class="hljs-string">fmt.Println(creds)</span>
+    <span class="hljs-string">clientCredentials,</span> <span class="hljs-string">err</span> <span class="hljs-string">:=</span> <span class="hljs-string">xds.NewClientCredentials(xds.ClientOptions{</span>
+        <span class="hljs-attr">FallbackCreds:</span> <span class="hljs-string">insecure.NewCredentials(),</span>
+    <span class="hljs-string">})</span>
+    <span class="hljs-string">fmt.Println(clientCredentials,</span> <span class="hljs-string">err)</span>
+    <span class="hljs-string">conn,</span> <span class="hljs-string">err</span> <span class="hljs-string">:=</span> <span class="hljs-string">grpc.Dial("127.0.0.1:8000",</span> <span class="hljs-string">grpc.WithTransportCredentials(creds))</span>
+    <span class="hljs-string">if</span> <span class="hljs-string">err</span> <span class="hljs-string">!=</span> <span class="hljs-string">nil</span> <span class="hljs-string">{</span>
+        <span class="hljs-string">panic(err)</span>
+    <span class="hljs-string">}</span>
+    <span class="hljs-string">defer</span> <span class="hljs-string">conn.Close()</span>
+
+    <span class="hljs-string">grpcClient</span> <span class="hljs-string">:=</span> <span class="hljs-string">NewHelloWorldClient(conn)</span>
+
+    <span class="hljs-string">say,</span> <span class="hljs-string">err</span> <span class="hljs-string">:=</span> <span class="hljs-string">grpcClient.SayHelloWorld(context.Background(),</span> <span class="hljs-string">&amp;HelloWorldRequest{</span>
+        <span class="hljs-attr">Referer:</span> <span class="hljs-string">"hello"</span><span class="hljs-string">,</span>
+    <span class="hljs-string">})</span>
+    <span class="hljs-string">fmt.Println(say)</span>
+<span class="hljs-string">}</span>
+</code></pre>
+<h2>参考</h2>
+<p><a href="https://istio.io/latest/docs/ops/best-practices/security/#configure-third-party-service-account-tokens">https://istio.io/latest/docs/ops/best-practices/security/#configure-third-party-service-account-tokens</a></p>
+</div></section><footer class="footer-container"><div class="footer-body"><img src="/img/dubbo_gray.png"/><img class="apache" src="/img/apache_logo.png"/><div class="cols-container"><div class="col col-12"><h3></h3><p></p></div><div class="col col-4"><dl><dt>ASF</dt><dd><a href="http://www.apache.org" target="_self">基金会</a></dd><dd><a href="http://www.apache.org/licenses/" target="_self">证书</a></dd><dd><a href="http://www.apache.org/events/current-event" target="_self">事件</a></dd><dd><a href="http://www.apache.org/foundation/sponsorship.html" target="_self">赞助</a></dd><dd><a href="http://www.apache.org/foundation/thanks.html" target="_self">致谢</a></dd></dl></div><div class="col col-4"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/user/concept/what_is_dubbogo.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/dev/build.html" target="_self">开发者指南</a></dd><dd><a href="/zh-cn/docs/admin/ops/dubbo-ops.html" target="_self">运维管理</a></dd><dd><a href="https://github.com/dubbogo/dubbogo.github.io/issues/new" target="_self">报告文档问题</a></dd><dd><a href="https://github.com/dubbogo/dubbogo.github.io" target="_self">编辑此文档</a></dd></dl></div><div class="col col-4"><dl><dt>资源</dt><dd><a href="/zh-cn/blog/index.html" target="_self">博客</a></dd><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.apache.org/security" target="_self">安全</a></dd></dl></div></div><div class="copyright"><span>Copyright © 2018-2020 The Apache Software Foundation. Apache and the Apache feather logo are trademarks of The Apache Software Foundation.</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+  <script src="/build/documentation.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112489517-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-112489517-1');
+	</script>
+</body>
+</html>
