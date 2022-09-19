@@ -3,12 +3,7 @@ import React from 'react';
 export default {
   'zh-cn': {
     brand: {
-      brandName: '本站已整体迁移至 dubbo.apache.org',
       briefIntroduction: '',
-      getStartedButton: {
-        text: '文档迁移至：dubbo.apache.org',
-        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/',
-      },
       viewOnGithubButton: {
         text: 'GITHUB',
         link: 'https://github.com/apache/dubbo-go',
