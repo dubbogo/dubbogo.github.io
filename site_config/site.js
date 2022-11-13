@@ -9,32 +9,32 @@ export default {
       {
         key: 'home', // 用作顶部菜单的选中
         text: 'HOME',
-        link: 'https://dubbo.apache.org/en/',
+        link: '/en-us/index.htm',
       },
       {
         key: 'docs',
         text: 'DOCS',
-        link: 'https://dubbo.apache.org/en/',
+        link: '/en-us/docs/user/quick-start.html',
       },
       {
         key: 'blog',
         text: 'BLOG',
-        link: 'https://dubbo.apache.org/en/',
+        link: '/en-us/blog/index.html',
       },
       {
         key: 'community',
         text: 'COMMUNITY',
-        link: 'https://dubbo.apache.org/en/',
+        link: '/en-us/community/index.html',
       },
       {
         key: 'downloads',
         text: 'DOWNLOADS',
-        link: 'https://dubbo.apache.org/en/',
+        link: '/en-us/blog/download.html',
       },
       {
         key: 'java',
         text: 'JAVA',
-        link: 'https://dubbo.apache.org/en/',
+        link: 'https://dubbo.apache.org/en-us/index.html',
       },
     ],
     disclaimer: {
@@ -125,17 +125,17 @@ export default {
       {
         key: 'blog',
         text: '博客',
-        link: 'https://dubbo.apache.org/zh/blog/golang/',
+        link: '/zh-cn/blog/index.html',
       },
       {
         key: 'community',
         text: '社区',
-        link: 'https://dubbo.apache.org/zh/blog/contact/',
+        link: '/zh-cn/community/index.html',
       },
       {
         key: 'downloads',
         text: '下载',
-        link: 'https://dubbo.apache.org/zh/release/',
+        link: '/zh-cn/blog/download.html',
       },
       {
         key: 'java',
