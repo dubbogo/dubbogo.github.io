@@ -3,6 +3,8 @@ import React from 'react';
 export default {
   'zh-cn': {
     brand: {
+      brandName: 'Apache Dubbo-go',
+      briefIntroduction: '一款兼容 Apache Dubbo™、gRPC 的高性能 Go RPC 框架。',
       briefIntroduction: '',
       viewOnGithubButton: {
         text: 'GITHUB',
@@ -37,10 +39,10 @@ export default {
     start: {
       title: '快速开始',
       desc: '只需通过几行代码即可快速构建一个 Dubbo-go 应用。',
-      img: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/quickstart/',
+      img: '/zh-cn/docs/user/quickstart/quickstart_triple.html',
       button: {
         text: '阅读更多',
-        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/quickstart/',
+        link: '/zh-cn/docs/user/concept/what_is_dubbogo.html',
       },
     },
     // blogs: {
@@ -73,11 +75,11 @@ export default {
   },
   'en-us': {
     brand: {
-      brandName: 'This site has migrated to dubbo.apache.org',
-      briefIntroduction: '',
+      brandName: 'Apache Dubbo-go',
+      briefIntroduction: 'A high-performance, Compatible Apache Dubbo™, Go based open source RPC framework.',
       getStartedButton: {
         text: 'Docs are in dubbo.apach.org now',
-        link: 'https://dubbo.apache.org/zh/docs3-v2/golang-sdk/',
+        link: 'https://dubbo.apache.org/cn/docs3-building/golang-sdk/',
       },
       viewOnGithubButton: {
         text: 'GITHUB',
@@ -110,7 +112,7 @@ export default {
       img: '/img/quick_start.png',
       button: {
         text: 'READ MORE',
-        link: 'https://dubbo.apache.org/en/',
+        link: '/en-us/docs/user/quick-start.html',
       },
     },
     // blogs: {
@@ -130,15 +132,15 @@ export default {
     //     }
     //   ]
     // },
-    users: {
-      title: 'Who is using Dubbo-go',
-      desc: <span>Providing your info on <a rel="noopener noreferrer" target="_blank" href="https://github.com/apache/dubbo-go/issues/2">dubbo-go user list</a> to help improving dubbo better</span>,
-      list: [
-        '/img/users_dingding.png',
-        '/img/users_ctrip.png',
-        '/img/users_haozhuo.png',
-        '/img/users_tuya.png'
-      ],
-    },
+    // users: {
+    //   title: 'Who is using Dubbo-go',
+    //   desc: <span>Providing your info on <a rel="noopener noreferrer" target="_blank" href="https://github.com/apache/dubbo-go/issues/2">dubbo-go user list</a> to help improving dubbo better</span>,
+    //   list: [
+    //     '/img/users_dingding.png',
+    //     '/img/users_ctrip.png',
+    //     '/img/users_haozhuo.png',
+    //     '/img/users_tuya.png'
+    //   ],
+    // },
   },
 };
